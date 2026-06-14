@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italian Riviera 2026 · Road Trip Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sea:#1b6f8c; --sea-deep:#0e4f66; --sand:#f4ede1; --paper:#fbf8f2;
+    --coral:#e2654b; --olive:#5f6b3f; --ink:#222018; --muted:#6f6a5f;
+    --line:#e6ddcd; --gold:#c8973f;
+    --shadow:0 10px 40px rgba(14,79,102,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.74rem;font-weight:700;color:var(--coral)}
+  h2{font-size:2.1rem;font-weight:900;line-height:1.1;margin:10px 0 8px}
+  .lead{color:var(--muted);font-size:1.08rem;max-width:680px}
+  a{color:var(--sea-deep)}
+
+  /* HERO */
+  .hero{position:relative;color:#fff;padding:120px 0 90px;
+    background:linear-gradient(160deg,#0e4f66 0%,#1b6f8c 55%,#2f8da6 100%);overflow:hidden;border:none}
+  .hero:after{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 20%,rgba(226,151,63,.25),transparent 45%);pointer-events:none}
+  .hero .wrap{position:relative;z-index:2}
+  .hero .eyebrow{color:#ffd9a0}
+  .hero h1{font-size:3.6rem;font-weight:900;line-height:1.02;margin:14px 0 18px;max-width:780px}
+  .hero p{font-size:1.18rem;max-width:620px;color:#eaf4f7}
+  .stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+  .stat{background:rgba(255,255,255,.12);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;padding:16px 22px;min-width:130px}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900}
+  .stat span{font-size:.8rem;color:#cfe6ec;text-transform:uppercase;letter-spacing:.08em}
+
+  /* generic */
+  .grid{display:grid;gap:20px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
+    padding:4px 10px;border-radius:999px;background:var(--sand);color:var(--sea-deep)}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--sea);color:#fff;text-decoration:none;
+    font-weight:600;font-size:.92rem;padding:11px 18px;border-radius:10px;transition:.15s;border:none}
+  .btn:hover{background:var(--sea-deep)}
+  .btn.map{background:#fff;color:var(--sea-deep);border:1.5px solid var(--sea)}
+  .btn.map:hover{background:var(--sand)}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--sand);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--sea-deep)}
+  td b{color:var(--ink)}
+  .note{background:#fff7ec;border:1px solid #f0dcb6;border-left:4px solid var(--gold);
+    border-radius:12px;padding:18px 20px;margin-top:24px;font-size:.95rem}
+  .warn{background:#fdeee9;border:1px solid #f3cabb;border-left:4px solid var(--coral);
+    border-radius:12px;padding:18px 20px;font-size:.95rem}
+
+  /* timeline */
+  .day{display:flex;gap:20px;padding:20px 0;border-bottom:1px dashed var(--line)}
+  .day:last-child{border-bottom:none}
+  .daynum{flex-shrink:0;width:64px;text-align:center}
+  .daynum b{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:900;color:var(--sea);display:block;line-height:1}
+  .daynum span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .day h4{font-size:1.12rem;margin-bottom:4px}
+  .day .meta{font-size:.82rem;color:var(--coral);font-weight:600;margin-bottom:6px}
+  .day p{font-size:.95rem;color:var(--muted)}
+
+  /* spots */
+  .spot{padding:18px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+  .spot:last-child{border-bottom:none}
+  .spot h4{font-size:1.05rem}
+  .spot p{font-size:.9rem;color:var(--muted);max-width:560px}
+  .spot .when{font-size:.78rem;color:var(--olive);font-weight:600;margin-top:4px}
+
+  /* packages */
+  .pkg{display:flex;flex-direction:column;position:relative}
+  .pkg.feature{border:2px solid var(--sea);box-shadow:0 16px 50px rgba(27,111,140,.18)}
+  .pkg .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--sea);color:#fff;
+    font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:5px 14px;border-radius:999px}
+  .pkg h3{font-size:1.3rem}
+  .price{font-family:'Fraunces',serif;font-weight:900;font-size:2.3rem;color:var(--ink);margin:6px 0 0}
+  .price small{display:block;font-family:'Inter';font-size:.85rem;font-weight:600;color:var(--muted)}
+  .pkg ul{list-style:none;margin:16px 0 0;font-size:.9rem}
+  .pkg li{padding:7px 0 7px 24px;position:relative;color:var(--muted);border-top:1px solid var(--line)}
+  .pkg li:before{content:"›";position:absolute;left:6px;color:var(--sea);font-weight:700}
+
+  .toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+  .toc a{font-size:.85rem;text-decoration:none;color:var(--sea-deep);background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.25);color:#eaf4f7;padding:7px 14px;border-radius:999px}
+  footer{background:var(--sea-deep);color:#cfe6ec;padding:50px 0;border:none}
+  footer h3{color:#fff;font-size:1.2rem}
+  footer a{color:#ffd9a0}
+  .crew{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .crew span{font-size:.8rem;background:rgba(255,255,255,.1);padding:5px 11px;border-radius:999px}
+  @media(max-width:760px){
+    .hero h1{font-size:2.4rem}.g2,.g3{grid-template-columns:1fr}h2{font-size:1.7rem}
+    .spot{flex-direction:column}.day{gap:12px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Road Trip Plan · August 2026 · 2 couples</div>
+    <h1>Prague to the Italian Riviera</h1>
+    <p>Ten days of turquoise water and postcard villages. Half beach, half the most photogenic coastline in Italy. No castles, no museums, no filler.</p>
+    <div class="stats">
+      <div class="stat"><b>~950 km</b><span>Prague → coast</span></div>
+      <div class="stat"><b>8–10</b><span>days incl. drive</span></div>
+      <div class="stat"><b>2 bases</b><span>Levanto · S. Margherita</span></div>
+      <div class="stat"><b>from 80K</b><span>CZK / 4 people</span></div>
+    </div>
+    <nav class="toc">
+      <a href="#verdict">Why Liguria</a>
+      <a href="#route">The Drive</a>
+      <a href="#days">Day by Day</a>
+      <a href="#spots">Photogenic Spots</a>
+      <a href="#sleep">Where to Sleep</a>
+      <a href="#budget">Budget</a>
+      <a href="#savings">Savings</a>
+      <a href="#booknow">Book Now</a>
+    </nav>
+  </div>
+</header>
+
+<!-- VERDICT -->
+<section id="verdict">
+  <div class="wrap">
+    <div class="eyebrow">The big decision</div>
+    <h2>Liguria, not Tuscany</h2>
+    <p class="lead">You started thinking Tuscany. But Tuscany's own coast (Versilia, Forte dei Marmi) is flat, suburban and viewless. The drama you want lives one notch northwest, on the <b>Ligurian Riviera</b>, where the beach and the "wow" are the same place.</p>
+    <div class="grid g2" style="margin-top:28px">
+      <div class="card">
+        <span class="pill">Base 1 · 3 nights</span>
+        <h3 class="serif" style="margin-top:12px;font-size:1.4rem">Levanto</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-top:6px">The smart gateway to Cinque Terre: its own sandy beach, a train station 4 minutes from the villages, real parking, and prices ~40% below the villages themselves.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Base 2 · 4 nights</span>
+        <h3 class="serif" style="margin-top:12px;font-size:1.4rem">Santa Margherita Ligure</h3>
+        <p style="color:var(--muted);font-size:.95rem;margin-top:6px">Five minutes from Portofino without Portofino's €400 rooms. A real harbour with boats to San Fruttuoso and Camogli, and the clearest water in Liguria at nearby Paraggi.</p>
+      </div>
+    </div>
+    <div class="note"><b>Why this order:</b> coming south from Prague you hit Levanto first, then loop 1 hour north to Santa Margherita, which sits back toward the route home. Zero backtracking.</div>
+  </div>
+</section>
+
+<!-- ROUTE -->
+<section id="route">
+  <div class="wrap">
+    <div class="eyebrow">Getting there</div>
+    <h2>The Drive: Prague → Levanto</h2>
+    <p class="lead">~950 km via Austria and the Brenner Pass. Roughly 11 hours of pure driving, so the team's call is to <b>split it with one overnight in Innsbruck</b> each way (built into the 10-day plan). The Saver package does it in one push to save the night.</p>
+
+    <a class="btn map" style="margin-top:20px" href="https://www.google.com/maps/dir/Prague,+Czech+Republic/Innsbruck,+Austria/Levanto,+SP,+Italy" target="_blank" rel="noopener">📍 View the full route on Google Maps</a>
+
+    <h3 class="serif" style="margin-top:34px;font-size:1.2rem">Leg by leg</h3>
+    <table>
+      <tr><th>Leg</th><th>Distance</th><th>Drive time</th><th>Notes</th></tr>
+      <tr><td><b>Prague → Innsbruck</b></td><td>~500 km</td><td>~5.5 h</td><td>D1/D2 → A1 via Linz & Salzburg → A12. Overnight here.</td></tr>
+      <tr><td><b>Innsbruck → Brenner → Levanto</b></td><td>~470 km</td><td>~5.5 h</td><td>A13 Brenner Pass → A22 → A1 → A15 La Spezia → A12 → Levanto.</td></tr>
+    </table>
+
+    <div class="grid g2" style="margin-top:28px">
+      <div class="card">
+        <h3 class="serif" style="font-size:1.15rem">⛽ Where to refuel (and where it's cheap)</h3>
+        <p style="color:var(--muted);font-size:.9rem;margin:8px 0 12px">Austrian fuel is cheaper than both Czech and (especially) Italian motorway pumps. The XC90 has ~600 km usable range — plan ~2 fills each way.</p>
+        <table style="margin-top:0">
+          <tr><th>Stop</th><th>Where</th></tr>
+          <tr><td><b>Ansfelden Nord (Shell)</b></td><td>A1, south of Linz — first Austrian top-up</td></tr>
+          <tr><td><b>Weer Autogrill</b></td><td>A12 Inntal — <b>fill the tank FULL here</b>, last cheap fuel before Italy</td></tr>
+          <tr><td><b>Trento Nord</b></td><td>A22, just past Brenner — leg stretch</td></tr>
+          <tr><td><b>Campogalliano Est</b></td><td>A22 near Modena — before the Apennine climb to La Spezia</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3 class="serif" style="font-size:1.15rem">🎟️ Tolls & vignettes (round trip)</h3>
+        <table style="margin-top:8px">
+          <tr><th>Item</th><th>EUR</th></tr>
+          <tr><td>Czech 10-day vignette</td><td>~12</td></tr>
+          <tr><td>Austrian 10-day vignette</td><td>~10</td></tr>
+          <tr><td>Brenner toll (A13) ×2</td><td>~25</td></tr>
+          <tr><td>Italian autostrada (A22/A15/A12) ×2</td><td>~71</td></tr>
+          <tr><td><b>Total tolls + vignettes</b></td><td><b>~€118</b></td></tr>
+          <tr><td><b>Round-trip fuel</b> (~1,900 km, petrol)</td><td><b>~€325</b></td></tr>
+        </table>
+        <p style="font-size:.8rem;color:var(--muted);margin-top:10px">Buy CZ &amp; AT vignettes online before you leave. Petrol math assumes ~9.5 L/100 km — confirm if it's the T8 hybrid or diesel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ITINERARY -->
+<section id="days">
+  <div class="wrap">
+    <div class="eyebrow">The 10-day plan</div>
+    <h2>Day by Day</h2>
+    <p class="lead">Suggested window: late August (after Ferragosto, Aug 15) for calmer crowds and lower prices. Dates are flexible — this is the shape.</p>
+
+    <div style="margin-top:30px">
+      <div class="day"><div class="daynum"><b>1</b><span>Sat</span></div><div><div class="meta">DRIVE · Prague → Innsbruck (~500 km)</div><h4>Roll out early, Alps by evening</h4><p>Leave Prague by 8am. Refuel at Ansfelden. Arrive Innsbruck mid-afternoon, walk the old town, easy dinner, sleep. <em>Overnight: Innsbruck.</em></p></div></div>
+      <div class="day"><div class="daynum"><b>2</b><span>Sun</span></div><div><div class="meta">DRIVE · Innsbruck → Levanto (~470 km)</div><h4>Over the Brenner, feet in the sea</h4><p>Fill up at Weer before Italy. Cross the Brenner, drop down to La Spezia and Levanto by early afternoon. Settle in, hit Levanto's own beach, first Ligurian dinner. <em>Overnight: Levanto (1/3).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>3</b><span>Mon</span></div><div><div class="meta">CINQUE TERRE</div><h4>The five villages, by train</h4><p>Train from Levanto into Cinque Terre before 9am to beat the crush. Manarola &amp; Vernazza viewpoints, the Via dell'Amore (pre-booked slot), swim stops, focaccia. <em>Overnight: Levanto (2/3).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>4</b><span>Tue</span></div><div><div class="meta">CAR DAY · south of Levanto</div><h4>Portovenere, Tellaro & white cliffs</h4><p>Drive to Portovenere (church on the rock), the tiny car-free village of Tellaro, and optionally the hike to Punta Bianca's turquoise cove. Tourist-light, photo-heavy. <em>Overnight: Levanto (3/3).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>5</b><span>Wed</span></div><div><div class="meta">TRANSFER · Levanto → S. Margherita (~1 h)</div><h4>Move north, slow afternoon</h4><p>Optional Carrara marble-quarry 4×4 detour en route. Arrive Santa Margherita, check in, sundowner at Paraggi cove. <em>Overnight: S. Margherita (1/4).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>6</b><span>Thu</span></div><div><div class="meta">PORTOFINO</div><h4>The piazzetta & lighthouse path</h4><p>Boat or bus to Portofino, walk the headland to the lighthouse, swim at Paraggi. The iconic harbour shot. <em>Overnight: S. Margherita (2/4).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>7</b><span>Fri</span></div><div><div class="meta">BOAT DAY</div><h4>San Fruttuoso & Camogli</h4><p>Boat to the hidden abbey-cove of San Fruttuoso (no road in), then the pastel fishing town of Camogli. <em>Overnight: S. Margherita (3/4).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>8</b><span>Sat</span></div><div><div class="meta">SLOW DAY</div><h4>Sestri Levante or pool day</h4><p>Baia del Silenzio in Sestri Levante (free crescent beach, stunning at sunset) — or do nothing by the pool. Your call. <em>Overnight: S. Margherita (4/4).</em></p></div></div>
+      <div class="day"><div class="daynum"><b>9</b><span>Sun</span></div><div><div class="meta">DRIVE · S. Margherita → Innsbruck (~6 h)</div><h4>Begin the loop home</h4><p>Last swim, then drive back over the Brenner to Innsbruck for the night. <em>Overnight: Innsbruck.</em></p></div></div>
+      <div class="day"><div class="daynum"><b>10</b><span>Mon</span></div><div><div class="meta">DRIVE · Innsbruck → Prague (~5.5 h)</div><h4>Home by evening</h4><p>Easy final leg back to Prague.</p></div></div>
+    </div>
+    <div class="note"><b>The 8-day version:</b> drop the two Innsbruck nights (one-push drives) and trim one beach day. Same highlights, lower cost — this is the Saver package below.</div>
+  </div>
+</section>
+
+<!-- SPOTS -->
+<section id="spots">
+  <div class="wrap">
+    <div class="eyebrow">What you came for</div>
+    <h2>The Photogenic Eight</h2>
+    <p class="lead">Every one is sea, cliff, colour or coastline. Maps links are live Google Maps — tap to open. All reachable inside ~1.5 h of a base.</p>
+    <div style="margin-top:24px">
+      <div class="spot"><div><h4>1 · Manarola viewpoint (Nessun Dorma)</h4><p>The definitive Cinque Terre postcard — stacked pastel houses tumbling to the sea.</p><div class="when">Train 15 min from Levanto · go early</div></div><a class="btn map" href="https://maps.app.goo.gl/7q4aUaMgZMGTkfGT7" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>2 · Vernazza from above</h4><p>The horseshoe harbour seen from the coastal trail — arguably the prettiest of the five.</p><div class="when">Train 10 min from Levanto</div></div><a class="btn map" href="https://maps.app.goo.gl/FhYJPa2UWK3D6FXTA8" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>3 · Portovenere — San Pietro rock church</h4><p>Black-and-white church on a cliff edge with open sea on both sides.</p><div class="when">45 min by car from Levanto</div></div><a class="btn map" href="https://maps.app.goo.gl/ogjGKSqbM4k9d3xq8" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>4 · Tellaro</h4><p>A village built on the rocks, the colour of terracotta and rust. Almost no tourists.</p><div class="when">45 min by car from Levanto</div></div><a class="btn map" href="https://maps.app.goo.gl/G1ZK8rJa1dB5LKXZ7" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>5 · Punta Bianca</h4><p>White cliffs over impossibly turquoise water. A short hike keeps the crowds away.</p><div class="when">50 min drive + ~1.5 h hike</div></div><a class="btn map" href="https://maps.app.goo.gl/jmapPxrDhnHJrGC26" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>6 · Carrara marble quarries</h4><p>A blinding white lunar moonscape carved into the mountains. Pure industrial drama.</p><div class="when">40 min by car · €15 walk-up 4×4 tour</div></div><a class="btn map" href="https://maps.app.goo.gl/sBXC8JFKC3X3UZeN9" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>7 · Portofino piazzetta & lighthouse</h4><p>The world-famous harbour plus the pine-headland walk to the lighthouse.</p><div class="when">Bus/boat 10–15 min from S. Margherita</div></div><a class="btn map" href="https://maps.app.goo.gl/hNSfBGeTbfyiQUFB8" target="_blank" rel="noopener">Map</a></div>
+      <div class="spot"><div><h4>8 · San Fruttuoso by boat</h4><p>A secret abbey in a cove with no road access — reached only by sea.</p><div class="when">Boat 40 min from S. Margherita harbour</div></div><a class="btn map" href="https://maps.app.goo.gl/PWVM5GrtNVwXHmAw9" target="_blank" rel="noopener">Map</a></div>
+    </div>
+    <div class="note"><b>Bonus:</b> Baia del Silenzio in Sestri Levante — a free pastel crescent beach, unreal at sunset, 30 min north of Santa Margherita.</div>
+    <div class="warn" style="margin-top:18px"><b>August rules from Marco:</b> Cinque Terre before 9am (platforms get dangerous after 10:30). Book Via dell'Amore slots and all ferries online, weeks ahead. On Ferragosto (Aug 15) skip the famous spots — hide at Tellaro or Punta Bianca.</div>
+  </div>
+</section>
+
+<!-- SLEEP -->
+<section id="sleep">
+  <div class="wrap">
+    <div class="eyebrow">Two couples · separate rooms</div>
+    <h2>Where to Sleep</h2>
+    <p class="lead">Honest note: a true private villa-with-pool <em>inside</em> Santa Margherita basically doesn't exist — it's a built-up town. The pool-villa dream lives 5–15 min up in the hills (San Lorenzo della Costa, San Michele di Pagana). Real options at three price levels below. Prices are August estimates for the whole stay.</p>
+
+    <h3 class="serif" style="margin-top:32px;font-size:1.25rem">Levanto · 3 nights</h3>
+    <table>
+      <tr><th>Tier</th><th>Property</th><th>Setup</th><th>3-night total</th></tr>
+      <tr><td><span class="pill">Budget</span></td><td><b>Apartment Giulia 2</b> — central self-catering</td><td>2 separate rooms · AC · €5/day parking · 500 m to beach</td><td>~€480–600</td></tr>
+      <tr><td><span class="pill">Mid</span></td><td><b>Hotel Palazzo Vannoni</b> — boutique 3★</td><td>2 rooms · AC · 100 m to sea · breakfast</td><td>~€1,200–1,500</td></tr>
+      <tr><td><span class="pill">Premium</span></td><td><b>Agriturismo Villanova</b> — estate + pool + spa</td><td>2 rooms · AC · free parking · free beach shuttle</td><td>~€1,700–2,400</td></tr>
+    </table>
+
+    <h3 class="serif" style="margin-top:32px;font-size:1.25rem">Santa Margherita Ligure · 4 nights</h3>
+    <table>
+      <tr><th>Tier</th><th>Property</th><th>Setup</th><th>4-night total</th></tr>
+      <tr><td><span class="pill">Budget</span></td><td><b>Appartamenti Mondo Per Te</b> — 9.5/10, 600+ reviews</td><td>2 bedrooms · AC · €16/day parking · 450 m to sea</td><td>~€1,000–1,300</td></tr>
+      <tr><td><span class="pill">Mid</span></td><td><b>Villa Draga</b> (PortofinoVacanze) — villa + pool</td><td>2 bedrooms · AC · pool · verify XC90 parking</td><td>~€1,200–2,000</td></tr>
+      <tr><td><span class="pill">Premium</span></td><td><b>Villa Aldo</b> (San Michele) / <b>Villa Dolcina</b> (infinity pool, sea views)</td><td>2+ bedrooms · private pool · free parking</td><td>~€1,750–4,000</td></tr>
+    </table>
+    <div class="warn" style="margin-top:20px"><b>Giulia's one urgent action:</b> August villas at this level book <b>up to a year ahead</b>. If the pool villa is the goal, enquire now — by July 2026 it's gone.</div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section id="budget">
+  <div class="wrap">
+    <div class="eyebrow">The real numbers · all 4 people, everything in</div>
+    <h2>Three Budget Packages</h2>
+    <p class="lead">Researched from real fuel, toll, room, food and activity prices. Converted at <b>1 € = 25 CZK</b>. These are totals for the whole group of four.</p>
+
+    <div class="warn" style="margin-top:24px">
+      <b>Straight talk on the 50,000 CZK target:</b> it isn't realistic for this trip. Four people in <em>separate rooms</em> for 8–10 days means paying for two units every night, plus ~€440 of fuel and tolls before anyone eats. The honest floor — done lean — is around <b>80,000 CZK</b>. To go lower you'd have to share one room (breaks your rule), camp, or cut the trip to ~5 days. The packages below are built on real prices, not wishful ones.
+    </div>
+
+    <div class="grid g3" style="margin-top:32px">
+      <div class="card pkg">
+        <h3 class="serif">🟢 The Saver</h3>
+        <div class="price">~80K <small>CZK · ≈ €3,200 · 8 days</small></div>
+        <ul>
+          <li>One-push drives (no Innsbruck nights)</li>
+          <li>Budget apartments, separate rooms</li>
+          <li>Self-cater breakfast + lunch, dinner out</li>
+          <li>Free public beaches</li>
+          <li>Cinque Terre + essentials only</li>
+          <li><b>≈ €800 / person</b></li>
+        </ul>
+      </div>
+      <div class="card pkg feature">
+        <span class="tag">Best balance</span>
+        <h3 class="serif">🔵 The Balanced</h3>
+        <div class="price">~130K <small>CZK · ≈ €5,200 · 10 days</small></div>
+        <ul>
+          <li>Overnight in Innsbruck each way</li>
+          <li>Nice apartment / B&B, a pool option</li>
+          <li>Mix of eating out and self-catering</li>
+          <li>All boats, CT 2-day card, one beach club</li>
+          <li>Carrara quarry tour included</li>
+          <li><b>≈ €1,300 / person</b></li>
+        </ul>
+      </div>
+      <div class="card pkg">
+        <h3 class="serif">🟣 The Villa Dream</h3>
+        <div class="price">~200K <small>CZK · ≈ €8,000 · 10 days</small></div>
+        <ul>
+          <li>Comfortable overnight stops</li>
+          <li>Agriturismo + private villa with pool</li>
+          <li>Eat out freely, harbour dinners</li>
+          <li>Every boat, tour and beach club</li>
+          <li>Zero compromises</li>
+          <li><b>≈ €2,000 / person</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="serif" style="margin-top:40px;font-size:1.2rem">What's inside the numbers (per group)</h3>
+    <table>
+      <tr><th>Line</th><th>Saver (8d)</th><th>Balanced (10d)</th><th>Villa (10d)</th></tr>
+      <tr><td>Fuel (round trip)</td><td>~€325</td><td>~€325</td><td>~€325</td></tr>
+      <tr><td>Tolls + vignettes</td><td>~€118</td><td>~€118</td><td>~€118</td></tr>
+      <tr><td>Innsbruck nights</td><td>€0 (one-push)</td><td>~€460</td><td>~€500</td></tr>
+      <tr><td>Accommodation (Italy)</td><td>~€1,450</td><td>~€2,150</td><td>~€4,200</td></tr>
+      <tr><td>Food (4 people)</td><td>~€900</td><td>~€1,800</td><td>~€2,500</td></tr>
+      <tr><td>Activities + parking</td><td>~€400</td><td>~€550</td><td>~€850</td></tr>
+      <tr><td><b>Group total</b></td><td><b>≈ €3,200</b></td><td><b>≈ €5,400</b></td><td><b>≈ €8,500</b></td></tr>
+      <tr><td><b>In CZK</b></td><td><b>~80,000</b></td><td><b>~135,000</b></td><td><b>~210,000</b></td></tr>
+    </table>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:12px">All figures are researched estimates, not quotes. Accommodation and August prices move fast — treat these as planning ranges and confirm at booking. Add a ~5% contingency.</p>
+  </div>
+</section>
+
+<!-- SAVINGS -->
+<section id="savings">
+  <div class="wrap">
+    <div class="eyebrow">Sasha's playbook</div>
+    <h2>How to Spend Less Without Wrecking It</h2>
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">Self-cater breakfast + focaccia lunch</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">Saves ~€120–200 per couple over the trip. Dinner out stays the treat.</p></div>
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">Levanto's free beach over a club</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">Saves ~€150–300 vs four days of sunbeds. Keep the paid beach for one Monterosso afternoon.</p></div>
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">Dinner one block off the seafront</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">Same food, no harbour markup — ~€200–400 saved across five evenings.</p></div>
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">Cinque Terre Treno Card, bought online</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">2-day card €61 beats singles at 4+ rides/day, and skips the August queues.</p></div>
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">Fill the tank in Austria</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">Top up full at Weer before the Brenner — Italian motorway fuel is ~€0.40/L more.</p></div>
+      <div class="card"><h4 class="serif" style="font-size:1.05rem">One ferry ticket, two stops</h4><p style="color:var(--muted);font-size:.92rem;margin-top:6px">The S. Margherita → San Fruttuoso return (€24) already includes the Portofino stop.</p></div>
+    </div>
+    <div class="note"><b>Reference prices:</b> CT 2-day card €61 · Via dell'Amore €10 supplement · S.Margherita↔Portofino €12 · San Fruttuoso return €24 · Carrara 4×4 €15 · Levanto parking €15–24/day · lean food €35–45/person/day, comfortable €60–80.</div>
+  </div>
+</section>
+
+<!-- BOOK NOW -->
+<section id="booknow">
+  <div class="wrap">
+    <div class="eyebrow">Time-sensitive</div>
+    <h2>Book Now — August Fills Early</h2>
+    <table>
+      <tr><th>What</th><th>Why now</th></tr>
+      <tr><td><b>Accommodation</b> (both bases)</td><td>August rooms fill by July; villa-with-pool books up to a year ahead. This is the #1 priority.</td></tr>
+      <tr><td><b>Innsbruck rooms</b> ×2 nights</td><td>If doing the overnight-split plan — peak summer, books out.</td></tr>
+      <tr><td><b>Via dell'Amore time slots</b></td><td>200 people per 30-min slot, sells out weeks ahead. <a href="https://www.viadellamore.info" target="_blank" rel="noopener">viadellamore.info</a></td></tr>
+      <tr><td><b>CZ + AT vignettes</b></td><td>Buy online before departure, cheaper and no queue.</td></tr>
+      <tr><td><b>Ferries (San Fruttuoso, Portofino)</b></td><td>Reserve the day before at the latest in August.</td></tr>
+    </table>
+    <div class="warn" style="margin-top:24px"><b>Still open for you to decide:</b> (1) confirm the car is petrol vs T8 hybrid/diesel — changes fuel cost; (2) which package; (3) exact August dates. Answer those and the team locks the bookable version.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h3>Planned by the Italy Trip Crew</h3>
+    <p style="margin-top:8px;max-width:640px">A reusable team of specialists. Prices are researched estimates as of mid-2026 — verify at booking. All maps link to Google Maps; none are AI-generated.</p>
+    <div class="crew">
+      <span>Marco · Italy insider</span>
+      <span>Elena · Itinerary</span>
+      <span>Hans · Road-trip logistics</span>
+      <span>Sasha · Travel hacker</span>
+      <span>Giulia · Stay scout</span>
+      <span>Tomáš · Budget</span>
+    </div>
+    <p style="margin-top:20px;font-size:.8rem;color:#8fb9c4">Italian Riviera Road Trip · August 2026 · Prepared for Michael &amp; group</p>
+  </div>
+</footer>
+
+</body>
+</html>
