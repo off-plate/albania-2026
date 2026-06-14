@@ -2,7 +2,8 @@
 
 **What:** 10-day road trip from Prague to Italy (Tuscany base), August 2026.
 **Who:** 2 couples, 4 people, separate rooms.
-**Status:** 🟡 SETUP — team assembled, brief captured, waiting on key answers before planning starts.
+**Status:** 🟢 PLAN LIVE — full itinerary, route, and 3 budget packages built and published.
+**Shareable link:** https://off-plate.github.io/italy-trip-2026/
 
 ---
 
