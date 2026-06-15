@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Italian Riviera 2026 · Full Road Trip Plan</title>
+<title>Italian Riviera 2026 · Full Mapped Road Trip Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
   :root{
     --sea:#1b6f8c; --sea-deep:#0e4f66; --sand:#f4ede1; --paper:#fbf8f2;
     --coral:#e2654b; --olive:#5f6b3f; --ink:#222018; --muted:#6f6a5f;
-    --line:#e6ddcd; --gold:#c8973f; --green:#3f7d5f;
+    --line:#e6ddcd; --gold:#c8973f;
     --shadow:0 10px 40px rgba(14,79,102,.10);
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -19,45 +19,36 @@
   body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
   h1,h2,h3,h4,.serif{font-family:'Fraunces',serif}
   .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
-  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  section{padding:60px 0;border-bottom:1px solid var(--line)}
   .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:700;color:var(--coral)}
   h2{font-size:2rem;font-weight:900;line-height:1.1;margin:8px 0 8px}
   .lead{color:var(--muted);font-size:1.05rem;max-width:720px}
   a{color:var(--sea-deep)}
 
-  /* sticky nav */
-  .nav{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.94);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line)}
+  .nav{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav .wrap{display:flex;gap:4px;overflow-x:auto;padding:10px 22px;align-items:center}
-  .nav a{flex-shrink:0;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--sea-deep);
-    padding:7px 13px;border-radius:8px;white-space:nowrap}
+  .nav a{flex-shrink:0;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--sea-deep);padding:7px 13px;border-radius:8px;white-space:nowrap}
   .nav a:hover{background:var(--sand)}
   .nav b{flex-shrink:0;font-family:'Fraunces';font-weight:900;color:var(--ink);margin-right:8px;font-size:.95rem}
 
-  /* HERO */
-  .hero{position:relative;color:#fff;padding:96px 0 76px;
-    background:linear-gradient(160deg,#0e4f66 0%,#1b6f8c 55%,#2f8da6 100%);overflow:hidden;border:none}
-  .hero:after{content:"";position:absolute;inset:0;
-    background:radial-gradient(circle at 82% 18%,rgba(226,151,63,.28),transparent 45%);pointer-events:none}
+  .hero{position:relative;color:#fff;padding:92px 0 72px;background:linear-gradient(160deg,#0e4f66 0%,#1b6f8c 55%,#2f8da6 100%);overflow:hidden;border:none}
+  .hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 18%,rgba(226,151,63,.28),transparent 45%);pointer-events:none}
   .hero .wrap{position:relative;z-index:2}
   .hero .eyebrow{color:#ffd9a0}
-  .hero h1{font-size:3.2rem;font-weight:900;line-height:1.03;margin:12px 0 16px;max-width:780px}
-  .hero p{font-size:1.12rem;max-width:600px;color:#eaf4f7}
-  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-  .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
-    border-radius:13px;padding:14px 20px;min-width:120px}
-  .stat b{display:block;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900}
-  .stat span{font-size:.74rem;color:#cfe6ec;text-transform:uppercase;letter-spacing:.07em}
-  .fx{margin-top:22px;font-size:.8rem;color:#bfe0e8;background:rgba(0,0,0,.12);display:inline-block;padding:6px 13px;border-radius:8px}
+  .hero h1{font-size:3.1rem;font-weight:900;line-height:1.03;margin:12px 0 16px;max-width:780px}
+  .hero p{font-size:1.1rem;max-width:600px;color:#eaf4f7}
+  .stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:13px;padding:13px 18px;min-width:115px}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900}
+  .stat span{font-size:.72rem;color:#cfe6ec;text-transform:uppercase;letter-spacing:.07em}
+  .fx{margin-top:20px;font-size:.8rem;color:#bfe0e8;background:rgba(0,0,0,.12);display:inline-block;padding:6px 13px;border-radius:8px}
 
   .grid{display:grid;gap:18px}
   .g2{grid-template-columns:repeat(2,1fr)}
   .g3{grid-template-columns:repeat(3,1fr)}
   .card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px;box-shadow:var(--shadow)}
-  .pill{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;
-    padding:3px 9px;border-radius:999px;background:var(--sand);color:var(--sea-deep)}
-  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--sea);color:#fff;text-decoration:none;
-    font-weight:600;font-size:.88rem;padding:10px 16px;border-radius:9px;transition:.15s;border:none}
+  .pill{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:999px;background:var(--sand);color:var(--sea-deep)}
+  .btn{display:inline-flex;align-items:center;gap:7px;background:var(--sea);color:#fff;text-decoration:none;font-weight:600;font-size:.88rem;padding:10px 16px;border-radius:9px;transition:.15s;border:none}
   .btn:hover{background:var(--sea-deep)}
   .btn.map{background:#fff;color:var(--sea-deep);border:1.5px solid var(--sea);padding:6px 12px;font-size:.8rem}
   .btn.map:hover{background:var(--sand)}
@@ -66,59 +57,66 @@
   th{background:var(--sand);font-weight:700;font-size:.76rem;text-transform:uppercase;letter-spacing:.04em;color:var(--sea-deep)}
   td b{color:var(--ink)}
   .kc{color:var(--muted);font-size:.86em;white-space:nowrap}
-  .note{background:#fff7ec;border:1px solid #f0dcb6;border-left:4px solid var(--gold);
-    border-radius:11px;padding:16px 18px;margin-top:20px;font-size:.93rem}
-  .warn{background:#fdeee9;border:1px solid #f3cabb;border-left:4px solid var(--coral);
-    border-radius:11px;padding:16px 18px;font-size:.93rem}
-  .map-frame{width:100%;height:440px;border:0;border-radius:15px;box-shadow:var(--shadow);margin-top:18px}
+  .note{background:#fff7ec;border:1px solid #f0dcb6;border-left:4px solid var(--gold);border-radius:11px;padding:16px 18px;margin-top:20px;font-size:.93rem}
+  .warn{background:#fdeee9;border:1px solid #f3cabb;border-left:4px solid var(--coral);border-radius:11px;padding:16px 18px;font-size:.93rem}
+  .map-frame{width:100%;height:420px;border:0;border-radius:15px;box-shadow:var(--shadow);margin-top:18px}
 
   /* day cards */
-  .day{background:#fff;border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);
-    margin-top:18px;overflow:hidden}
+  .day{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-top:22px;overflow:hidden}
   .day-head{display:flex;align-items:center;gap:16px;padding:16px 20px;background:linear-gradient(90deg,var(--sea-deep),var(--sea));color:#fff}
-  .day-head .n{font-family:'Fraunces';font-weight:900;font-size:1.9rem;line-height:1;background:rgba(255,255,255,.16);
-    border-radius:11px;width:54px;height:54px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-  .day-head h3{font-size:1.18rem;color:#fff;margin:0}
-  .day-head .sub{font-size:.8rem;color:#cfe6ec;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-  .day-body{padding:18px 20px}
-  .line{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.92rem}
+  .day-head .n{font-family:'Fraunces';font-weight:900;font-size:1.8rem;line-height:1;background:rgba(255,255,255,.16);border-radius:11px;width:52px;height:52px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .day-head h3{font-size:1.15rem;color:#fff;margin:0}
+  .day-head .sub{font-size:.78rem;color:#cfe6ec;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+  /* wanderlog-style two-column: map + stops */
+  .day-main{display:grid;grid-template-columns:1.05fr 1fr;gap:0}
+  .day-map{width:100%;height:100%;min-height:360px;border:0;display:block}
+  .day-stops{padding:18px 20px;border-left:1px solid var(--line)}
+  .day-stops .h{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:10px}
+  .stop{display:flex;gap:12px;padding:8px 0}
+  .stop .dot{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--sea);color:#fff;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .stop .sd{flex:1}
+  .stop .sd b{font-size:.94rem}
+  .stop .sd span{display:block;font-size:.8rem;color:var(--muted)}
+  .stop .leg{font-size:.74rem;color:var(--olive);font-weight:600;padding:2px 0 6px 36px}
+  .day-body{padding:16px 20px;border-top:1px solid var(--line)}
+  .line{display:flex;gap:12px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
   .line:last-of-type{border-bottom:none}
-  .line .ic{flex-shrink:0;width:26px;text-align:center;font-size:1.05rem}
+  .line .ic{flex-shrink:0;width:24px;text-align:center;font-size:1rem}
   .line .txt{flex:1}
   .line .txt b{color:var(--ink)}
-  .line .cost{flex-shrink:0;text-align:right;font-weight:700;color:var(--sea-deep);min-width:120px;font-size:.86rem}
+  .line .cost{flex-shrink:0;text-align:right;font-weight:700;color:var(--sea-deep);min-width:112px;font-size:.84rem}
   .line .cost .kc{display:block;font-weight:500}
-  .daytotal{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:13px 16px;
-    background:var(--sand);border-radius:11px}
+  .daytotal{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 15px;background:var(--sand);border-radius:11px}
   .daytotal .lbl{font-family:'Fraunces';font-weight:900;font-size:1rem}
   .daytotal .amt{text-align:right}
-  .daytotal .amt b{font-family:'Fraunces';font-size:1.3rem;color:var(--sea-deep)}
-  .daytotal .amt span{display:block;font-size:.78rem;color:var(--muted)}
+  .daytotal .amt b{font-family:'Fraunces';font-size:1.25rem;color:var(--sea-deep)}
+  .daytotal .amt span{display:block;font-size:.76rem;color:var(--muted)}
 
-  /* packages */
   .pkg{display:flex;flex-direction:column;position:relative}
   .pkg.feature{border:2px solid var(--sea);box-shadow:0 16px 50px rgba(27,111,140,.18)}
-  .pkg .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--sea);color:#fff;
-    font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:4px 13px;border-radius:999px}
+  .pkg .tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--sea);color:#fff;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:4px 13px;border-radius:999px}
   .pkg h3{font-size:1.25rem}
-  .price{font-family:'Fraunces',serif;font-weight:900;font-size:2rem;color:var(--ink);margin:6px 0 0;line-height:1}
+  .price{font-family:'Fraunces',serif;font-weight:900;font-size:1.9rem;color:var(--ink);margin:6px 0 0;line-height:1}
   .price .e{font-size:1rem;color:var(--muted);font-weight:600}
   .price small{display:block;font-family:'Inter';font-size:.8rem;font-weight:600;color:var(--muted);margin-top:4px}
   .pkg ul{list-style:none;margin:14px 0 0;font-size:.88rem}
   .pkg li{padding:6px 0 6px 22px;position:relative;color:var(--muted);border-top:1px solid var(--line)}
   .pkg li:before{content:"›";position:absolute;left:5px;color:var(--sea);font-weight:700}
 
-  .rest h4{font-size:1rem;margin-top:2px}
-  .rest .meta{font-size:.8rem;color:var(--olive);font-weight:600}
   footer{background:var(--sea-deep);color:#cfe6ec;padding:46px 0;border:none}
   footer h3{color:#fff;font-size:1.15rem}
   footer a{color:#ffd9a0}
   .crew{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
   .crew span{font-size:.78rem;background:rgba(255,255,255,.1);padding:5px 11px;border-radius:999px}
+  @media(max-width:820px){
+    .day-main{grid-template-columns:1fr}
+    .day-map{min-height:300px;height:300px}
+    .day-stops{border-left:none;border-top:1px solid var(--line)}
+  }
   @media(max-width:760px){
     .hero h1{font-size:2.2rem}.g2,.g3{grid-template-columns:1fr}h2{font-size:1.6rem}
-    .line{flex-wrap:wrap}.line .cost{min-width:0;text-align:left;width:100%;padding-left:38px}
-    .map-frame{height:340px}
+    .line{flex-wrap:wrap}.line .cost{min-width:0;text-align:left;width:100%;padding-left:36px}
+    .map-frame{height:320px}
   }
 </style>
 </head>
@@ -126,23 +124,23 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="eyebrow">Full Road Trip Plan · August 2026 · 2 couples, 4 people</div>
+    <div class="eyebrow">Full Mapped Plan · August 2026 · 2 couples, 4 people</div>
     <h1>Prague to the Italian Riviera</h1>
-    <p>Ten days, two bases, every euro accounted for. Where you drive, sleep, eat, swim and refuel, day by day, costed to the crown.</p>
+    <p>Every day mapped, every stop pinned, every euro counted. Ten days, two bases, both drives there and back.</p>
     <div class="stats">
       <div class="stat"><b>~1,900 km</b><span>round trip</span></div>
       <div class="stat"><b>10 days</b><span>incl. driving</span></div>
-      <div class="stat"><b>Levanto<br>+ S. Margherita</b><span>two bases</span></div>
-      <div class="stat"><b>~85K–225K</b><span>CZK / group of 4</span></div>
+      <div class="stat"><b>11 maps</b><span>1 per day + overview</span></div>
+      <div class="stat"><b>~85K–225K</b><span>CZK / group</span></div>
     </div>
-    <div class="fx">All prices shown in EUR and CZK at <b>1 € = 25 Kč</b> · researched mid-2026, treat as planning estimates</div>
+    <div class="fx">All prices in EUR and CZK at <b>1 € = 25 Kč</b> · researched mid-2026, planning estimates</div>
   </div>
 </header>
 
 <nav class="nav">
   <div class="wrap">
     <b>Plan</b>
-    <a href="#map">Map</a>
+    <a href="#map">Overview map</a>
     <a href="#route">Route &amp; Fuel</a>
     <a href="#days">Day by Day</a>
     <a href="#food">Where to Eat</a>
@@ -152,17 +150,15 @@
   </div>
 </nav>
 
-<!-- MAP -->
+<!-- OVERVIEW MAP -->
 <section id="map">
   <div class="wrap">
     <div class="eyebrow">The whole trip on one map</div>
-    <h2>Prague → Innsbruck → Levanto → Santa Margherita</h2>
-    <p class="lead">Live, interactive Google Map of the full route. Pan, zoom, and open it in the Google Maps app for turn-by-turn.</p>
+    <h2>Prague → Innsbruck → Levanto → Santa Margherita → back</h2>
+    <p class="lead">Live, interactive Google Map of the full loop. Each day below has its own map of that day's route and stops.</p>
     <iframe class="map-frame" loading="lazy" allowfullscreen
-      src="https://www.google.com/maps?saddr=Prague,Czech+Republic&daddr=Innsbruck,Austria+to:Levanto,SP,Italy+to:Santa+Margherita+Ligure,GE,Italy&output=embed"></iframe>
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/Prague,+Czech+Republic/Innsbruck,+Austria/Levanto,+SP,+Italy/Santa+Margherita+Ligure,+Metropolitan+City+of+Genoa,+Italy">Open full route in Google Maps</a>
-    </div>
+      src="https://www.google.com/maps?saddr=Prague,Czech+Republic&amp;daddr=Innsbruck,Austria+to:Levanto,SP,Italy+to:Santa+Margherita+Ligure,GE,Italy&amp;output=embed"></iframe>
+    <div style="margin-top:14px"><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/Prague,+Czech+Republic/Innsbruck,+Austria/Levanto,+SP,+Italy/Santa+Margherita+Ligure,+Metropolitan+City+of+Genoa,+Italy">Open full route in Google Maps</a></div>
   </div>
 </section>
 
@@ -171,18 +167,8 @@
   <div class="wrap">
     <div class="eyebrow">Getting there &amp; fuel</div>
     <h2>The Drive, Down to the Pump</h2>
-    <p class="lead">~950 km each way via Austria and the Brenner Pass. ~11 h of pure driving, so the plan splits it with one night in Innsbruck each way. The Saver does it in one push.</p>
-
+    <p class="lead">~950 km each way via Austria and the Brenner Pass. The plan splits it with one night in Innsbruck each way; the Saver does it in one push.</p>
     <div class="grid g2" style="margin-top:22px">
-      <div class="card">
-        <h3 class="serif" style="font-size:1.1rem">Route legs</h3>
-        <table>
-          <tr><th>Leg</th><th>km</th><th>Time</th></tr>
-          <tr><td><b>Prague → Innsbruck</b><br><span class="kc">A1 via Linz &amp; Salzburg</span></td><td>~500</td><td>~5.5 h</td></tr>
-          <tr><td><b>Innsbruck → Levanto</b><br><span class="kc">Brenner A22 → A15 La Spezia → A12</span></td><td>~470</td><td>~5.5 h</td></tr>
-          <tr><td><b>Levanto → S. Margherita</b><br><span class="kc">coastal A12</span></td><td>~55</td><td>~1 h</td></tr>
-        </table>
-      </div>
       <div class="card">
         <h3 class="serif" style="font-size:1.1rem">Petrol price by country (Super 95)</h3>
         <table>
@@ -192,48 +178,52 @@
           <tr><td>🇮🇹 Italy (self-service)</td><td>€1.94</td><td>~48.5 Kč</td></tr>
           <tr><td>🇮🇹 Italy (attended)</td><td>€2.09+</td><td>~52+ Kč</td></tr>
         </table>
-        <p style="font-size:.78rem;color:var(--muted);margin-top:8px">Italy is dearest. Strategy: fill in Prague, top up in Austria, use only "fai da te" self-service pumps in Italy.</p>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:8px">Fill in Prague, top up in Austria, use only self-service ("fai da te") pumps in Italy.</p>
+      </div>
+      <div class="card">
+        <h3 class="serif" style="font-size:1.1rem">⛽ Fuel stops &amp; tolls (round trip)</h3>
+        <table>
+          <tr><th>Item</th><th>Cost</th></tr>
+          <tr><td>Prague fill (~60 L)</td><td>€100 <span class="kc">~2,505 Kč</span></td></tr>
+          <tr><td>Ansfelden Nord 🇦🇹 (~40 L)</td><td>€72 <span class="kc">~1,800 Kč</span></td></tr>
+          <tr><td>Campogalliano 🇮🇹 return (~50 L)</td><td>€97 <span class="kc">~2,425 Kč</span></td></tr>
+          <tr><td>Weer Autogrill 🇦🇹 return (~35 L)</td><td>€63 <span class="kc">~1,575 Kč</span></td></tr>
+          <tr><td><b>Fuel total</b></td><td><b>~€332 <span class="kc">~8,305 Kč</span></b></td></tr>
+          <tr><td>Tolls + CZ/AT vignettes</td><td>~€118 <span class="kc">~2,950 Kč</span></td></tr>
+        </table>
       </div>
     </div>
-
-    <h3 class="serif" style="margin-top:26px;font-size:1.15rem">⛽ The actual fuel stops (Volvo XC90, ~9.5 L/100 km, 71 L tank)</h3>
-    <table>
-      <tr><th>#</th><th>Stop</th><th>Country</th><th>Litres</th><th>Cost</th></tr>
-      <tr><td>1</td><td><b>Prague</b> — fill before leaving</td><td>🇨🇿</td><td>~60 L</td><td>€100 <span class="kc">/ ~2,505 Kč</span></td></tr>
-      <tr><td>2</td><td><b>Ansfelden Nord (Shell)</b>, A1 south of Linz</td><td>🇦🇹</td><td>~40 L</td><td>€72 <span class="kc">/ ~1,800 Kč</span></td></tr>
-      <tr><td>3</td><td><b>Campogalliano</b>, A1 near Modena (return leg)</td><td>🇮🇹</td><td>~50 L</td><td>€97 <span class="kc">/ ~2,425 Kč</span></td></tr>
-      <tr><td>4</td><td><b>Weer Autogrill</b>, A12 Inntal (return leg)</td><td>🇦🇹</td><td>~35 L</td><td>€63 <span class="kc">/ ~1,575 Kč</span></td></tr>
-      <tr><td colspan="3"><b>Round-trip fuel total</b></td><td><b>~185 L</b></td><td><b>~€332 <span class="kc">/ ~8,305 Kč</span></b></td></tr>
-    </table>
-
-    <h3 class="serif" style="margin-top:26px;font-size:1.15rem">🎟️ Tolls &amp; vignettes (round trip)</h3>
-    <table>
-      <tr><th>Item</th><th>Cost</th></tr>
-      <tr><td>Czech 10-day vignette (buy online)</td><td>€12 <span class="kc">/ ~300 Kč</span></td></tr>
-      <tr><td>Austrian 10-day vignette (buy online)</td><td>€10 <span class="kc">/ ~250 Kč</span></td></tr>
-      <tr><td>Brenner Pass toll (A13) ×2</td><td>€25 <span class="kc">/ ~625 Kč</span></td></tr>
-      <tr><td>Italian autostrada (A22/A15/A12) ×2</td><td>~€71 <span class="kc">/ ~1,775 Kč</span></td></tr>
-      <tr><td><b>Total tolls + vignettes</b></td><td><b>~€118 <span class="kc">/ ~2,950 Kč</span></b></td></tr>
-    </table>
   </div>
 </section>
 
 <!-- DAY BY DAY -->
 <section id="days">
   <div class="wrap">
-    <div class="eyebrow">The plan, hour by hour, euro by euro</div>
+    <div class="eyebrow">Every day mapped · euro by euro</div>
     <h2>Day by Day</h2>
-    <p class="lead">Costs below are for the <b>Balanced package</b> (the recommended middle tier), for the whole group of 4. Each day shows where you sleep, eat, what you do, fuel and parking, with a day total. Swap in cheaper or fancier picks from the directories below to move between packages.</p>
+    <p class="lead">Each day shows its own route map and numbered stops, then the full cost (sleep, eat, do, fuel, parking) for the group of 4 on the <b>Balanced package</b>. Maps load as you scroll.</p>
 
     <!-- DAY 1 -->
     <div class="day">
       <div class="day-head"><div class="n">1</div><div><div class="sub">Sat · Drive · Prague → Innsbruck (~500 km)</div><h3>Roll out, Alps by evening</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Prague,Czech+Republic&amp;daddr=Linz,Austria+to:Salzburg,Austria+to:Innsbruck,Austria&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Prague</b><span>Fuel up, depart ~08:00</span></div></div>
+          <div class="leg">↓ ~3 h · 280 km</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Linz / Ansfelden</b><span>Fuel + lunch stop</span></div></div>
+          <div class="leg">↓ ~1 h 15 · 130 km</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Salzburg</b><span>Leg stretch, coffee</span></div></div>
+          <div class="leg">↓ ~2 h · 190 km</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Innsbruck</b><span>Old town walk, overnight</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🚗</div><div class="txt"><b>Depart Prague ~8:00.</b> Fuel up before leaving. Lunch at a motorway stop (Ansfelden). Arrive Innsbruck mid-afternoon, walk the old town.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Goldener Adler</b>, Altstadt — Tiroler Gröstl, open daily. <span class="kc">+ quick lunch en route.</span></div><div class="cost">€168 <span class="kc">~4,200 Kč</span></div></div>
-        <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Prague fill + Austria top-up share)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Goldener Adler</b> (Tiroler Gröstl) + lunch en route</div><div class="cost">€168 <span class="kc">~4,200 Kč</span></div></div>
+        <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Prague + Austria)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
         <div class="line"><div class="ic">🎟️</div><div class="txt">CZ + AT vignettes</div><div class="cost">€22 <span class="kc">~550 Kč</span></div></div>
-        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Innsbruck</b>, 2 rooms (3★, e.g. NH/Ibis) + parking</div><div class="cost">€215 <span class="kc">~5,375 Kč</span></div></div>
+        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Innsbruck</b>, 2 rooms + parking</div><div class="cost">€215 <span class="kc">~5,375 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 1 total</div><div class="amt"><b>€490</b><span>~12,250 Kč · €123/person</span></div></div>
       </div>
     </div>
@@ -241,14 +231,25 @@
     <!-- DAY 2 -->
     <div class="day">
       <div class="day-head"><div class="n">2</div><div><div class="sub">Sun · Drive · Innsbruck → Levanto (~470 km)</div><h3>Over the Brenner, feet in the sea</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Innsbruck,Austria&amp;daddr=Brennero,Italy+to:Trento,Italy+to:La+Spezia,Italy+to:Levanto,SP,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Innsbruck</b><span>Breakfast Café Munding, fill tank at Weer</span></div></div>
+          <div class="leg">↓ ~40 min · Brenner Pass border</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Brennero → Trento</b><span>First Italian coffee</span></div></div>
+          <div class="leg">↓ ~3 h · A22 / A15</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>La Spezia</b><span>Down to the coast</span></div></div>
+          <div class="leg">↓ ~40 min</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Levanto</b><span>Arrive ~14:00, beach + check in</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🍳</div><div class="txt"><b>Breakfast: Café Munding</b> (cash only). Fill the tank FULL at <b>Weer</b> before Italy.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🚗</div><div class="txt">Cross the Brenner, drop to La Spezia, reach <b>Levanto</b> early afternoon. Check in, hit Levanto's own beach.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Osteria Tumelin</b> (seafood, since 1970, book ahead) + breakfast/lunch en route</div><div class="cost">€200 <span class="kc">~5,000 Kč</span></div></div>
-        <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Austria + Italy self-service)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Osteria Tumelin</b> + breakfast/lunch en route</div><div class="cost">€200 <span class="kc">~5,000 Kč</span></div></div>
+        <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Austria + Italy)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
         <div class="line"><div class="ic">🎟️</div><div class="txt">Brenner + Italian autostrada tolls</div><div class="cost">€50 <span class="kc">~1,250 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">Levanto parking</div><div class="cost">€24 <span class="kc">~600 Kč</span></div></div>
-        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Levanto</b> apartment / B&amp;B (night 1 of 3)</div><div class="cost">€280 <span class="kc">~7,000 Kč</span></div></div>
+        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Levanto</b> (night 1 of 3)</div><div class="cost">€280 <span class="kc">~7,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 2 total</div><div class="amt"><b>€639</b><span>~15,975 Kč · €160/person</span></div></div>
       </div>
     </div>
@@ -256,10 +257,24 @@
     <!-- DAY 3 -->
     <div class="day">
       <div class="day-head"><div class="n">3</div><div><div class="sub">Mon · Cinque Terre by train</div><h3>The five villages</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Levanto,SP,Italy&amp;daddr=Monterosso+al+Mare,SP,Italy+to:Vernazza,SP,Italy+to:Manarola,SP,Italy+to:Riomaggiore,SP,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by train)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Levanto station</b><span>Board before 09:00</span></div></div>
+          <div class="leg">🚆 ~5 min</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Monterosso al Mare</b><span>The one sandy beach</span></div></div>
+          <div class="leg">🚆 ~5 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Vernazza</b><span>Harbour viewpoint + lunch Il Pirata</span></div></div>
+          <div class="leg">🚆 ~10 min</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Manarola</b><span>The postcard viewpoint (Nessun Dorma)</span></div></div>
+          <div class="leg">🚆 ~5 min</div>
+          <div class="stop"><div class="dot">5</div><div class="sd"><b>Riomaggiore</b><span>Fried-seafood cone, sunset</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🚆</div><div class="txt"><b>Train from Levanto before 9:00</b> to beat the crowds. Manarola &amp; Vernazza viewpoints, Via dell'Amore (now included in the card, book a slot), swim stops.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🎟️</div><div class="txt"><b>Cinque Terre Treno Card</b> — unlimited trains + trails + Via dell'Amore (€35/person)</div><div class="cost">€140 <span class="kc">~3,500 Kč</span></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Breakfast: Pat Bakery</b> focaccia · <b>Lunch: Il Pirata</b> (Vernazza, best trofie al pesto) or <b>Il Pescato Cucinato</b> fried-seafood cone (Riomaggiore) · <b>Dinner: Levanto</b></div><div class="cost">€212 <span class="kc">~5,300 Kč</span></div></div>
+        <div class="line"><div class="ic">🎟️</div><div class="txt"><b>Cinque Terre Treno Card</b> (trains + trails + Via dell'Amore, €35pp)</div><div class="cost">€140 <span class="kc">~3,500 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Bfast: Pat Bakery · Lunch: Il Pirata / Il Pescato Cucinato · Dinner: Levanto</b></div><div class="cost">€212 <span class="kc">~5,300 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">Levanto parking</div><div class="cost">€24 <span class="kc">~600 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Levanto</b> (night 2 of 3)</div><div class="cost">€280 <span class="kc">~7,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 3 total</div><div class="amt"><b>€656</b><span>~16,400 Kč · €164/person</span></div></div>
@@ -269,9 +284,21 @@
     <!-- DAY 4 -->
     <div class="day">
       <div class="day-head"><div class="n">4</div><div><div class="sub">Tue · Car day south of Levanto</div><h3>Portovenere, Tellaro &amp; white cliffs</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Levanto,SP,Italy&amp;daddr=Portovenere,SP,Italy+to:Tellaro,SP,Italy+to:Montemarcello,SP,Italy+to:Levanto,SP,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by car)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Levanto</b><span>Set off mid-morning</span></div></div>
+          <div class="leg">🚗 ~45 min</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Portovenere</b><span>San Pietro church on the rock</span></div></div>
+          <div class="leg">🚗 ~30 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Tellaro</b><span>Village on the rocks, lunch Anciùa nearby</span></div></div>
+          <div class="leg">🚗 ~15 min</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Punta Bianca (Montemarcello)</b><span>White cliffs, turquoise cove (short hike)</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">📸</div><div class="txt">Drive to <b>Portovenere</b> (church on the rock), the car-free village of <b>Tellaro</b>, optional hike to <b>Punta Bianca</b>'s turquoise cove. Tourist-light, photo-heavy.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Breakfast: focaccia</b> · <b>Lunch: Anciùa</b> Ligurian street food, Portovenere (€9 stuffed focaccia, €15 fritto misto) · <b>Dinner: Antica Trattoria Centro</b> (Michelin Guide, Levanto)</div><div class="cost">€220 <span class="kc">~5,500 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: Anciùa</b> street food · <b>Dinner: Antica Trattoria Centro</b> (Levanto)</div><div class="cost">€220 <span class="kc">~5,500 Kč</span></div></div>
         <div class="line"><div class="ic">⛽</div><div class="txt">Local driving fuel</div><div class="cost">€16 <span class="kc">~400 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">Parking (Portovenere + Levanto)</div><div class="cost">€24 <span class="kc">~600 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Levanto</b> (night 3 of 3)</div><div class="cost">€280 <span class="kc">~7,000 Kč</span></div></div>
@@ -281,14 +308,26 @@
 
     <!-- DAY 5 -->
     <div class="day">
-      <div class="day-head"><div class="n">5</div><div><div class="sub">Wed · Transfer · Levanto → S. Margherita (~1 h)</div><h3>Move north, marble detour</h3></div></div>
+      <div class="day-head"><div class="n">5</div><div><div class="sub">Wed · Transfer · Levanto → Santa Margherita (~1 h)</div><h3>Move north along the coast</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Levanto,SP,Italy&amp;daddr=Sestri+Levante,GE,Italy+to:Santa+Margherita+Ligure,GE,Italy+to:Paraggi,GE,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by car)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Levanto</b><span>Checkout. Optional: Carrara marble quarries (40 min south, then back)</span></div></div>
+          <div class="leg">🚗 ~40 min north</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Sestri Levante</b><span>Quick photo stop (or save for Day 8)</span></div></div>
+          <div class="leg">🚗 ~25 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Santa Margherita Ligure</b><span>Check in</span></div></div>
+          <div class="leg">🚗 ~10 min</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Paraggi</b><span>Sundown swim, clearest water in Liguria</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🚗</div><div class="txt">Optional <b>Carrara marble-quarry 4×4 tour</b> en route (the white moonscape). Arrive Santa Margherita, check in, sundowner at Paraggi cove.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🎟️</div><div class="txt">Carrara quarry 4×4 walk-up tour (~€22/person)</div><div class="cost">€88 <span class="kc">~2,200 Kč</span></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Breakfast: focaccia</b> · <b>Lunch: en route</b> · <b>Dinner: Angolo 48</b> (S. Margherita, contemporary Ligurian, book)</div><div class="cost">€228 <span class="kc">~5,700 Kč</span></div></div>
+        <div class="line"><div class="ic">🎟️</div><div class="txt">Optional Carrara quarry 4×4 tour (~€22pp)</div><div class="cost">€88 <span class="kc">~2,200 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Angolo 48</b> (S. Margherita) + breakfast/lunch</div><div class="cost">€228 <span class="kc">~5,700 Kč</span></div></div>
         <div class="line"><div class="ic">⛽</div><div class="txt">Transfer + local fuel</div><div class="cost">€20 <span class="kc">~500 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">S. Margherita parking</div><div class="cost">€22 <span class="kc">~550 Kč</span></div></div>
-        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Santa Margherita</b> apt/villa (night 1 of 4)</div><div class="cost">€320 <span class="kc">~8,000 Kč</span></div></div>
+        <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Santa Margherita</b> (night 1 of 4)</div><div class="cost">€320 <span class="kc">~8,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 5 total</div><div class="amt"><b>€698</b><span>~17,450 Kč · €175/person</span></div></div>
       </div>
     </div>
@@ -296,10 +335,22 @@
     <!-- DAY 6 -->
     <div class="day">
       <div class="day-head"><div class="n">6</div><div><div class="sub">Thu · Portofino</div><h3>The piazzetta, lighthouse &amp; Paraggi</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Santa+Margherita+Ligure,GE,Italy&amp;daddr=Paraggi,GE,Italy+to:Portofino,GE,Italy+to:Faro+di+Portofino,GE,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (bus / boat / walk)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Santa Margherita</b><span>Boat or bus 782 to Portofino</span></div></div>
+          <div class="leg">⛴️ ~15 min</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Paraggi</b><span>Cove swim en route</span></div></div>
+          <div class="leg">🚌 ~5 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Portofino piazzetta</b><span>The iconic harbour</span></div></div>
+          <div class="leg">🚶 ~25 min walk</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Faro di Portofino</b><span>Lighthouse + headland views</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">⛴️</div><div class="txt">Boat or bus to <b>Portofino</b>, walk the headland to the lighthouse, swim at <b>Paraggi</b> (clearest water in Liguria).</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🎟️</div><div class="txt">S. Margherita ↔ Portofino boat (€20/person return) + a Paraggi beach club afternoon (2 couples)</div><div class="cost">€160 <span class="kc">~4,000 Kč</span></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Don't eat sit-down in Portofino</b> (rip-off). Grab <b>Panificio Canale</b> focaccia there; real meals back in S. Margherita. <b>Dinner: Trattoria da Pezzi</b> (value) or <b>Ristorante Antonio</b></div><div class="cost">€200 <span class="kc">~5,000 Kč</span></div></div>
+        <div class="line"><div class="ic">🎟️</div><div class="txt">S. Margherita ↔ Portofino boat (€20pp return) + Paraggi beach club</div><div class="cost">€160 <span class="kc">~4,000 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Portofino: focaccia only</b> (Panificio Canale) · <b>Dinner: Trattoria da Pezzi</b></div><div class="cost">€200 <span class="kc">~5,000 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">S. Margherita parking</div><div class="cost">€22 <span class="kc">~550 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Santa Margherita</b> (night 2 of 4)</div><div class="cost">€320 <span class="kc">~8,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 6 total</div><div class="amt"><b>€702</b><span>~17,550 Kč · €176/person</span></div></div>
@@ -309,10 +360,22 @@
     <!-- DAY 7 -->
     <div class="day">
       <div class="day-head"><div class="n">7</div><div><div class="sub">Fri · Boat day</div><h3>San Fruttuoso &amp; Camogli</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Santa+Margherita+Ligure,GE,Italy&amp;daddr=San+Fruttuoso,GE,Italy+to:Camogli,GE,Italy+to:Santa+Margherita+Ligure,GE,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by boat)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Santa Margherita harbour</b><span>Morning boat</span></div></div>
+          <div class="leg">⛴️ ~40 min (via Portofino)</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>San Fruttuoso</b><span>Abbey cove, no road access</span></div></div>
+          <div class="leg">⛴️ ~20 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Camogli</b><span>Lunch Ostaia da Ö Sigù + Revello focaccia</span></div></div>
+          <div class="leg">⛴️ ~30 min back</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Santa Margherita</b><span>Light dinner</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">⛴️</div><div class="txt">Boat to the hidden abbey-cove of <b>San Fruttuoso</b> (no road in), then the pastel town of <b>Camogli</b>.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🎟️</div><div class="txt">S. Margherita → San Fruttuoso return boat, incl. Portofino stop (€24/person)</div><div class="cost">€96 <span class="kc">~2,400 Kč</span></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: Ostaia da Ö Sigù</b> (Camogli harbourfront seafood) + <b>Revello</b> focaccia di Recco · <b>Dinner: light</b> in S. Margherita</div><div class="cost">€252 <span class="kc">~6,300 Kč</span></div></div>
+        <div class="line"><div class="ic">🎟️</div><div class="txt">S. Margherita → San Fruttuoso return boat, incl. Portofino (€24pp)</div><div class="cost">€96 <span class="kc">~2,400 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: Ostaia da Ö Sigù</b> (Camogli) · <b>Dinner: light</b> in S. Margherita</div><div class="cost">€252 <span class="kc">~6,300 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">S. Margherita parking</div><div class="cost">€22 <span class="kc">~550 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Santa Margherita</b> (night 3 of 4)</div><div class="cost">€320 <span class="kc">~8,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 7 total</div><div class="amt"><b>€690</b><span>~17,250 Kč · €173/person</span></div></div>
@@ -322,10 +385,20 @@
     <!-- DAY 8 -->
     <div class="day">
       <div class="day-head"><div class="n">8</div><div><div class="sub">Sat · Slow day</div><h3>Sestri Levante or pool</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Santa+Margherita+Ligure,GE,Italy&amp;daddr=Sestri+Levante,GE,Italy+to:Baia+del+Silenzio,Sestri+Levante,GE,Italy&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Santa Margherita</b><span>Lazy start, or stay at the pool</span></div></div>
+          <div class="leg">🚆/🚗 ~25 min</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Sestri Levante</b><span>Lunch Aragosta d'Oro</span></div></div>
+          <div class="leg">🚶 ~5 min</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Baia del Silenzio</b><span>Free pastel crescent beach, sunset</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🏖️</div><div class="txt"><b>Baia del Silenzio</b> in Sestri Levante (free pastel crescent beach, unreal at sunset) — or do nothing by the pool.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🚆</div><div class="txt">Train/drive to Sestri Levante (~€8/person) · free beach</div><div class="cost">€32 <span class="kc">~800 Kč</span></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: Aragosta d'Oro</b> (5-course set + wine, €22) · <b>Dinner: Maniman Inosteria</b> (Sestri) or back in S. Margherita</div><div class="cost">€248 <span class="kc">~6,200 Kč</span></div></div>
+        <div class="line"><div class="ic">🚆</div><div class="txt">Train/drive to Sestri Levante (~€8pp) · free beach</div><div class="cost">€32 <span class="kc">~800 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: Aragosta d'Oro</b> (set €22) · <b>Dinner: Maniman Inosteria</b></div><div class="cost">€248 <span class="kc">~6,200 Kč</span></div></div>
         <div class="line"><div class="ic">🅿️</div><div class="txt">Parking</div><div class="cost">€22 <span class="kc">~550 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Santa Margherita</b> (night 4 of 4)</div><div class="cost">€320 <span class="kc">~8,000 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 8 total</div><div class="amt"><b>€622</b><span>~15,550 Kč · €156/person</span></div></div>
@@ -334,10 +407,22 @@
 
     <!-- DAY 9 -->
     <div class="day">
-      <div class="day-head"><div class="n">9</div><div><div class="sub">Sun · Drive · S. Margherita → Innsbruck (~6 h)</div><h3>Begin the loop home</h3></div></div>
+      <div class="day-head"><div class="n">9</div><div><div class="sub">Sun · Drive back · S. Margherita → Innsbruck (~6 h)</div><h3>Begin the loop home</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Santa+Margherita+Ligure,GE,Italy&amp;daddr=Modena,Italy+to:Brennero,Italy+to:Innsbruck,Austria&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by car)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Santa Margherita</b><span>Last swim, depart morning</span></div></div>
+          <div class="leg">🚗 ~2 h 30</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Modena / Campogalliano</b><span>Refuel (cheaper self-service)</span></div></div>
+          <div class="leg">🚗 ~3 h</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Brenner Pass</b><span>Back into Austria</span></div></div>
+          <div class="leg">🚗 ~1 h</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Innsbruck</b><span>Dinner + overnight</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🚗</div><div class="txt">Last swim, then drive back over the Brenner to Innsbruck. Refuel at Campogalliano.</div><div class="cost"></div></div>
-        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Lunch: en route</b> · <b>Dinner: Innsbruck</b> (Goldener Adler again, or Stiftskeller beer hall)</div><div class="cost">€188 <span class="kc">~4,700 Kč</span></div></div>
+        <div class="line"><div class="ic">🍽️</div><div class="txt"><b>Dinner: Innsbruck</b> + lunch en route</div><div class="cost">€188 <span class="kc">~4,700 Kč</span></div></div>
         <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Italy self-service)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
         <div class="line"><div class="ic">🎟️</div><div class="txt">Italian autostrada + Brenner tolls</div><div class="cost">€50 <span class="kc">~1,250 Kč</span></div></div>
         <div class="line"><div class="ic">🛏️</div><div class="txt"><b>Sleep: Innsbruck</b>, 2 rooms + parking</div><div class="cost">€215 <span class="kc">~5,375 Kč</span></div></div>
@@ -347,16 +432,28 @@
 
     <!-- DAY 10 -->
     <div class="day">
-      <div class="day-head"><div class="n">10</div><div><div class="sub">Mon · Drive · Innsbruck → Prague (~5.5 h)</div><h3>Home by evening</h3></div></div>
+      <div class="day-head"><div class="n">10</div><div><div class="sub">Mon · Drive back · Innsbruck → Prague (~5.5 h)</div><h3>Home by evening</h3></div></div>
+      <div class="day-main">
+        <iframe class="day-map" loading="lazy" allowfullscreen src="https://www.google.com/maps?saddr=Innsbruck,Austria&amp;daddr=Salzburg,Austria+to:Linz,Austria+to:Prague,Czech+Republic&amp;output=embed"></iframe>
+        <div class="day-stops">
+          <div class="h">Today's stops (by car)</div>
+          <div class="stop"><div class="dot">1</div><div class="sd"><b>Innsbruck</b><span>Breakfast Café Munding, depart</span></div></div>
+          <div class="leg">🚗 ~2 h</div>
+          <div class="stop"><div class="dot">2</div><div class="sd"><b>Salzburg</b><span>Leg stretch</span></div></div>
+          <div class="leg">🚗 ~1 h 15</div>
+          <div class="stop"><div class="dot">3</div><div class="sd"><b>Linz</b><span>Lunch + last cheap fuel</span></div></div>
+          <div class="leg">🚗 ~2 h 30</div>
+          <div class="stop"><div class="dot">4</div><div class="sd"><b>Prague</b><span>Home by evening</span></div></div>
+        </div>
+      </div>
       <div class="day-body">
-        <div class="line"><div class="ic">🍳</div><div class="txt">Breakfast at Café Munding, easy final leg back to Prague. Refuel at Weer.</div><div class="cost"></div></div>
         <div class="line"><div class="ic">🍽️</div><div class="txt">Breakfast + lunch en route</div><div class="cost">€80 <span class="kc">~2,000 Kč</span></div></div>
         <div class="line"><div class="ic">⛽</div><div class="txt">Fuel (Austria, final leg)</div><div class="cost">€85 <span class="kc">~2,125 Kč</span></div></div>
         <div class="daytotal"><div class="lbl">Day 10 total</div><div class="amt"><b>€165</b><span>~4,125 Kč · €41/person</span></div></div>
       </div>
     </div>
 
-    <div class="note" style="margin-top:22px"><b>Balanced package, all 10 days:</b> ~<b>€5,660</b> for the group (~141,500 Kč), about <b>€1,415 / 35,400 Kč per person</b>. Day totals include sleep, food, fuel, tolls, parking and activities.</div>
+    <div class="note" style="margin-top:22px"><b>Balanced package, all 10 days:</b> ~<b>€5,660</b> for the group (~141,500 Kč), about <b>€1,415 / 35,400 Kč per person</b>, sleep, food, fuel, tolls, parking and activities included.</div>
   </div>
 </section>
 
@@ -365,16 +462,15 @@
   <div class="wrap">
     <div class="eyebrow">Where you actually eat</div>
     <h2>The Restaurant Directory</h2>
-    <p class="lead">Real, named, currently-open places per stop. Prices are per person. The starred 🔖 spots need an August reservation, book 1–2 weeks ahead.</p>
+    <p class="lead">Real, named, currently-open places per stop, price per person. 🔖 spots need an August reservation (book 1–2 weeks ahead).</p>
 
     <h3 class="serif" style="margin-top:24px;font-size:1.15rem">Levanto (base 1)</h3>
     <table>
       <tr><th>Meal</th><th>Place</th><th>What &amp; how much</th><th></th></tr>
-      <tr><td>Breakfast / lunch</td><td><b>Pat Bakery</b></td><td>Focaccia, farinata, gattafin · €3–8 <span class="kc">~75–200 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Pat+Bakery+Levanto">Map</a></td></tr>
+      <tr><td>Breakfast / lunch</td><td><b>Pat Bakery</b></td><td>Focaccia, farinata · €3–8 <span class="kc">~75–200 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Pat+Bakery+Levanto">Map</a></td></tr>
       <tr><td>Dinner (value)</td><td><b>Osteria Tumelin</b> 🔖</td><td>Seafood since 1970 · €25–35 <span class="kc">~625–875 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Osteria+Tumelin+Levanto">Map</a></td></tr>
-      <tr><td>Dinner (nicer)</td><td><b>Antica Trattoria Centro</b> 🔖</td><td>Michelin Guide, Ligurian · €35–45 <span class="kc">~875–1,125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Antica+Trattoria+Centro+Levanto">Map</a></td></tr>
-      <tr><td>Dinner (splurge)</td><td><b>Ristorante L'Oasi</b> 🔖</td><td>Daily-caught fish, dinner only · €60–70 <span class="kc">~1,500–1,750 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Ristorante+L+Oasi+Levanto">Map</a></td></tr>
-      <tr><td>Gelato</td><td><b>Basilico e Limone</b></td><td>"Best in Italy" per reviews · €3–5 <span class="kc">~75–125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Gelateria+Basilico+e+Limone+Levanto">Map</a></td></tr>
+      <tr><td>Dinner (nicer)</td><td><b>Antica Trattoria Centro</b> 🔖</td><td>Michelin Guide · €35–45 <span class="kc">~875–1,125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Antica+Trattoria+Centro+Levanto">Map</a></td></tr>
+      <tr><td>Gelato</td><td><b>Basilico e Limone</b></td><td>€3–5 <span class="kc">~75–125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Gelateria+Basilico+e+Limone+Levanto">Map</a></td></tr>
     </table>
 
     <h3 class="serif" style="margin-top:24px;font-size:1.15rem">Cinque Terre &amp; Portovenere (day trips)</h3>
@@ -382,7 +478,7 @@
       <tr><th>Where</th><th>Place</th><th>What &amp; how much</th><th></th></tr>
       <tr><td>Vernazza</td><td><b>Il Pirata delle Cinque Terre</b></td><td>Best trofie al pesto · €15–20 <span class="kc">~375–500 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Il+Pirata+delle+Cinque+Terre+Vernazza">Map</a></td></tr>
       <tr><td>Riomaggiore</td><td><b>Il Pescato Cucinato</b></td><td>Fried-seafood cone · €8–16 <span class="kc">~200–400 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Il+Pescato+Cucinato+Riomaggiore">Map</a></td></tr>
-      <tr><td>Portovenere</td><td><b>Anciùa</b> (street food)</td><td>Stuffed focaccia €9, fritto misto €15 · lean lunch <span class="kc">~250–500 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Anciua+Portovenere">Map</a></td></tr>
+      <tr><td>Portovenere</td><td><b>Anciùa</b> street food</td><td>Stuffed focaccia €9, fritto misto €15 <span class="kc">~250–500 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Anciua+Portovenere">Map</a></td></tr>
       <tr><td>Portovenere</td><td><b>Ristorante Portivene</b> 🔖</td><td>#1 in town, sea view · €40–65 <span class="kc">~1,000–1,625 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Ristorante+Portivene+Portovenere">Map</a></td></tr>
     </table>
 
@@ -390,20 +486,20 @@
     <table>
       <tr><th>Meal</th><th>Place</th><th>What &amp; how much</th><th></th></tr>
       <tr><td>Breakfast</td><td><b>Panificio Fiordiponti</b></td><td>Focaccia genovese &amp; di Recco · €3–5 <span class="kc">~75–125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Panificio+Fiordiponti+Santa+Margherita+Ligure">Map</a></td></tr>
-      <tr><td>Dinner (value)</td><td><b>Trattoria da Pezzi</b></td><td>Local canteen, trofie al pesto · €15–25 <span class="kc">~375–625 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Trattoria+da+Pezzi+Santa+Margherita+Ligure">Map</a></td></tr>
-      <tr><td>Dinner (mid)</td><td><b>Angolo 48</b> 🔖</td><td>Travellers' Choice, grilled tuna · €35–45 <span class="kc">~875–1,125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Angolo+48+Santa+Margherita+Ligure">Map</a></td></tr>
+      <tr><td>Dinner (value)</td><td><b>Trattoria da Pezzi</b></td><td>Local canteen · €15–25 <span class="kc">~375–625 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Trattoria+da+Pezzi+Santa+Margherita+Ligure">Map</a></td></tr>
+      <tr><td>Dinner (mid)</td><td><b>Angolo 48</b> 🔖</td><td>Grilled tuna, pesto lasagne · €35–45 <span class="kc">~875–1,125 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Angolo+48+Santa+Margherita+Ligure">Map</a></td></tr>
       <tr><td>Dinner (special)</td><td><b>Zi'Ninella</b> 🔖</td><td>Chef-run seafood · €60–100 <span class="kc">~1,500–2,500 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Zi+Ninella+Santa+Margherita+Ligure">Map</a></td></tr>
-      <tr><td>Gelato</td><td><b>Gelateria Centrale "Pinguino"</b></td><td>Dark-chocolate-dipped cone · €2–4 <span class="kc">~50–100 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Gelateria+Centrale+Santa+Margherita+Ligure">Map</a></td></tr>
+      <tr><td>Gelato</td><td><b>Gelateria Centrale "Pinguino"</b></td><td>€2–4 <span class="kc">~50–100 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Gelateria+Centrale+Santa+Margherita+Ligure">Map</a></td></tr>
     </table>
 
     <h3 class="serif" style="margin-top:24px;font-size:1.15rem">Portofino, Camogli &amp; Sestri Levante</h3>
     <table>
       <tr><th>Where</th><th>Place</th><th>What &amp; how much</th><th></th></tr>
-      <tr><td>Portofino</td><td><b>Panificio Canale</b> (focaccia)</td><td>Eat standing, skip sit-down · €3–6 <span class="kc">~75–150 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Panificio+Canale+Portofino">Map</a></td></tr>
+      <tr><td>Portofino</td><td><b>Panificio Canale</b></td><td>Focaccia, skip sit-down · €3–6 <span class="kc">~75–150 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Panificio+Canale+Portofino">Map</a></td></tr>
       <tr><td>Camogli</td><td><b>Ostaia da Ö Sigù</b> 🔖</td><td>Harbourfront seafood · €30–50 <span class="kc">~750–1,250 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Ostaia+da+o+Sigu+Camogli">Map</a></td></tr>
-      <tr><td>Camogli</td><td><b>Revello</b> (focacceria)</td><td>Focaccia di Recco DOP, Camogliesi · €3–8 <span class="kc">~75–200 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Revello+Camogli">Map</a></td></tr>
+      <tr><td>Camogli</td><td><b>Revello</b> focacceria</td><td>Focaccia di Recco DOP · €3–8 <span class="kc">~75–200 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Revello+Camogli">Map</a></td></tr>
       <tr><td>Sestri Levante</td><td><b>Aragosta d'Oro</b></td><td>5-course set + wine · €22 <span class="kc">~550 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Aragosta+d+Oro+Sestri+Levante">Map</a></td></tr>
-      <tr><td>Sestri Levante</td><td><b>Maniman Inosteria</b> 🔖</td><td>Creative seafood, #1 by the bay · €40–50 <span class="kc">~1,000–1,250 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Maniman+Inosteria+Sestri+Levante">Map</a></td></tr>
+      <tr><td>Sestri Levante</td><td><b>Maniman Inosteria</b> 🔖</td><td>Creative seafood · €40–50 <span class="kc">~1,000–1,250 Kč</span></td><td><a class="btn map" target="_blank" rel="noopener" href="https://maps.google.com/?q=Maniman+Inosteria+Sestri+Levante">Map</a></td></tr>
     </table>
 
     <div class="grid g2" style="margin-top:22px">
@@ -411,16 +507,16 @@
         <h4 class="serif" style="font-size:1.05rem">Daily food budget per person</h4>
         <table style="margin-top:6px">
           <tr><th>Style</th><th>Per day</th></tr>
-          <tr><td>Lean (self-cater breakfast+lunch, trattoria dinner)</td><td>€35–45 <span class="kc">~875–1,125 Kč</span></td></tr>
+          <tr><td>Lean (self-cater bfast+lunch, trattoria dinner)</td><td>€35–45 <span class="kc">~875–1,125 Kč</span></td></tr>
           <tr><td>Comfortable (cafe, sit-down lunch, dinner+wine)</td><td>€75–100 <span class="kc">~1,875–2,500 Kč</span></td></tr>
         </table>
       </div>
       <div class="card">
         <h4 class="serif" style="font-size:1.05rem">5 dishes to order</h4>
-        <p style="font-size:.88rem;color:var(--muted);margin-top:6px">Trofie al pesto (€14–18) · Focaccia genovese (€2.50) · Focaccia di Recco (€8–12) · Fritto misto di mare (€15–28) · Farinata (€4). Buy focaccia hot from a bakery in the morning, never at a restaurant.</p>
+        <p style="font-size:.88rem;color:var(--muted);margin-top:6px">Trofie al pesto (€14–18) · Focaccia genovese (€2.50) · Focaccia di Recco (€8–12) · Fritto misto di mare (€15–28) · Farinata (€4). Buy focaccia hot from a bakery in the morning.</p>
       </div>
     </div>
-    <div class="warn" style="margin-top:18px"><b>Portofino food warning:</b> it's one of the most expensive villages in Italy (coffee €3–4, mains €30+, a sandwich cut in half can cost extra). Walk it, photograph it, drink one Aperol, then eat in Santa Margherita or Camogli for a fraction of the price.</div>
+    <div class="warn" style="margin-top:18px"><b>Portofino food warning:</b> one of the priciest villages in Italy. Walk it, photograph it, drink one Aperol, eat in Santa Margherita or Camogli instead.</div>
   </div>
 </section>
 
@@ -429,24 +525,24 @@
   <div class="wrap">
     <div class="eyebrow">Two couples · separate rooms</div>
     <h2>Where to Sleep</h2>
-    <p class="lead">Honest note: a true private villa-with-pool <em>inside</em> Santa Margherita barely exists, it's a built-up town. The pool-villa dream lives 5–15 min up in the hills. Real options at three price levels, total for the stay.</p>
+    <p class="lead">A true private villa-with-pool <em>inside</em> Santa Margherita barely exists; the pool-villa dream lives 5–15 min up in the hills. Real options at three price levels, total for the stay.</p>
 
     <h3 class="serif" style="margin-top:24px;font-size:1.15rem">Levanto · 3 nights</h3>
     <table>
       <tr><th>Tier</th><th>Property</th><th>Setup</th><th>3-night total</th></tr>
       <tr><td><span class="pill">Budget</span></td><td><b>Apartment Giulia 2</b></td><td>2 rooms · AC · €5/day parking · 500 m to beach</td><td>€480–600 <span class="kc">~12,000–15,000 Kč</span></td></tr>
       <tr><td><span class="pill">Mid</span></td><td><b>Hotel Palazzo Vannoni</b></td><td>Boutique 3★ · 100 m to sea · breakfast</td><td>€1,200–1,500 <span class="kc">~30,000–37,500 Kč</span></td></tr>
-      <tr><td><span class="pill">Premium</span></td><td><b>Agriturismo Villanova</b></td><td>Estate + pool + spa · free parking · beach shuttle</td><td>€1,700–2,400 <span class="kc">~42,500–60,000 Kč</span></td></tr>
+      <tr><td><span class="pill">Premium</span></td><td><b>Agriturismo Villanova</b></td><td>Estate + pool + spa · free parking · shuttle</td><td>€1,700–2,400 <span class="kc">~42,500–60,000 Kč</span></td></tr>
     </table>
 
     <h3 class="serif" style="margin-top:24px;font-size:1.15rem">Santa Margherita Ligure · 4 nights</h3>
     <table>
       <tr><th>Tier</th><th>Property</th><th>Setup</th><th>4-night total</th></tr>
-      <tr><td><span class="pill">Budget</span></td><td><b>Appartamenti Mondo Per Te</b></td><td>2 bedrooms · AC · €16/day parking · 450 m to sea · 9.5/10</td><td>€1,000–1,300 <span class="kc">~25,000–32,500 Kč</span></td></tr>
-      <tr><td><span class="pill">Mid</span></td><td><b>Villa Draga</b> (PortofinoVacanze)</td><td>2 bedrooms · AC · pool · verify XC90 parking</td><td>€1,200–2,000 <span class="kc">~30,000–50,000 Kč</span></td></tr>
-      <tr><td><span class="pill">Premium</span></td><td><b>Villa Aldo</b> / <b>Villa Dolcina</b></td><td>2+ bedrooms · private pool · sea views · free parking</td><td>€1,750–4,000 <span class="kc">~43,750–100,000 Kč</span></td></tr>
+      <tr><td><span class="pill">Budget</span></td><td><b>Appartamenti Mondo Per Te</b></td><td>2 bedrooms · AC · €16/day parking · 450 m to sea</td><td>€1,000–1,300 <span class="kc">~25,000–32,500 Kč</span></td></tr>
+      <tr><td><span class="pill">Mid</span></td><td><b>Villa Draga</b></td><td>2 bedrooms · AC · pool · verify XC90 parking</td><td>€1,200–2,000 <span class="kc">~30,000–50,000 Kč</span></td></tr>
+      <tr><td><span class="pill">Premium</span></td><td><b>Villa Aldo</b> / <b>Villa Dolcina</b></td><td>2+ bedrooms · private pool · sea views</td><td>€1,750–4,000 <span class="kc">~43,750–100,000 Kč</span></td></tr>
     </table>
-    <div class="warn" style="margin-top:18px"><b>Urgent:</b> August villas at this level book up to a year ahead. If the pool villa is the goal, enquire now, by July 2026 it's gone.</div>
+    <div class="warn" style="margin-top:18px"><b>Urgent:</b> August villas at this level book up to a year ahead. If the pool villa is the goal, enquire now.</div>
   </div>
 </section>
 
@@ -455,45 +551,27 @@
   <div class="wrap">
     <div class="eyebrow">The real numbers · group of 4 · everything in</div>
     <h2>Three Budget Packages</h2>
-
     <div class="warn" style="margin-top:18px">
-      <b>Straight talk on 50,000 Kč:</b> it isn't realistic. Four people in <em>separate rooms</em> means paying for two units every night, plus ~8,300 Kč of fuel and ~3,000 Kč of tolls before anyone eats. The honest floor, done lean over 8 days, is around <b>85,000 Kč</b>. To go lower you'd share one room (breaks your rule) or cut the trip to ~5 days.
+      <b>Straight talk on 50,000 Kč:</b> not realistic. Four people in <em>separate rooms</em> means two units every night, plus ~8,300 Kč fuel and ~3,000 Kč tolls before anyone eats. The honest floor, lean over 8 days, is ~<b>85,000 Kč</b>.
     </div>
-
     <div class="grid g3" style="margin-top:28px">
       <div class="card pkg">
         <h3 class="serif">🟢 The Saver</h3>
         <div class="price">~85K Kč <span class="e">/ €3,400</span><small>8 days · ~21,250 Kč per person</small></div>
-        <ul>
-          <li>One-push drives (no Innsbruck nights)</li>
-          <li>Budget apartments, separate rooms</li>
-          <li>Self-cater breakfast + lunch</li>
-          <li>Free public beaches, CT essentials</li>
-        </ul>
+        <ul><li>One-push drives (no Innsbruck nights)</li><li>Budget apartments, separate rooms</li><li>Self-cater breakfast + lunch</li><li>Free beaches, CT essentials</li></ul>
       </div>
       <div class="card pkg feature">
         <span class="tag">Recommended</span>
         <h3 class="serif">🔵 The Balanced</h3>
         <div class="price">~140K Kč <span class="e">/ €5,660</span><small>10 days · ~35,400 Kč per person</small></div>
-        <ul>
-          <li>Overnight Innsbruck each way</li>
-          <li>Nice apartment / B&amp;B, pool option</li>
-          <li>Mix of eating out + self-catering</li>
-          <li>All boats, CT card, Carrara, one beach club</li>
-        </ul>
+        <ul><li>Overnight Innsbruck each way</li><li>Nice apartment / B&amp;B, pool option</li><li>Mix of eating out + self-catering</li><li>All boats, CT card, Carrara, beach club</li></ul>
       </div>
       <div class="card pkg">
         <h3 class="serif">🟣 The Villa Dream</h3>
         <div class="price">~225K Kč <span class="e">/ €9,000</span><small>10 days · ~56,250 Kč per person</small></div>
-        <ul>
-          <li>Comfortable overnight stops</li>
-          <li>Agriturismo + private villa with pool</li>
-          <li>Eat out freely, harbour dinners</li>
-          <li>Every boat, tour and beach club</li>
-        </ul>
+        <ul><li>Comfortable overnight stops</li><li>Agriturismo + private villa with pool</li><li>Eat out freely, harbour dinners</li><li>Every boat, tour and beach club</li></ul>
       </div>
     </div>
-
     <h3 class="serif" style="margin-top:34px;font-size:1.15rem">What's inside the numbers (group of 4)</h3>
     <table>
       <tr><th>Line</th><th>Saver (8d)</th><th>Balanced (10d)</th><th>Villa (10d)</th></tr>
@@ -506,7 +584,7 @@
       <tr><td><b>Group total</b></td><td><b>~€3,380<br><span class="kc">~84,500 Kč</span></b></td><td><b>~€5,660<br><span class="kc">~141,500 Kč</span></b></td><td><b>~€9,030<br><span class="kc">~225,750 Kč</span></b></td></tr>
       <tr><td><b>Per person</b></td><td><b>~21,000 Kč</b></td><td><b>~35,400 Kč</b></td><td><b>~56,500 Kč</b></td></tr>
     </table>
-    <p style="font-size:.78rem;color:var(--muted);margin-top:10px">Researched estimates, not quotes. August accommodation prices move fast. Add ~5% contingency. FX 1 € = 25 Kč.</p>
+    <p style="font-size:.78rem;color:var(--muted);margin-top:10px">Researched estimates, not quotes. Add ~5% contingency. FX 1 € = 25 Kč.</p>
   </div>
 </section>
 
@@ -517,29 +595,23 @@
     <h2>Book Now — August Fills Early</h2>
     <table>
       <tr><th>What</th><th>Why now</th></tr>
-      <tr><td><b>Accommodation</b> (both bases)</td><td>August rooms fill by July; villa-with-pool books up to a year ahead. Priority #1.</td></tr>
-      <tr><td><b>Innsbruck rooms</b> ×2 nights</td><td>If doing the overnight-split plan, peak summer.</td></tr>
-      <tr><td><b>Via dell'Amore slot</b> (now in CT card)</td><td>200 people per 30-min slot, sells out. <a href="https://www.viadellamore.info" target="_blank" rel="noopener">viadellamore.info</a></td></tr>
-      <tr><td><b>Dinner reservations</b> (🔖 spots)</td><td>Tumelin, Angolo 48, Zi'Ninella, Portivene, Ostaia da Ö Sigù, Maniman — book 1–2 weeks ahead.</td></tr>
-      <tr><td><b>CZ + AT vignettes</b></td><td>Buy online before departure, cheaper, no queue.</td></tr>
-      <tr><td><b>Ferries</b> (San Fruttuoso, Portofino)</td><td>Reserve the day before at the latest in August.</td></tr>
+      <tr><td><b>Accommodation</b> (both bases)</td><td>Fill by July; villa-with-pool books a year ahead. Priority #1.</td></tr>
+      <tr><td><b>Innsbruck rooms</b> ×2</td><td>If doing the overnight-split plan, peak summer.</td></tr>
+      <tr><td><b>Via dell'Amore slot</b></td><td>Sells out. <a href="https://www.viadellamore.info" target="_blank" rel="noopener">viadellamore.info</a></td></tr>
+      <tr><td><b>Dinner reservations</b> (🔖)</td><td>Tumelin, Angolo 48, Zi'Ninella, Portivene, Sigù, Maniman.</td></tr>
+      <tr><td><b>CZ + AT vignettes</b></td><td>Buy online before departure.</td></tr>
+      <tr><td><b>Ferries</b></td><td>Reserve the day before at the latest.</td></tr>
     </table>
-    <div class="warn" style="margin-top:22px"><b>Still your call:</b> (1) confirm the XC90 is petrol vs T8 plug-in hybrid or diesel, it changes the fuel cost; (2) pick a package; (3) pick exact August dates. Answer those and the team locks the bookable version with live prices.</div>
+    <div class="warn" style="margin-top:22px"><b>Still your call:</b> (1) confirm the XC90 is petrol vs T8 hybrid/diesel; (2) pick a package; (3) pick exact August dates. Then the team locks the bookable version with live prices.</div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <h3>Planned by the Italy Trip Crew</h3>
-    <p style="margin-top:8px;max-width:660px">Marco scouted the spots, Hans drove the route and priced the fuel, Giulia found the beds, Lorenzo found the food, Sasha hunted the savings, Elena built the days, Tomáš counted every crown. Prices are researched estimates as of mid-2026, verify at booking. The map is live Google Maps, nothing is AI-generated.</p>
+    <p style="margin-top:8px;max-width:660px">Marco scouted the spots, Hans drove the route and priced the fuel, Giulia found the beds, Lorenzo found the food, Sasha hunted the savings, Elena built and mapped the days, Tomáš counted every crown. Prices are researched estimates as of mid-2026, verify at booking. All maps are live Google Maps, nothing is AI-generated.</p>
     <div class="crew">
-      <span>Marco · Italy insider</span>
-      <span>Elena · Itinerary</span>
-      <span>Hans · Logistics &amp; fuel</span>
-      <span>Sasha · Travel hacker</span>
-      <span>Giulia · Stays</span>
-      <span>Lorenzo · Dining</span>
-      <span>Tomáš · Budget</span>
+      <span>Marco · Italy insider</span><span>Elena · Itinerary</span><span>Hans · Logistics &amp; fuel</span><span>Sasha · Travel hacker</span><span>Giulia · Stays</span><span>Lorenzo · Dining</span><span>Tomáš · Budget</span>
     </div>
     <p style="margin-top:18px;font-size:.78rem;color:#8fb9c4">Italian Riviera Road Trip · August 2026 · Prepared for Michael &amp; group</p>
   </div>
