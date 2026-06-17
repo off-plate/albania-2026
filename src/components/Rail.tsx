@@ -16,14 +16,11 @@ export default function Rail({
         >
           Overview
         </button>
-        <button className="rail-sub" onClick={() => setView('overview')}>
-          Explore
-        </button>
-        <button className="rail-sub" onClick={() => setView('overview')}>
+        <button
+          className={view === 'notes' ? 'rail-sub rail-sub-active' : 'rail-sub'}
+          onClick={() => setView('notes')}
+        >
           Notes
-        </button>
-        <button className="rail-sub" onClick={() => setView('itinerary')}>
-          Reservations
         </button>
       </div>
 
@@ -43,8 +40,17 @@ export default function Rail({
         >
           Budget
         </button>
-        <button className="rail-sub" onClick={() => setView('budget')}>
-          View
+        <button
+          className={view === 'budget' ? 'rail-sub rail-sub-active' : 'rail-sub'}
+          onClick={() => setView('budget')}
+        >
+          Expenses
+        </button>
+        <button
+          className={view === 'split' ? 'rail-sub rail-sub-active' : 'rail-sub'}
+          onClick={() => setView('split')}
+        >
+          Split
         </button>
       </div>
     </nav>

@@ -199,14 +199,16 @@ h1, h2, h3 { margin: 0; }
 .notes { font-size: 15px; color: var(--ink-soft); max-width: 64ch; }
 
 /* ── Itinerary cards ── */
-.sec { margin-bottom: 26px; }
-.sec-title {
-  font-size: 13px; text-transform: uppercase; letter-spacing: 0.07em;
-  color: var(--ink-faint);
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 12px;
+.sec { margin-bottom: 30px; }
+.sec-head { padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.sec-when { display: flex; align-items: baseline; gap: 10px; }
+.sec-day {
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: #fff; background: var(--accent);
+  padding: 2px 9px; border-radius: 999px;
 }
+.sec-date { font-size: 13px; color: var(--ink-faint); }
+.sec-focus { font-family: var(--serif); font-weight: 500; font-size: 22px; margin-top: 6px; }
 .cards { display: flex; flex-direction: column; gap: 10px; }
 .card {
   display: grid;
@@ -288,6 +290,57 @@ h1, h2, h3 { margin: 0; }
 .pop-type { display: block; font-size: 12px; font-weight: 600; margin: 3px 0 2px; }
 .pop-blurb { display: block; font-size: 13px; color: var(--ink-soft); }
 
+.rail-sub-active { background: rgba(226, 85, 45, 0.12); color: var(--accent-deep); font-weight: 600; }
+.rail-sub-active:hover { background: rgba(226, 85, 45, 0.12); }
+
+/* ── Notes ── */
+.notes-view { max-width: 720px; }
+.nb-toolbar { display: flex; gap: 8px; margin-bottom: 10px; }
+.nb-toolbar button {
+  border: 1px solid var(--line); background: var(--surface);
+  border-radius: 8px; padding: 6px 12px; font-size: 14px; color: var(--ink-soft);
+}
+.nb-toolbar button:hover { border-color: var(--accent); color: var(--ink); }
+.nb-copy { margin-left: auto; }
+.nb-input {
+  width: 100%; min-height: 220px; resize: vertical;
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; font-family: var(--sans); font-size: 15px; line-height: 1.6;
+  background: var(--surface); color: var(--ink);
+}
+.nb-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.15); }
+.nb-preview-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin: 18px 0 8px; }
+.nb-preview {
+  border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px 14px;
+  background: var(--surface);
+}
+.nb-preview p { margin: 10px 0; }
+.nb-preview ul { margin: 10px 0; padding-left: 22px; }
+.nb-preview li { margin: 4px 0; }
+.nb-preview strong { font-weight: 700; }
+.nb-gap { height: 8px; }
+
+/* ── Split ── */
+.split-total { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
+.split-total-n { font-family: var(--serif); font-size: 36px; }
+.split-total-l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); }
+.split-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.split-card { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--surface); }
+.split-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.split-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--ink); color: #fff; font-size: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.split-name { font-weight: 600; }
+.split-rows { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.split-rows > div { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; }
+.split-rows dt { color: var(--ink-soft); margin: 0; }
+.split-rows dd { margin: 0; font-weight: 600; }
+.split-net { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 2px; }
+.split-net dd.pos { color: var(--good); }
+.split-net dd.neg { color: var(--accent-deep); }
+
 /* ── Responsive: stack on phones, map behind a toggle ── */
 @media (max-width: 900px) {
   .shell { display: block; height: 100%; }
@@ -299,4 +352,5 @@ h1, h2, h3 { margin: 0; }
   .panel { padding: 18px 16px 80px; }
   .card { grid-template-columns: 28px 1fr 88px; }
   .card-photo { width: 88px; height: 66px; }
+  .split-cards { grid-template-columns: 1fr; }
 }

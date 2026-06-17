@@ -17,7 +17,13 @@ export default function Itinerary({
 
       {trip.sections.map((section) => (
         <section className="sec" key={section.id}>
-          <h2 className="sec-title">{section.title}</h2>
+          <div className="sec-head">
+            <div className="sec-when">
+              {section.dayLabel && <span className="sec-day">{section.dayLabel}</span>}
+              {section.dateLabel && <span className="sec-date">{section.dateLabel}</span>}
+            </div>
+            <h2 className="sec-focus">{section.title}</h2>
+          </div>
           <div className="cards">
             {section.places.map((p) => (
               <PlaceCard

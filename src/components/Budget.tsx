@@ -66,6 +66,28 @@ export default function Budget() {
         <span className="budget-total-l">total logged</span>
       </div>
 
+      <h2 className="ov-h">Expenses</h2>
+      <ul className="exp-list">
+        {expenses.map((e) => {
+          const payer = travelers.find((t) => t.id === e.paidBy)
+          return (
+            <li className="exp" key={e.id}>
+              <span className="exp-icon">{CAT_ICON[e.category]}</span>
+              <span className="exp-main">
+                <span className="exp-label">{e.label}</span>
+                <span className="exp-meta">
+                  {e.date ? `${e.date} · ` : ''}paid by {payer?.name ?? e.paidBy}
+                </span>
+              </span>
+              <span className="exp-amt">
+                {e.currency === 'EUR' ? `€${e.amount.toFixed(2)}` : czk(e.amount)}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+      {expenses.length === 0 && <p className="notes">No expenses yet.</p>}
+
       <h2 className="ov-h">Group balances</h2>
       <ul className="balances">
         {net.map((n) => {
@@ -93,28 +115,6 @@ export default function Budget() {
           ))}
         </div>
       )}
-
-      <h2 className="ov-h">Expenses</h2>
-      <ul className="exp-list">
-        {expenses.map((e) => {
-          const payer = travelers.find((t) => t.id === e.paidBy)
-          return (
-            <li className="exp" key={e.id}>
-              <span className="exp-icon">{CAT_ICON[e.category]}</span>
-              <span className="exp-main">
-                <span className="exp-label">{e.label}</span>
-                <span className="exp-meta">
-                  {e.date ? `${e.date} · ` : ''}paid by {payer?.name ?? e.paidBy}
-                </span>
-              </span>
-              <span className="exp-amt">
-                {e.currency === 'EUR' ? `€${e.amount.toFixed(2)}` : czk(e.amount)}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
-      {expenses.length === 0 && <p className="notes">No expenses yet.</p>}
     </div>
   )
 }

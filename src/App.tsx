@@ -4,11 +4,13 @@ import type { Place } from './types'
 import TopBar from './components/TopBar'
 import Rail from './components/Rail'
 import Overview from './components/Overview'
+import Notes from './components/Notes'
 import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
+import Split from './components/Split'
 import MapPane from './components/MapPane'
 
-export type View = 'overview' | 'itinerary' | 'budget'
+export type View = 'overview' | 'notes' | 'itinerary' | 'budget' | 'split'
 
 export default function App() {
   const [view, setView] = useState<View>('overview')
@@ -28,10 +30,12 @@ export default function App() {
           <Rail view={view} setView={setView} />
           <div className="panel">
             {view === 'overview' && <Overview setView={setView} onPick={setActiveId} />}
+            {view === 'notes' && <Notes />}
             {view === 'itinerary' && (
               <Itinerary activeId={activeId} onPick={setActiveId} />
             )}
             {view === 'budget' && <Budget />}
+            {view === 'split' && <Split />}
           </div>
         </div>
       </div>

@@ -30,6 +30,11 @@ export interface Place {
 
 export interface Section {
   id: string
+  /** e.g. "Day 1" or "Days 8–9". */
+  dayLabel?: string
+  /** e.g. "Fri 21 Aug". */
+  dateLabel?: string
+  /** The focus of this stretch, e.g. "Prague to Lake Garda". */
   title: string
   places: Place[]
 }
