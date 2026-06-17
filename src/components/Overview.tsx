@@ -1,48 +1,106 @@
+import type { View } from '../App'
 import { trip } from '../data/trip'
 
-export default function Overview({ onJump }: { onJump: (t: any) => void }) {
-  const stays = trip.places.filter((p) => p.category === 'stay')
-  const pins = trip.places.filter((p) => p.coords)
+const base = import.meta.env.BASE_URL
+
+const RES_ICON: Record<string, string> = {
+  flight: '✈',
+  lodging: '⌂',
+  car: '⛟',
+  train: '☶',
+  other: '⊕',
+}
+
+function czk(n: number) {
+  return new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 }).format(Math.round(n)) + ' Kč'
+}
+
+export default function Overview({
+  setView,
+}: {
+  setView: (v: View) => void
+  onPick: (id: string) => void
+}) {
+  const placeCount = trip.sections.flatMap((s) => s.places).length
+  const spent = trip.expenses.reduce(
+    (sum, e) => sum + (e.currency === 'EUR' ? e.amount * trip.eurToCzk : e.amount),
+    0,
+  )
+  const lodging = trip.reservations.find((r) => r.kind === 'lodging')
 
   return (
-    <section className="overview">
-      <p className="lede">{trip.summary}</p>
-
-      <dl className="facts">
-        {trip.facts.map((f) => (
-          <div className="fact" key={f.label}>
-            <dt>{f.label}</dt>
-            <dd>{f.value}</dd>
+    <div className="overview">
+      <div className="hero">
+        <div className="hero-card">
+          <h1>{trip.title}</h1>
+          <div className="hero-meta">
+            <span className="hero-dates">{trip.dateRange}</span>
+            <span className="avatars">
+              {trip.travelers.map((t) => (
+                <span className="avatar" key={t.id} title={t.name}>
+                  {t.initials}
+                </span>
+              ))}
+            </span>
           </div>
-        ))}
-      </dl>
-
-      <div className="who">
-        <span className="who-label">Travelling</span>
-        <span className="who-names">
-          {trip.travelers.map((t) => t.name).join(' · ')}
-        </span>
+        </div>
       </div>
 
-      <div className="jump">
-        <button className="jump-card" onClick={() => onJump('map')}>
-          <span className="jump-n">{pins.length}</span>
-          <span className="jump-l">places on the map</span>
+      <p className="overview-summary">{trip.summary}</p>
+
+      <div className="ov-grid">
+        <button className="ov-tile" onClick={() => setView('itinerary')}>
+          <span className="ov-n">{placeCount}</span>
+          <span className="ov-l">stops planned</span>
         </button>
-        <button className="jump-card" onClick={() => onJump('stays')}>
-          <span className="jump-n">{stays.length}</span>
-          <span className="jump-l">stays in the running</span>
+        <button className="ov-tile" onClick={() => setView('budget')}>
+          <span className="ov-n">{czk(spent)}</span>
+          <span className="ov-l">logged so far</span>
         </button>
-        <button className="jump-card" onClick={() => onJump('days')}>
-          <span className="jump-n">{trip.days.length}</span>
-          <span className="jump-l">days to plan</span>
+        <button className="ov-tile" onClick={() => setView('itinerary')}>
+          <span className="ov-n">{trip.travelers.length}</span>
+          <span className="ov-l">travellers</span>
         </button>
       </div>
 
-      <p className="note-block">
-        This planner only holds what we decide together. Send a place, a link, a
-        price or a note and it gets saved here for good.
-      </p>
-    </section>
+      <h2 className="ov-h">Reservations</h2>
+      <div className="res-row">
+        {(['flight', 'lodging', 'car', 'train', 'other'] as const).map((k) => {
+          const has = trip.reservations.some((r) => r.kind === k)
+          return (
+            <div className={has ? 'res-chip res-chip-on' : 'res-chip'} key={k}>
+              <span className="res-icon">{RES_ICON[k]}</span>
+              <span className="res-label">{k}</span>
+            </div>
+          )
+        })}
+      </div>
+
+      {lodging && (
+        <div className="res-detail">
+          <div className="res-detail-head">
+            <h3>{lodging.title}</h3>
+            {lodging.dates && <span className="res-dates">{lodging.dates}</span>}
+          </div>
+          {lodging.detail && <p className="res-text">{lodging.detail}</p>}
+          {lodging.price && <p className="res-price">{lodging.price}</p>}
+          {lodging.photos && (
+            <div className="res-photos">
+              {lodging.photos.slice(0, 6).map((p) => (
+                <img key={p} src={base + p} alt="" loading="lazy" />
+              ))}
+            </div>
+          )}
+          {lodging.link && (
+            <a href={lodging.link} target="_blank" rel="noreferrer">
+              View listing →
+            </a>
+          )}
+        </div>
+      )}
+
+      <h2 className="ov-h">Notes</h2>
+      <p className="notes">{trip.notes}</p>
+    </div>
   )
 }

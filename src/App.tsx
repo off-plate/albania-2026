@@ -1,58 +1,44 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { trip } from './data/trip'
+import type { Place } from './types'
+import TopBar from './components/TopBar'
+import Rail from './components/Rail'
 import Overview from './components/Overview'
-import MapView from './components/MapView'
 import Itinerary from './components/Itinerary'
-import Stays from './components/Stays'
-import Expenses from './components/Expenses'
+import Budget from './components/Budget'
+import MapPane from './components/MapPane'
 
-type Tab = 'overview' | 'map' | 'days' | 'stays' | 'money'
-
-const TABS: { id: Tab; label: string }[] = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'map', label: 'Map' },
-  { id: 'days', label: 'Days' },
-  { id: 'stays', label: 'Stays' },
-  { id: 'money', label: 'Money' },
-]
+export type View = 'overview' | 'itinerary' | 'budget'
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>('overview')
+  const [view, setView] = useState<View>('overview')
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const [showMapMobile, setShowMapMobile] = useState(false)
+
+  const allPlaces = useMemo<Place[]>(
+    () => trip.sections.flatMap((s) => s.places).filter((p) => p.coords),
+    [],
+  )
 
   return (
-    <div className="app">
-      <header className="masthead">
-        <div className="masthead-text">
-          <h1>{trip.title}</h1>
-          <p>
-            {trip.subtitle} · {trip.dates}
-          </p>
+    <div className="shell">
+      <div className="left">
+        <TopBar onToggleMap={() => setShowMapMobile((v) => !v)} mapOpen={showMapMobile} />
+        <div className="left-body">
+          <Rail view={view} setView={setView} />
+          <div className="panel">
+            {view === 'overview' && <Overview setView={setView} onPick={setActiveId} />}
+            {view === 'itinerary' && (
+              <Itinerary activeId={activeId} onPick={setActiveId} />
+            )}
+            {view === 'budget' && <Budget />}
+          </div>
         </div>
-      </header>
+      </div>
 
-      <nav className="tabs" aria-label="Sections">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            className={t.id === tab ? 'tab tab-active' : 'tab'}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
-      </nav>
-
-      <main className="content">
-        {tab === 'overview' && <Overview onJump={setTab} />}
-        {tab === 'map' && <MapView />}
-        {tab === 'days' && <Itinerary />}
-        {tab === 'stays' && <Stays />}
-        {tab === 'money' && <Expenses />}
-      </main>
-
-      <footer className="foot">
-        <span>Built from what we actually decide. No auto-suggestions.</span>
-      </footer>
+      <div className={showMapMobile ? 'map-col map-col-open' : 'map-col'}>
+        <MapPane places={allPlaces} activeId={activeId} onPick={setActiveId} />
+      </div>
     </div>
   )
 }

@@ -1,151 +1,159 @@
 import type { Trip } from '../types'
 
-// ─────────────────────────────────────────────────────────────────────────
-// SINGLE SOURCE OF TRUTH
-// Michael sends locations / notes / bookings; they get written in here.
-// Nothing is invented. Everything has an honest status: idea / shortlist / booked.
-// ─────────────────────────────────────────────────────────────────────────
+// ── SINGLE SOURCE OF TRUTH ─────────────────────────────────────────────────
+// Pulled from the shared trip, then maintained here. Add / edit places,
+// reservations and expenses in this file; the whole app renders from it.
+// Blurbs are written here (not scraped). Statuses honest.
 
 export const trip: Trip = {
-  title: 'Italy 2026',
-  subtitle: 'Ligurian Riviera road trip',
-  dates: 'August 2026',
+  title: 'Trip to Italy',
+  dateRange: 'August 21–30, 2026',
   summary:
-    'Two couples, one car, driving down from Prague. About a week on the ground: half sea and slow mornings, half photogenic viewpoints. No museums, no castles.',
+    'Road trip from Prague: Lake Garda, Verona, the motor valley (Ferrari, Lamborghini), Florence, Chianti and the Tuscan hill towns, then the coast, Lucca and Pisa on the way home.',
 
   travelers: [
-    { id: 'michael', name: 'Michael' },
-    { id: 'gf', name: 'Girlfriend' },
-    { id: 'friend1', name: 'Friend 1' },
-    { id: 'friend2', name: 'Friend 2' },
+    { id: 'michael', name: 'Michael', initials: 'M' },
+    { id: 'gf', name: 'Girlfriend', initials: 'G' },
+    { id: 'f1', name: 'Friend 1', initials: 'F1' },
+    { id: 'f2', name: 'Friend 2', initials: 'F2' },
   ],
 
+  eurToCzk: 24.14, // matches the planner's CZK total
   budgetPerPersonCZK: 20000,
-  eurToCzk: 25, // rough working rate; update when we want exact numbers
 
-  facts: [
-    { label: 'Who', value: '2 couples · 4 people' },
-    { label: 'Car', value: 'Volvo XC90, from Prague' },
-    { label: 'On the ground', value: '~7 days + 2 driving days' },
-    { label: 'Budget', value: '~20,000 Kč / person' },
-    { label: 'Style', value: '50% sea · 50% viewpoints' },
-    { label: 'Base', value: 'Still deciding (see Stays)' },
-  ],
+  notes:
+    'Two couples, one car (Volvo XC90), driving down from Prague. Mix of car museums, lake + city days and slow Tuscany. Chianti is the long base. Fill in dinners and timings as we lock them.',
 
-  // Centered on the Ligurian coast; Chianti candidate sits to the SE.
-  mapCenter: [44.2, 9.45],
-  mapZoom: 9,
+  mapCenter: [44.6, 11.0],
+  mapZoom: 7,
 
-  places: [
-    // ── The one real candidate Michael sent ──
+  reservations: [
     {
-      id: 'badia-passignano',
-      name: 'Ciliegiolo — Badia a Passignano',
-      category: 'stay',
-      status: 'shortlist',
-      coords: [43.5746, 11.2186],
-      note: 'Airbnb in Chianti, Tuscany. Candidate for the longer base (6+ nights).',
+      id: 'badia',
+      kind: 'lodging',
+      title: 'Ciliegiolo — Badia a Passignano (Airbnb)',
       detail:
-        'Rental apartment, sleeps 4 (2 bedrooms, 3 beds, 2 baths). Checked 27 Aug → 2 Sep 2026, 4 guests. Set in Chianti Classico vineyards near Tavarnelle. Florence ~40 min, Siena ~45 min, San Gimignano ~35 min. NOTE: this is inland, not coastal — nearest sea is ~1h30, Cinque Terre ~2h. Decide if the trip is shifting to Tuscany countryside or staying on the coast.',
-      price: 'Not confirmed yet — paste the total Airbnb shows you for those dates',
-      links: [
-        { label: 'Airbnb listing', url: 'https://www.airbnb.com/rooms/1668821830585037471' },
-        { label: 'Open in Maps', url: 'https://www.google.com/maps/search/?api=1&query=43.5746,11.2186' },
-      ],
+        'Chianti base. Apartment, sleeps 4 (2 bed, 3 beds, 2 bath), in the vineyards near Tavarnelle. Florence ~40 min, Siena ~45 min.',
+      dates: '27 Aug → 2 Sep 2026 · 4 guests',
+      price: 'Price not confirmed — paste the Airbnb total and I\'ll log it',
+      link: 'https://www.airbnb.com/rooms/1668821830585037471',
       photos: Array.from({ length: 14 }, (_, i) =>
         `stays/badia-passignano/photo-${String(i + 1).padStart(2, '0')}.jpg`,
       ),
     },
+  ],
 
-    // ── Coastal candidates from our own research (not online suggestions; our team's notes). ──
-    // All marked 'idea' — nothing here is decided. Tell me to drop any.
+  // From the planner screenshots. All paid by Michael so far.
+  expenses: [
     {
-      id: 'levanto',
-      name: 'Levanto',
-      category: 'town',
-      status: 'idea',
-      coords: [44.1706, 9.6111],
-      note: 'Research pick for Base 1 (2 nights). Own sandy beach, 4-min train to Cinque Terre, cheaper than the villages.',
+      id: 'e-fuel',
+      label: 'Fuel: Prague → Garda → Modena → Florence → Chianti',
+      amount: 452,
+      currency: 'EUR',
+      category: 'gas',
+      paidBy: 'michael',
+      date: 'Jun 16',
     },
     {
-      id: 'santa-margherita',
-      name: 'Santa Margherita Ligure',
-      category: 'town',
-      status: 'idea',
-      coords: [44.3354, 9.2107],
-      note: 'Research pick for Base 2 (4–5 nights). Real town, parking, 5 min to Portofino, boats to San Fruttuoso.',
+      id: 'e-tolls',
+      label: 'Highway tolls, full road trip (Italy + buffer)',
+      amount: 95,
+      currency: 'EUR',
+      category: 'car',
+      paidBy: 'michael',
+      date: 'Jun 16',
     },
     {
-      id: 'cinque-terre',
-      name: 'Cinque Terre',
-      category: 'view',
-      status: 'idea',
-      coords: [44.1461, 9.6543],
-      note: 'The five villages. Go early, by train. Monterosso has the only real beach.',
-    },
-    {
-      id: 'portovenere',
-      name: 'Portovenere',
-      category: 'view',
-      status: 'idea',
-      coords: [44.0533, 9.8377],
-      note: 'Colorful harbour, quieter than Cinque Terre. Pair with Tellaro.',
-    },
-    {
-      id: 'sestri-levante',
-      name: 'Sestri Levante — Baia del Silenzio',
-      category: 'beach',
-      status: 'idea',
-      coords: [44.27, 9.392],
-      note: 'The "Bay of Silence." 30 min north of Santa Margherita by car.',
-    },
-    {
-      id: 'portofino',
-      name: 'Portofino',
-      category: 'view',
-      status: 'idea',
-      coords: [44.3035, 9.2097],
-      note: 'The classic harbour. Day trip only — sleeping here is absurdly expensive.',
-    },
-    {
-      id: 'san-fruttuoso',
-      name: 'San Fruttuoso',
-      category: 'beach',
-      status: 'idea',
-      coords: [44.316, 9.173],
-      note: 'Abbey cove reachable only by boat or trail. Boats from Santa Margherita / Camogli.',
-    },
-    {
-      id: 'camogli',
-      name: 'Camogli',
-      category: 'town',
-      status: 'idea',
-      coords: [44.3486, 9.155],
-      note: 'Pastel fishing town, fewer tourists. Good for a relaxed evening.',
+      id: 'e-vignette',
+      label: 'Austria vignette for the road trip',
+      amount: 12.8,
+      currency: 'EUR',
+      category: 'car',
+      paidBy: 'michael',
+      date: 'Jun 16',
     },
   ],
 
-  // No invented itinerary. The shape is here; we fill the days together.
-  days: [
+  sections: [
     {
-      title: 'Day 1 — Drive: Prague → coast',
-      base: 'TBD',
-      stops: [{ label: 'Long driving day (~10h via Parma / A15).' }],
-      note: 'Arrive, drop the car, first dinner. We add the real plan once the base is locked.',
-    },
-    {
-      title: 'Days 2–8 — On the ground',
-      base: 'TBD',
-      stops: [{ label: 'To be built — sea days, viewpoint days, one slow day.' }],
-      note: 'Send me what you want each day and I\'ll place it here with the map pins.',
-    },
-    {
-      title: 'Last day — Drive home',
-      base: '—',
-      stops: [{ label: 'Drive back to Prague.' }],
+      id: 'route',
+      title: 'Trip · August 21–30',
+      places: [
+        { id: 'ferrari-maranello', n: 1, name: 'Museo Ferrari Maranello', type: 'car',
+          blurb: 'Car museum stop, near Modena.', coords: [44.5318, 10.8642],
+          about: 'The Maranello museum: Ferrari road and race cars, plus a driving simulator. Pair with the motor-valley day.' },
+        { id: 'lake-garda', n: 2, name: 'Lake Garda', type: 'classic',
+          blurb: 'Lake arrival and scenic base.', coords: [45.65, 10.6833],
+          about: 'Italy\'s largest lake, ringed by towns. Boat rides, swimming and easy walks.' },
+        { id: 'peschiera', n: 3, name: 'Peschiera del Garda', type: 'instagram',
+          blurb: 'Pretty lake-town base near Garda.', coords: [45.4392, 10.6889] },
+        { id: 'bardolino', n: 4, name: 'Bardolino', type: 'instagram',
+          blurb: 'Lakeside atmosphere and photo-friendly streets.', coords: [45.5494, 10.7206] },
+        { id: 'sirmione', n: 5, name: 'Sirmione', type: 'instagram',
+          blurb: 'Castle, harbour views, the most photogenic Garda town.', coords: [45.4969, 10.6058] },
+        { id: 'castello-sirmione', n: 6, name: 'Castello Scaligero di Sirmione', type: 'instagram',
+          blurb: 'Iconic moated castle by the lake.', coords: [45.4944, 10.6075] },
+        { id: 'grotte-catullo', n: 7, name: 'Grotte di Catullo', type: 'instagram',
+          blurb: 'Roman ruins at the tip of the peninsula.', coords: [45.5083, 10.6044] },
+        { id: 'verona', n: 8, name: 'Verona', type: 'classic',
+          blurb: 'Historic centre, great for dinner and an evening out.', coords: [45.4384, 10.9916] },
+        { id: 'piazza-erbe', n: 9, name: 'Piazza delle Erbe', type: 'classic',
+          blurb: 'Verona\'s central square.', coords: [45.443, 10.9978] },
+        { id: 'arena-verona', n: 10, name: 'Arena di Verona', type: 'classic',
+          blurb: 'Roman amphitheatre and city landmark.', coords: [45.439, 10.9947] },
+        { id: 'ponte-pietra', n: 11, name: 'Ponte Pietra', type: 'instagram',
+          blurb: 'Romantic bridge photo spot.', coords: [45.447, 10.999] },
+        { id: 'castel-san-pietro', n: 12, name: 'Castel San Pietro', type: 'instagram',
+          blurb: 'Viewpoint over Verona.', coords: [45.448, 11.001] },
+        { id: 'modena', n: 13, name: 'Modena', type: 'car',
+          blurb: 'Base for the Ferrari / motor-valley day.', coords: [44.6471, 10.9252] },
+        { id: 'enzo-ferrari', n: 14, name: 'Museo Enzo Ferrari (Modena)', type: 'car',
+          blurb: 'The second Ferrari museum, in Modena itself.', coords: [44.6516, 10.9265] },
+        { id: 'lamborghini', n: 15, name: 'Lamborghini Museum', type: 'car',
+          blurb: 'Optional second motor-valley museum.', coords: [44.664, 11.13] },
+        { id: 'florence', n: 16, name: 'Florence', type: 'classic',
+          blurb: 'Main Tuscany city and one of the bases.', coords: [43.7696, 11.2558] },
+        { id: 'duomo-firenze', n: 17, name: 'Cathedral of Santa Maria del Fiore', type: 'classic',
+          blurb: 'Florence cathedral and Duomo area.', coords: [43.7731, 11.256] },
+        { id: 'uffizi', n: 18, name: 'Uffizi Galleries', type: 'classic',
+          blurb: 'The famous museum, if you want one.', coords: [43.7678, 11.2553] },
+        { id: 'ponte-vecchio', n: 19, name: 'Ponte Vecchio', type: 'instagram',
+          blurb: 'Iconic bridge in Florence.', coords: [43.768, 11.2531] },
+        { id: 'piazzale-michelangelo', n: 20, name: 'Piazzale Michelangelo', type: 'instagram',
+          blurb: 'Best sunset viewpoint in Florence.', coords: [43.7629, 11.265] },
+        { id: 'piazza-signoria', n: 21, name: 'Piazza della Signoria', type: 'classic',
+          blurb: 'Central Florence square.', coords: [43.7696, 11.2558] },
+        { id: 'palazzo-vecchio', n: 22, name: 'Palazzo Vecchio', type: 'classic',
+          blurb: 'Florence civic landmark.', coords: [43.7693, 11.2562] },
+        { id: 'greve', n: 23, name: 'Greve in Chianti', type: 'relaxed',
+          blurb: 'Wine-country base in Chianti.', coords: [43.5836, 11.3158] },
+        { id: 'radda', n: 24, name: 'Radda in Chianti', type: 'relaxed',
+          blurb: 'Hill town and wine base in Chianti.', coords: [43.4849, 11.376] },
+        { id: 'chianti-taxi', n: 25, name: 'Chianti Taxi NCC', type: 'relaxed',
+          blurb: 'Wine-region transfer service if we want to drink.' },
+        { id: 'siena', n: 26, name: 'Siena', type: 'classic',
+          blurb: 'Major Tuscan city.', coords: [43.3188, 11.3308] },
+        { id: 'san-gimignano', n: 27, name: 'San Gimignano', type: 'instagram',
+          blurb: 'Medieval hill town with towers.', coords: [43.4677, 11.0431] },
+        { id: 'palazzo-comunale-sg', n: 28, name: 'Palazzo Comunale, Torre Grossa', type: 'classic',
+          blurb: 'Tower and museum area in San Gimignano.', coords: [43.4677, 11.0436] },
+        { id: 'piazza-campo', n: 29, name: 'Piazza del Campo', type: 'instagram',
+          blurb: 'Siena\'s main square, home of the Palio.', coords: [43.3186, 11.332] },
+        { id: 'castiglione', n: 30, name: 'Castiglione della Pescaia', type: 'relaxed',
+          blurb: 'Beach and sea-swim base on the Tuscan coast.', coords: [42.7639, 10.8769] },
+        { id: 'lucca', n: 31, name: 'Lucca', type: 'relaxed',
+          blurb: 'Walled city for a slower night.', coords: [43.843, 10.5027] },
+        { id: 'pisa', n: 32, name: 'Pisa', type: 'classic',
+          blurb: 'Iconic Pisa visit.', coords: [43.7228, 10.3966] },
+        { id: 'piazza-miracoli', n: 33, name: 'Piazza dei Miracoli', type: 'instagram',
+          blurb: 'The square with the Pisa monuments.', coords: [43.723, 10.3966] },
+        { id: 'tower-pisa', n: 34, name: 'Tower of Pisa', type: 'instagram',
+          blurb: 'The famous leaning-tower photo.', coords: [43.7230, 10.3965] },
+        { id: 'innsbruck', n: 35, name: 'Innsbruck', type: 'optional',
+          blurb: 'Optional mountain stop on the way back.', coords: [47.2692, 11.4041] },
+        { id: 'prague', n: 36, name: 'Prague', type: 'endpoint',
+          blurb: 'Start and end of the road trip.', coords: [50.0755, 14.4378] },
+      ],
     },
   ],
-
-  // Nothing spent yet. Add real costs as they happen; the split is computed live.
-  expenses: [],
 }
