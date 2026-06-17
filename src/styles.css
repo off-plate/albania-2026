@@ -302,23 +302,23 @@ h1, h2, h3 { margin: 0; }
 }
 .nb-toolbar button:hover { border-color: var(--accent); color: var(--ink); }
 .nb-copy { margin-left: auto; }
-.nb-input {
-  width: 100%; min-height: 220px; resize: vertical;
+.nb-on { border-color: var(--accent) !important; color: var(--accent-deep) !important; background: rgba(226,85,45,0.12) !important; }
+.nb-editor {
+  min-height: 340px;
   border: 1px solid var(--line); border-radius: 12px;
-  padding: 16px; font-family: var(--sans); font-size: 15px; line-height: 1.6;
-  background: var(--surface); color: var(--ink);
+  padding: 18px 20px; background: var(--surface);
+  font-size: 16px; line-height: 1.65; color: var(--ink);
+  outline: none;
 }
-.nb-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.15); }
-.nb-preview-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-faint); margin: 18px 0 8px; }
-.nb-preview {
-  border: 1px solid var(--line); border-radius: 12px; padding: 6px 18px 14px;
-  background: var(--surface);
+.nb-editor:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.15); }
+.nb-editor p { margin: 0 0 10px; }
+.nb-editor ul { margin: 0 0 10px; padding-left: 24px; }
+.nb-editor li { margin: 4px 0; }
+.nb-editor strong { font-weight: 700; }
+.nb-editor:empty::before {
+  content: 'Write trip notes here. Use B for bold and the list button for bullets.';
+  color: var(--ink-faint);
 }
-.nb-preview p { margin: 10px 0; }
-.nb-preview ul { margin: 10px 0; padding-left: 22px; }
-.nb-preview li { margin: 4px 0; }
-.nb-preview strong { font-weight: 700; }
-.nb-gap { height: 8px; }
 
 /* ── Split ── */
 .split-total { display: flex; flex-direction: column; gap: 2px; margin-bottom: 20px; }
