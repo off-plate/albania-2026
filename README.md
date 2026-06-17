@@ -1,16 +1,36 @@
-# Italy Trip 2026 — Clean Slate
+# Italy 2026 — Trip Planner
 
-The previous website (static plans + the React planner app) was **torn down** on Michael's instruction. The live site is unpublished. Nothing is lost — every old version is in git history and recoverable.
+A private planner for the Ligurian Riviera road trip (2 couples, August 2026). It holds the map, the day-by-day plan, the stays, and who-paid-what. No online suggestions, no auto-fill. It only ever shows what we actually decide.
 
-## New direction
-Michael sends locations, updates, and notes. I collect them into one **structured master list** ([`locations.md`](locations.md)) and, when he's ready, turn that into a structured map.
+**Live:** https://off-plate.github.io/italy-trip-2026/
 
-- One source of truth: `locations.md`
-- Built only from what Michael actually sends — no assumptions, no pre-filled itinerary
-- Map gets built once there's enough to structure
+## How it works
 
-## Still here for reference (not the website)
+Everything on the site is rendered from one file: [`src/data/trip.ts`](src/data/trip.ts). That's the single source of truth.
+
+Michael sends a place, a link, a price, a note. It gets written into `trip.ts`, committed, and the site redeploys. Data lives in git forever, so nothing is ever lost. Viewers (the other couple) just open the link.
+
+Statuses are honest: `idea` → `shortlist` → `booked`. Nothing is invented.
+
+## Sections
+
+- **Map** — every place with coordinates, pins by category (Leaflet + OpenStreetMap)
+- **Days** — the itinerary, built together as we decide it
+- **Stays** — lodging candidates with photos, price, links
+- **Money** — expenses with the split worked out per person against the ~20K Kč budget
+
+## Develop
+
+```bash
+npm install
+npm run dev      # local dev
+npm run build    # builds to docs/ for GitHub Pages
+```
+
+Built to `docs/` and served by GitHub Pages at `/italy-trip-2026/`.
+
+## Also here (reference, not the website)
+
+- `locations.md` — the older plain-text master list (kept for history)
 - `research/` — the team's earlier research (routes, fuel, stays, food, costs)
-- `team/` + `.claude/agents/` — the reusable specialist crew
-
-_Last reset: 2026-06-15_
+- `images/` — original source photos
