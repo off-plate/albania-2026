@@ -31,11 +31,11 @@ export const trip: Trip = {
     {
       id: 'badia',
       kind: 'lodging',
-      title: 'Ciliegiolo — Badia a Passignano (Airbnb)',
+      title: 'Ciliegiolo, Badia a Passignano (Airbnb)',
       detail:
         'Chianti base. Apartment, sleeps 4 (2 bed, 3 beds, 2 bath), in the vineyards near Tavarnelle. Florence ~40 min, Siena ~45 min.',
       dates: '27 Aug → 2 Sep 2026 · 4 guests',
-      price: 'Price not confirmed — paste the Airbnb total and I\'ll log it',
+      price: 'Price not confirmed yet. Paste the Airbnb total and I\'ll log it.',
       link: 'https://www.airbnb.com/rooms/1668821830585037471',
       photos: Array.from({ length: 14 }, (_, i) =>
         `stays/badia-passignano/photo-${String(i + 1).padStart(2, '0')}.jpg`,
