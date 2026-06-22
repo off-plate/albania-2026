@@ -83,10 +83,25 @@ export interface Trip {
   summary: string
   notes: string
   heroPhoto: string | null
+  transport: string
   eurToCzk: number
   budgetTotalCzk: number | null
   mapCenter: [number, number]
   mapZoom: number
+}
+
+/** A trip card for the packages hub. */
+export interface TripSummary {
+  id: string
+  slug: string
+  title: string
+  heroPhoto: string | null
+  transport: string
+  summary: string
+  dateStart: string | null
+  dateEnd: string | null
+  days: number
+  totalCzk: number
 }
 
 export interface TripData {

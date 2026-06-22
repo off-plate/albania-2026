@@ -61,6 +61,7 @@ function tripRow(t: Partial<Trip>): Record<string, any> {
   if ('title' in t) r.title = t.title
   if ('summary' in t) r.summary = t.summary
   if ('notes' in t) r.notes = t.notes
+  if ('transport' in t) r.transport = t.transport
   if ('heroPhoto' in t) r.hero_photo = t.heroPhoto
   if ('eurToCzk' in t) r.eur_to_czk = t.eurToCzk
   if ('budgetTotalCzk' in t) r.budget_total_czk = t.budgetTotalCzk
@@ -157,7 +158,7 @@ export const useStore = () => {
   return s
 }
 
-export function StoreProvider({ children }: { children: ReactNode }) {
+export function StoreProvider({ slug, children }: { slug: string; children: ReactNode }) {
   const [data, setData] = useState<TripData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -184,7 +185,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       console.error('write failed, resyncing', e)
       setError(e?.message ?? 'Save failed, reloading from server.')
       try {
-        setData(await api.loadTrip())
+        setData(await api.loadTrip(slug))
       } catch {}
       setTimeout(() => setError(null), 4000)
     } finally {
@@ -194,19 +195,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setSaving(false)
       }
     }
-  }, [])
+  }, [slug])
 
   const reload = useCallback(() => {
     setLoading(true)
     api
-      .loadTrip()
+      .loadTrip(slug)
       .then((d) => {
         setData(d)
         setError(null)
       })
       .catch((e) => setError(e?.message ?? 'Could not load the trip.'))
       .finally(() => setLoading(false))
-  }, [])
+  }, [slug])
 
   useEffect(() => {
     reload()

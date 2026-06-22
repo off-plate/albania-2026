@@ -9,6 +9,7 @@ import type {
   Traveler,
   Trip,
   TripData,
+  TripSummary,
 } from '../types'
 
 // ── Row → app mappers ───────────────────────────────────────────────────────
@@ -24,6 +25,7 @@ function toTrip(r: any): Trip {
     summary: r.summary ?? '',
     notes: r.notes ?? '',
     heroPhoto: r.hero_photo,
+    transport: r.transport ?? '',
     eurToCzk: Number(r.eur_to_czk ?? 24.5),
     budgetTotalCzk: num(r.budget_total_czk),
     mapCenter: [Number(r.map_center_lat ?? 45.4), Number(r.map_center_lng ?? 11)],
@@ -96,12 +98,46 @@ function toReservation(r: any): Reservation {
   }
 }
 
-// ── Load ────────────────────────────────────────────────────────────────────
-export async function loadTrip(): Promise<TripData> {
+// ── Hub: all trips as summary cards ─────────────────────────────────────────
+export async function loadTripSummaries(): Promise<TripSummary[]> {
+  const [trips, days, expenses] = await Promise.all([
+    supabase.from('italy_trips').select('*').order('date_start'),
+    supabase.from('italy_days').select('trip_id'),
+    supabase.from('italy_expenses').select('trip_id,amount,currency'),
+  ])
+  for (const r of [trips, days, expenses]) if (r.error) throw r.error
+
+  const dayCount = new Map<string, number>()
+  for (const d of days.data ?? []) dayCount.set(d.trip_id, (dayCount.get(d.trip_id) ?? 0) + 1)
+
+  const total = new Map<string, number>()
+  const rateOf = new Map<string, number>()
+  for (const t of trips.data ?? []) rateOf.set(t.id, Number(t.eur_to_czk ?? 24.5))
+  for (const e of expenses.data ?? []) {
+    const amt = e.currency === 'EUR' ? Number(e.amount) * (rateOf.get(e.trip_id) ?? 24.5) : Number(e.amount)
+    total.set(e.trip_id, (total.get(e.trip_id) ?? 0) + amt)
+  }
+
+  return (trips.data ?? []).map((t) => ({
+    id: t.id,
+    slug: t.slug,
+    title: t.title,
+    heroPhoto: t.hero_photo,
+    transport: t.transport ?? '',
+    summary: t.summary ?? '',
+    dateStart: t.date_start,
+    dateEnd: t.date_end,
+    days: dayCount.get(t.id) ?? 0,
+    totalCzk: Math.round(total.get(t.id) ?? 0),
+  }))
+}
+
+// ── Load one trip ───────────────────────────────────────────────────────────
+export async function loadTrip(slug: string = TRIP_SLUG): Promise<TripData> {
   const { data: tripRow, error: te } = await supabase
     .from('italy_trips')
     .select('*')
-    .eq('slug', TRIP_SLUG)
+    .eq('slug', slug)
     .single()
   if (te) throw te
   const tripId = tripRow.id

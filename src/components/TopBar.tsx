@@ -40,10 +40,10 @@ export default function TopBar() {
   return (
     <header className="topbar">
       <div className="topbar-l">
-        <span className="brand">
-          <span className="brand-mark">◇</span>
-          {data?.trip.title ?? 'Italy 2026'}
-        </span>
+        <a className="brand" href="#/" title="All trips">
+          <span className="brand-mark">‹</span>
+          {data?.trip.title ?? 'Trips'}
+        </a>
         <span className="saved">{saving ? 'Saving…' : 'Saved'}</span>
       </div>
 

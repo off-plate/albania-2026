@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { StoreProvider, useStore } from './store'
 import TopBar from './components/TopBar'
 import Rail from './components/Rail'
@@ -6,6 +7,24 @@ import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
 import MapPane from './components/MapPane'
 import Snackbar from './components/Snackbar'
+import Hub from './components/Hub'
+
+// Hash routing, so it works on static GitHub Pages with no server rewrites:
+//   #/            → packages hub
+//   #/italy-2026  → that trip's planner
+function useRouteSlug(): string | null {
+  const read = () => {
+    const h = window.location.hash.replace(/^#\/?/, '').trim()
+    return h || null
+  }
+  const [slug, setSlug] = useState<string | null>(read)
+  useEffect(() => {
+    const on = () => setSlug(read())
+    window.addEventListener('hashchange', on)
+    return () => window.removeEventListener('hashchange', on)
+  }, [])
+  return slug
+}
 
 function Shell() {
   const { view, loading, error, data, mapMobileOpen } = useStore()
@@ -53,8 +72,10 @@ function Shell() {
 }
 
 export default function App() {
+  const slug = useRouteSlug()
+  if (!slug) return <Hub />
   return (
-    <StoreProvider>
+    <StoreProvider slug={slug} key={slug}>
       <Shell />
     </StoreProvider>
   )

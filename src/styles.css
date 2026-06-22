@@ -63,8 +63,9 @@ h1, h2, h3 { margin: 0; }
   padding: 0 18px; border-bottom: 1px solid var(--line); background: var(--surface);
 }
 .topbar-l { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
-.brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.brand-mark { color: var(--accent); font-size: 14px; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+.brand:hover { text-decoration: none; color: var(--accent-deep); }
+.brand-mark { color: var(--accent); font-size: 18px; font-weight: 700; }
 .saved { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-faint); }
 .topbar-r { display: flex; align-items: center; gap: 8px; flex: none; }
 .btn-line {
@@ -327,6 +328,40 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .modal input:focus { border-color: var(--accent); }
 .modal-err { color: var(--accent-deep); font-size: 13px; margin-top: 8px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 12px; align-items: center; margin-top: 16px; }
+
+/* ── Packages hub ── */
+.hub { min-height: 100%; max-width: 760px; margin: 0 auto; padding: 64px 28px 96px; }
+.hub-head { margin-bottom: 36px; }
+.hub-brand { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+.hub-mark { color: var(--accent); font-size: 15px; }
+.hub-title { font-family: var(--serif); font-weight: 500; font-size: 48px; letter-spacing: -0.02em; margin: 14px 0 0; }
+.hub-sub { color: var(--ink-soft); font-size: 16px; margin: 8px 0 0; max-width: 48ch; }
+.hub-error { color: var(--accent-deep); font-size: 14px; }
+.hub-list { display: flex; flex-direction: column; gap: 18px; }
+.hub-card {
+  display: grid; grid-template-columns: 40% 1fr; min-height: 200px;
+  border: 1px solid var(--line); border-radius: var(--radius-max); overflow: hidden;
+  background: var(--surface); color: var(--ink);
+  transition: border-color 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.hub-card:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-2px); }
+.hub-card-img { background-size: cover; background-position: center; background-color: var(--surface-2); min-height: 200px; }
+.hub-card-body { padding: 24px 26px; display: flex; flex-direction: column; }
+.hub-card-title { font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -0.01em; }
+.hub-card-dates { font-size: 13px; color: var(--ink-faint); margin-top: 4px; }
+.hub-card-meta { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 15px; color: var(--ink-soft); }
+.hub-price { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.hub-dot { color: var(--ink-faint); }
+.hub-transport { color: var(--accent-deep); font-weight: 600; }
+.hub-open { margin-top: auto; padding-top: 18px; font-size: 14px; font-weight: 600; color: var(--accent-deep); }
+.hub-skel { background: var(--surface-2); border: 0; min-height: 200px; display: block; }
+
+@media (max-width: 640px) {
+  .hub { padding: 40px 16px 80px; }
+  .hub-title { font-size: 36px; }
+  .hub-card { grid-template-columns: 1fr; }
+  .hub-card-img { min-height: 160px; }
+}
 
 /* ── Responsive ── */
 @media (max-width: 900px) {

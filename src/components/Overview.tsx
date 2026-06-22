@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
 import { fmtCZK, fmtDateRange, toCZK } from '../lib/format'
+import { asset } from '../lib/asset'
 import type { Reservation } from '../types'
 import { InlineText } from './Inline'
 
@@ -21,7 +22,7 @@ export default function Overview() {
       {/* A. header */}
       <div className="ov-header">
         {trip.heroPhoto && (
-          <div className="ov-hero" style={{ backgroundImage: `url(${trip.heroPhoto})` }} />
+          <div className="ov-hero" style={{ backgroundImage: `url(${asset(trip.heroPhoto)})` }} />
         )}
         <InlineText
           as="h1"
