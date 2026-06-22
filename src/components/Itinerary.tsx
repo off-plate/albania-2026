@@ -1,41 +1,128 @@
-import { trip } from '../data/trip'
+import { useEffect, useState } from 'react'
+import { useStore } from '../store'
+import type { Day, Place } from '../types'
+import { fmtDayDate } from '../lib/format'
+import { routeLeg, fmtDuration, fmtDistance, type Leg } from '../lib/geocode'
 import PlaceCard from './PlaceCard'
+import AddPlace from './AddPlace'
+import { InlineText } from './Inline'
 
-export default function Itinerary({
-  activeId,
-  onPick,
-}: {
-  activeId: string | null
-  onPick: (id: string) => void
-}) {
+export default function Itinerary() {
+  const { data, canEdit, numberOf } = useStore()
+  if (!data) return null
+  const days = [...data.days].sort((a, b) => a.sortOrder - b.sortOrder)
+
   return (
-    <div className="itinerary">
-      <header className="panel-head">
-        <h1>{trip.title}</h1>
-        <p>{trip.dateRange}</p>
-      </header>
-
-      {trip.sections.map((section) => (
-        <section className="sec" key={section.id}>
-          <div className="sec-head">
-            <div className="sec-when">
-              {section.dayLabel && <span className="sec-day">{section.dayLabel}</span>}
-              {section.dateLabel && <span className="sec-date">{section.dateLabel}</span>}
-            </div>
-            <h2 className="sec-focus">{section.title}</h2>
-          </div>
-          <div className="cards">
-            {section.places.map((p) => (
-              <PlaceCard
-                key={p.id}
-                place={p}
-                active={p.id === activeId}
-                onPick={onPick}
-              />
-            ))}
-          </div>
-        </section>
+    <div>
+      <div className="panel-head">
+        <h1>Itinerary</h1>
+        <p>{days.length} days · {data.places.filter((p) => p.dayId).length} stops</p>
+      </div>
+      {days.map((day, i) => (
+        <DaySection key={day.id} day={day} dayNumber={i + 1} canEdit={canEdit} numberOf={numberOf} />
       ))}
+    </div>
+  )
+}
+
+function DaySection({
+  day,
+  dayNumber,
+  canEdit,
+  numberOf,
+}: {
+  day: Day
+  dayNumber: number
+  canEdit: boolean
+  numberOf: (id: string) => number | null
+}) {
+  const { placesOfDay, patchDay, reorderWithinDay } = useStore()
+  const places = placesOfDay(day.id)
+  const [dragFrom, setDragFrom] = useState<number | null>(null)
+  const [dragOver, setDragOver] = useState<number | null>(null)
+
+  const onDrop = () => {
+    if (dragFrom != null && dragOver != null && dragFrom !== dragOver) {
+      reorderWithinDay(day.id, dragFrom, dragOver)
+    }
+    setDragFrom(null)
+    setDragOver(null)
+  }
+
+  return (
+    <section className="sec">
+      <div className="sec-head">
+        <div className="sec-when">
+          <span className="sec-day">Day {dayNumber}</span>
+          <span className="sec-date">{fmtDayDate(day.date)}</span>
+        </div>
+        <InlineText
+          as="div"
+          className="sec-focus"
+          value={day.title}
+          editable={canEdit}
+          placeholder="Name this day"
+          onCommit={(v) => patchDay(day.id, { title: v })}
+        />
+      </div>
+
+      {places.length === 0 && (
+        <div className="day-empty">No stops yet for this day.{canEdit ? ' Add the first below.' : ''}</div>
+      )}
+
+      <div className="cards">
+        {places.map((p, i) => (
+          <div key={p.id}>
+            <PlaceCard
+              place={p}
+              n={numberOf(p.id)}
+              canEdit={canEdit}
+              dragging={dragFrom === i}
+              onDragStart={() => setDragFrom(i)}
+              onDragOver={() => setDragOver(i)}
+              onDrop={onDrop}
+            />
+            {i < places.length - 1 && <DriveRow from={p} to={places[i + 1]} />}
+          </div>
+        ))}
+      </div>
+
+      {canEdit && <AddPlace dayId={day.id} dayTitle={day.title || `Day ${dayNumber}`} />}
+    </section>
+  )
+}
+
+function DriveRow({ from, to }: { from: Place; to: Place }) {
+  const [leg, setLeg] = useState<Leg | null>(null)
+  const [failed, setFailed] = useState(false)
+  const sameSpot =
+    from.lat != null && to.lat != null && from.lat === to.lat && from.lng === to.lng
+
+  useEffect(() => {
+    if (from.lat == null || from.lng == null || to.lat == null || to.lng == null || sameSpot) return
+    let live = true
+    routeLeg([from.lat, from.lng], [to.lat, to.lng]).then((l) => {
+      if (!live) return
+      if (l) setLeg(l)
+      else setFailed(true)
+    })
+    return () => {
+      live = false
+    }
+  }, [from.lat, from.lng, to.lat, to.lng, sameSpot])
+
+  if (from.lat == null || to.lat == null || sameSpot) return null
+
+  return (
+    <div className="drive-row">
+      <span className="drive-connector" aria-hidden />
+      <span className="drive-text">
+        {leg
+          ? `drive · ${fmtDuration(leg.durationMin)} · ${fmtDistance(leg.distanceMi)}`
+          : failed
+            ? 'drive · distance unavailable'
+            : 'drive · calculating…'}
+      </span>
     </div>
   )
 }

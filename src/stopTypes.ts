@@ -1,11 +1,22 @@
 import type { StopType } from './types'
 
-// One place to define how each stop type looks + reads.
+// The six (and only) category colors in the product. Per the design spec:
+// classic = the accent; instagram warmed off forbidden indigo-violet;
+// endpoint a warm near-black. These appear on 9–26px dots + map markers only.
 export const STOP: Record<StopType, { label: string; color: string }> = {
-  classic: { label: 'Classic stop', color: '#E05140' },
-  instagram: { label: 'Instagram stop', color: '#8B5CF6' },
-  relaxed: { label: 'Relaxed stop', color: '#27AE60' },
-  car: { label: 'Car stop', color: '#2D6CDF' },
-  optional: { label: 'Optional', color: '#9A8C7B' },
-  endpoint: { label: 'Start / End', color: '#2B2017' },
+  classic: { label: 'Classic stop', color: '#C8461E' },
+  instagram: { label: 'Viewpoint', color: '#9C5BB0' },
+  relaxed: { label: 'Sea & slow', color: '#2E8B6B' },
+  car: { label: 'Motor valley', color: '#2E6BB8' },
+  optional: { label: 'If time allows', color: '#9A8C7B' },
+  endpoint: { label: 'Start / End', color: '#3A2C1E' },
 }
+
+export const STOP_ORDER: StopType[] = [
+  'classic',
+  'instagram',
+  'relaxed',
+  'car',
+  'optional',
+  'endpoint',
+]

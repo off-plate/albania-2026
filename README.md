@@ -1,23 +1,31 @@
 # Italy 2026 — Trip Planner
 
-A private planner for the Ligurian Riviera road trip (2 couples, August 2026). It holds the map, the day-by-day plan, the stays, and who-paid-what. No online suggestions, no auto-fill. It only ever shows what we actually decide.
+A private, editable trip planner for the August 2026 Italy road trip. A self-hosted, one-to-one clone of the core Wanderlog planner, built so the trip survives an expiring subscription. You edit; everyone with the link views.
 
 **Live:** https://off-plate.github.io/italy-trip-2026/
 
-## How it works
+## What it does
 
-Everything on the site is rendered from one file: [`src/data/trip.ts`](src/data/trip.ts). That's the single source of truth.
+Two-pane layout (left = planner, right = live map), matching Wanderlog:
 
-Michael sends a place, a link, a price, a note. It gets written into `trip.ts`, committed, and the site redeploys. Data lives in git forever, so nothing is ever lost. Viewers (the other couple) just open the link.
+- **Overview** — trip title, dates, travelers, summary, free-text notes, a wishlist of un-scheduled places, a budget summary, and reservations.
+- **Itinerary** — day by day. Each stop is a card with a category color, note, scheduled time, and an optional per-place budget. Drive time and distance between consecutive stops are computed automatically. Drag to reorder; an "Add a place" search box geocodes and drops a pin.
+- **Budget** — total spent, a set budget with a meter, the expense list, and a per-person split / who-owes-who.
+- **Map** — numbered, category-colored markers, a route line per day, and a fly-to when you select a stop.
 
-Statuses are honest: `idea` → `shortlist` → `booked`. Nothing is invented.
+## Edit vs view
 
-## Sections
+- The trip data lives in **Supabase** (single source of truth, no localStorage, nothing lost).
+- **Viewers** open the link and get a clean read-only trip. No edit controls.
+- **The owner** signs in (the "Edit" button, password) and gets inline editing everywhere: click a title/note/time/budget to change it, search to add stops, drag to reorder, add/edit/delete expenses. Writes are locked to the owner's account by row-level security, server-side, so a shared link can't be used to change anything.
 
-- **Map** — every place with coordinates, pins by category (Leaflet + OpenStreetMap)
-- **Days** — the itinerary, built together as we decide it
-- **Stays** — lodging candidates with photos, price, links
-- **Money** — expenses with the split worked out per person against the ~20K Kč budget
+## Stack
+
+React + TypeScript + Vite, Leaflet + OpenStreetMap (free, no key), Photon for place search and OSRM for drive times (both free, no key), Supabase for data + auth. No paid APIs.
+
+## Data
+
+Tables are namespaced `italy_` in the shared Supabase project (`italy_trips`, `italy_days`, `italy_places`, `italy_expenses`, `italy_travelers`, `italy_reservations`). The trip is keyed by slug `italy-2026`.
 
 ## Develop
 
@@ -29,8 +37,8 @@ npm run build    # builds to docs/ for GitHub Pages
 
 Built to `docs/` and served by GitHub Pages at `/italy-trip-2026/`.
 
-## Also here (reference, not the website)
+## Also here (reference, not the app)
 
 - `locations.md` — the older plain-text master list (kept for history)
-- `research/` — the team's earlier research (routes, fuel, stays, food, costs)
-- `images/` — original source photos
+- `research/` — earlier route, fuel, stay and cost research
+- `public/stays/` — source photos

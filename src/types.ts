@@ -1,86 +1,106 @@
 // ── Data model ────────────────────────────────────────────────────────────
-// Everything the app shows comes from src/data/trip.ts. Edit that one file.
+// The trip lives in Supabase (tables prefixed italy_). The app loads it into
+// these shapes, edits optimistically, and writes back. No localStorage source.
 
-// Stop types, mirroring the planner's coloured dots.
 export type StopType =
-  | 'classic' // red — the must-see / iconic stops
-  | 'instagram' // purple — photogenic / viewpoint stops
-  | 'relaxed' // green — slow, sea, wine, easy nights
-  | 'car' // blue — motor-valley / car-themed
-  | 'optional' // grey — nice if there's time
-  | 'endpoint' // dark — start / end of the road trip
+  | 'classic' // accent — must-see / iconic
+  | 'instagram' // mauve — viewpoint / photogenic
+  | 'relaxed' // teal-green — sea & slow
+  | 'car' // blue — motor valley
+  | 'optional' // warm grey — if time allows
+  | 'endpoint' // near-black — start / end
+
+export type Currency = 'CZK' | 'EUR'
+export type ExpenseCategory = 'gas' | 'car' | 'lodging' | 'food' | 'activity' | 'other'
+export type ReservationKind = 'flight' | 'lodging' | 'car' | 'train' | 'other'
 
 export interface Place {
   id: string
-  /** Display + map marker number. */
-  n: number
+  dayId: string | null // null = un-scheduled (places to visit)
   name: string
   type: StopType
-  /** One short line, like the planner's blurb. */
   blurb: string
-  /** Longer factual description ("From the web"-style). Optional. */
-  about?: string
-  /** [lat, lng]. Omit for non-mappable items (e.g. a taxi service). */
-  coords?: [number, number]
-  /** Local photo path under public/, e.g. 'stays/badia/photo-01.jpg'. */
-  photo?: string
-  /** Optional external link. */
-  link?: string
+  about: string
+  lat: number | null
+  lng: number | null
+  photo: string | null
+  link: string | null
+  time: string | null // scheduled time, e.g. "14:30"
+  budgetAmount: number | null
+  budgetCurrency: Currency
+  visited: boolean
+  sortOrder: number
 }
 
-export interface Section {
+export interface Day {
   id: string
-  /** e.g. "Day 1" or "Days 8–9". */
-  dayLabel?: string
-  /** e.g. "Fri 21 Aug". */
-  dateLabel?: string
-  /** The focus of this stretch, e.g. "Prague to Lake Garda". */
+  date: string | null // ISO yyyy-mm-dd
   title: string
-  places: Place[]
-}
-
-export interface Reservation {
-  id: string
-  kind: 'flight' | 'lodging' | 'car' | 'train' | 'other'
-  title: string
-  detail?: string
-  dates?: string
-  price?: string
-  link?: string
-  photos?: string[]
+  budgetAmount: number | null
+  budgetCurrency: Currency
+  sortOrder: number
 }
 
 export interface Expense {
   id: string
+  dayId: string | null
+  placeId: string | null
   label: string
   amount: number
-  currency: 'EUR' | 'CZK'
-  category: 'gas' | 'car' | 'lodging' | 'food' | 'activity' | 'other'
-  paidBy: string // traveler id
-  splitAmong?: string[] // empty = everyone
-  date?: string
+  currency: Currency
+  category: ExpenseCategory
+  date: string | null
+  paidBy: string | null
+  splitAmong: string[] | null
+  sortOrder: number
 }
 
 export interface Traveler {
   id: string
   name: string
   initials: string
+  sortOrder: number
+}
+
+export interface Reservation {
+  id: string
+  kind: ReservationKind
+  title: string
+  detail: string | null
+  dates: string | null
+  price: string | null
+  link: string | null
+  sortOrder: number
 }
 
 export interface Trip {
+  id: string
+  slug: string
   title: string
-  dateRange: string
-  heroPhoto?: string
+  dateStart: string | null
+  dateEnd: string | null
   summary: string
-  travelers: Traveler[]
-  /** Working FX rate for showing EUR expenses in CZK. */
-  eurToCzk: number
-  /** Optional per-person budget in CZK (for the budget bar). */
-  budgetPerPersonCZK?: number
   notes: string
+  heroPhoto: string | null
+  eurToCzk: number
+  budgetTotalCzk: number | null
   mapCenter: [number, number]
   mapZoom: number
-  sections: Section[]
+}
+
+export interface TripData {
+  trip: Trip
+  days: Day[]
+  places: Place[]
+  travelers: Traveler[]
   reservations: Reservation[]
   expenses: Expense[]
+}
+
+/** A scheduled place with its computed marker number + day position. */
+export interface NumberedPlace {
+  place: Place
+  n: number
+  dayId: string
+  dayIndex: number
 }

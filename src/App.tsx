@@ -1,48 +1,61 @@
-import { useMemo, useState } from 'react'
-import { trip } from './data/trip'
-import type { Place } from './types'
+import { StoreProvider, useStore } from './store'
 import TopBar from './components/TopBar'
 import Rail from './components/Rail'
 import Overview from './components/Overview'
-import Notes from './components/Notes'
 import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
-import Split from './components/Split'
 import MapPane from './components/MapPane'
+import Snackbar from './components/Snackbar'
 
-export type View = 'overview' | 'notes' | 'itinerary' | 'budget' | 'split'
-
-export default function App() {
-  const [view, setView] = useState<View>('overview')
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const [showMapMobile, setShowMapMobile] = useState(false)
-
-  const allPlaces = useMemo<Place[]>(
-    () => trip.sections.flatMap((s) => s.places).filter((p) => p.coords),
-    [],
-  )
+function Shell() {
+  const { view, loading, error, data, mapMobileOpen } = useStore()
 
   return (
     <div className="shell">
       <div className="left">
-        <TopBar onToggleMap={() => setShowMapMobile((v) => !v)} mapOpen={showMapMobile} />
+        <TopBar />
         <div className="left-body">
-          <Rail view={view} setView={setView} />
+          <Rail />
           <div className="panel">
-            {view === 'overview' && <Overview setView={setView} onPick={setActiveId} />}
-            {view === 'notes' && <Notes />}
-            {view === 'itinerary' && (
-              <Itinerary activeId={activeId} onPick={setActiveId} />
+            {loading && !data && (
+              <div className="boot">
+                <div className="boot-skel" />
+                <div className="boot-skel" />
+                <div className="boot-skel short" />
+                <p>Loading your trip…</p>
+              </div>
             )}
-            {view === 'budget' && <Budget />}
-            {view === 'split' && <Split />}
+            {error && !data && (
+              <div className="boot-error">
+                <p>We couldn’t load this trip.</p>
+                <span>{error}</span>
+              </div>
+            )}
+            {data && (
+              <>
+                {view === 'overview' && <Overview />}
+                {view === 'itinerary' && <Itinerary />}
+                {view === 'budget' && <Budget />}
+              </>
+            )}
           </div>
         </div>
       </div>
 
-      <div className={showMapMobile ? 'map-col map-col-open' : 'map-col'}>
-        <MapPane places={allPlaces} activeId={activeId} onPick={setActiveId} />
+      <div className={mapMobileOpen ? 'map-col map-col-open' : 'map-col'}>
+        <MapPane />
       </div>
+
+      {error && data && <div className="toast">{error}</div>}
+      <Snackbar />
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <StoreProvider>
+      <Shell />
+    </StoreProvider>
   )
 }
