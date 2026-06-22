@@ -1,4 +1,28 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { Fragment, useEffect, useId, useRef, useState } from 'react'
+
+// Render free text, turning URLs into clickable links. Airbnb room links get a
+// friendly label; other links show their host. Each URL on its own line.
+export function Linkify({ text, className }: { text: string; className?: string }) {
+  if (!text) return null
+  const parts = text.split(/(https?:\/\/[^\s]+)/g)
+  let airbnbN = 0
+  return (
+    <div className={className} style={{ whiteSpace: 'pre-wrap' }}>
+      {parts.map((part, i) => {
+        if (/^https?:\/\//.test(part)) {
+          let label = part.replace(/^https?:\/\//, '').split('/')[0]
+          if (/airbnb\./i.test(part)) label = `Airbnb option ${++airbnbN}`
+          return (
+            <a key={i} href={part} target="_blank" rel="noreferrer" className="note-link">
+              {label} →
+            </a>
+          )
+        }
+        return <Fragment key={i}>{part}</Fragment>
+      })}
+    </div>
+  )
+}
 
 // Click-to-edit primitives. One coherent pattern app-wide (per the design spec):
 // resting state reads as plain text; click turns it into an input in place;

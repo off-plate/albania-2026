@@ -36,6 +36,7 @@ export interface Day {
   id: string
   date: string | null // ISO yyyy-mm-dd
   title: string
+  note: string // free text, may contain links (e.g. Airbnb stay options)
   budgetAmount: number | null
   budgetCurrency: Currency
   sortOrder: number

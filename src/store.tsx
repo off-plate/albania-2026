@@ -50,6 +50,7 @@ function dayRow(d: Partial<Day>): Record<string, any> {
   const r: Record<string, any> = {}
   if ('date' in d) r.date = d.date
   if ('title' in d) r.title = d.title
+  if ('note' in d) r.note = d.note
   if ('budgetAmount' in d) r.budget_amount = d.budgetAmount
   if ('budgetCurrency' in d) r.budget_currency = d.budgetCurrency
   if ('sortOrder' in d) r.sort_order = d.sortOrder

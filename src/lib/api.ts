@@ -36,6 +36,7 @@ function toDay(r: any): Day {
     id: r.id,
     date: r.date,
     title: r.title ?? '',
+    note: r.note ?? '',
     budgetAmount: num(r.budget_amount),
     budgetCurrency: (r.budget_currency ?? 'CZK') as Currency,
     sortOrder: r.sort_order ?? 0,

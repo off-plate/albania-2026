@@ -177,6 +177,8 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .sec-day { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; background: var(--accent); padding: 3px 9px; border-radius: 999px; }
 .sec-date { font-size: 13px; color: var(--ink-faint); }
 .sec-focus { font-family: var(--serif); font-weight: 500; font-size: 22px; margin-top: 8px; display: block; }
+.sec-note { font-size: 13.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.55; }
+.note-link { display: inline-block; font-weight: 600; color: var(--accent-deep); margin: 1px 0; }
 .day-empty { font-size: 13px; color: var(--ink-faint); padding: 10px 14px; border: 1px dashed var(--line); border-radius: var(--radius); margin-bottom: 10px; }
 .cards { display: flex; flex-direction: column; gap: 10px; }
 
