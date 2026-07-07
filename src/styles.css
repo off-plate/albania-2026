@@ -413,6 +413,15 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .est-n { font-family: var(--serif, Georgia, serif); font-size: 26px; margin-top: 2px; color: var(--ink); }
 .est-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
 
+/* ── Stay markers on the map ── */
+.mk-stay {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #2B2017; color: #fff; font-size: 15px; line-height: 1;
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.45);
+}
+.mk-stay-fav { background: #e2552d; }
+
 /* ── Short-trip note ── */
 .short-note {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;

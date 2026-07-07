@@ -18,6 +18,8 @@ export interface StayOption {
   link: string
   favorite?: boolean
   note?: string
+  lat?: number
+  lng?: number
 }
 
 // Kratší, 8denní varianta: víc levnějších ubytování kolem 25 000 Kč.
@@ -47,6 +49,8 @@ export const STAY_OPTIONS: StayOption[] = [
     link: 'https://www.airbnb.com/rooms/1213765894851725573?check_in=2026-08-14&check_out=2026-08-23&adults=4',
     favorite: true,
     note: 'Your pick. 2 bedrooms, garden, beach resort.',
+    lat: 41.5089,
+    lng: 19.4636,
   },
   {
     id: 's-durres-beachfront',
@@ -62,6 +66,8 @@ export const STAY_OPTIONS: StayOption[] = [
     link: 'https://www.airbnb.com/rooms/50289628?check_in=2026-08-14&check_out=2026-08-22&adults=4',
     favorite: true,
     note: 'Your pick. One night shorter, but stunning and right on the beach.',
+    lat: 41.3117,
+    lng: 19.4547,
   },
   {
     id: 's-durres-resort',
@@ -76,6 +82,8 @@ export const STAY_OPTIONS: StayOption[] = [
     image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ0MjU1MDkyNjA2MDg4MjI1OQ==/original/60a13f8a-a8af-41ea-a227-ca7819429854.jpeg?im_w=720',
     link: 'https://www.airbnb.com/rooms/1442550926060882259?check_in=2026-08-14&check_out=2026-08-23&adults=4',
     note: 'Resort by the beach. 1 bedroom, 3 beds.',
+    lat: 41.305,
+    lng: 19.46,
   },
   {
     id: 's-vila-kristiano',
@@ -88,6 +96,8 @@ export const STAY_OPTIONS: StayOption[] = [
     image: 'https://vila-kristiano.al/img/deluxe-ap1-1.jpg',
     link: 'https://vila-kristiano.al/index.html',
     note: 'Price on request. Right in Ksamil, the swim-to-islands spot.',
+    lat: 39.7679,
+    lng: 20.0018,
   },
   {
     id: 's-tale',
@@ -102,5 +112,7 @@ export const STAY_OPTIONS: StayOption[] = [
     image: 'https://a0.muscache.com/im/pictures/miso/Hosting-1420791314326537498/original/4e254031-244f-466f-807d-9c5dbda03769.jpeg?im_w=720',
     link: 'https://www.airbnb.com/rooms/1420791314326537498?check_in=2026-08-14&check_out=2026-08-23&adults=4',
     note: 'Cheapest option. 1 bedroom, 3 beds.',
+    lat: 41.8256,
+    lng: 19.5844,
   },
 ]

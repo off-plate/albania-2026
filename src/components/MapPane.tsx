@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-
 import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
+import { STAY_OPTIONS } from '../data/stayOptions'
+import { fmtCZK } from '../lib/format'
 
 function markerIcon(color: string, n: number, active: boolean) {
   return L.divIcon({
@@ -10,6 +12,16 @@ function markerIcon(color: string, n: number, active: boolean) {
     html: `<div class="mk ${active ? 'mk-active' : ''}" style="background:${color}">${n}</div>`,
     iconSize: active ? [30, 30] : [24, 24],
     iconAnchor: active ? [15, 15] : [12, 12],
+  })
+}
+
+// Distinct marker for candidate stays: a home glyph, accent for favourites.
+function stayIcon(fav: boolean) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="mk-stay ${fav ? 'mk-stay-fav' : ''}">⌂</div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
   })
 }
 
@@ -81,6 +93,25 @@ export default function MapPane() {
           </Marker>
         )
       })}
+      {STAY_OPTIONS.filter((s) => s.lat != null && s.lng != null).map((s) => (
+        <Marker
+          key={s.id}
+          position={[s.lat as number, s.lng as number]}
+          icon={stayIcon(!!s.favorite)}
+          zIndexOffset={600}
+        >
+          <Popup>
+            <strong>{s.label}</strong>
+            <span className="pop-type" style={{ color: '#e2552d' }}>
+              {s.favorite ? '★ Michael likes this · ' : ''}Ubytování
+            </span>
+            <span className="pop-blurb">
+              {s.place} · {s.totalCzk != null ? fmtCZK(s.totalCzk) : 'cena na vyžádání'}
+            </span>
+            <a href={s.link} target="_blank" rel="noreferrer">Otevřít →</a>
+          </Popup>
+        </Marker>
+      ))}
       <FlyTo target={flyTarget} />
     </MapContainer>
   )
