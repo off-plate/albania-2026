@@ -403,6 +403,19 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .stay-flights a { font-weight: 600; }
 .stay-price-req { font-size: 15px; font-weight: 700; color: var(--ink-soft); }
 
+/* ── Car rental ── */
+.car-cost { font-size: 14px; color: var(--accent-deep); font-weight: 600; margin: -2px 0 10px; }
+.car-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.car {
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--surface);
+}
+.car-top { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.14); }
+.car-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.car-name { font-weight: 600; font-size: 15px; }
+.car-rating { font-size: 13px; color: var(--accent-deep); font-weight: 600; white-space: nowrap; }
+.car-reviews { color: var(--ink-faint); font-weight: 400; }
+.car-note { font-size: 13px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .shell { display: block; height: 100%; }

@@ -6,6 +6,7 @@ import { asset } from '../lib/asset'
 import type { Reservation } from '../types'
 import { InlineText } from './Inline'
 import { STAY_OPTIONS, FLIGHTS } from '../data/stayOptions'
+import { CAR_RENTALS, CAR_TRIP_COST } from '../data/carRentals'
 
 const RES_KINDS: Reservation['kind'][] = ['flight', 'lodging', 'car', 'train', 'other']
 
@@ -70,6 +71,9 @@ export default function Overview() {
 
       {/* B2. where to stay — candidate stays to choose from */}
       <StayOptions />
+
+      {/* B3. car rental options */}
+      <CarRentals />
 
       {/* C. notes */}
       <div className="ov-h">Notes</div>
@@ -211,6 +215,29 @@ function StayOptions() {
         <a href={FLIGHTS.long.link} target="_blank" rel="noreferrer">{FLIGHTS.long.dates}: {fmtCZK(FLIGHTS.long.perPersonCzk)}</a>
         <a href={FLIGHTS.short.link} target="_blank" rel="noreferrer">{FLIGHTS.short.dates}: {fmtCZK(FLIGHTS.short.perPersonCzk)}</a>
       </div>
+    </>
+  )
+}
+
+function CarRentals() {
+  return (
+    <>
+      <div className="ov-h">Rent a car · půjčovny u letiště</div>
+      <div className="car-cost">{CAR_TRIP_COST}</div>
+      <ul className="car-list">
+        {CAR_RENTALS.map((c) => (
+          <li className={`car ${c.top ? 'car-top' : ''}`} key={c.name}>
+            <div className="car-head">
+              <span className="car-name">{c.name}</span>
+              <span className="car-rating">
+                ★ {c.rating.toFixed(1)}
+                <span className="car-reviews"> · {c.reviews.toLocaleString('cs-CZ')} recenzí</span>
+              </span>
+            </div>
+            <div className="car-note">{c.note}</div>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
