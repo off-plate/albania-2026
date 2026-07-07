@@ -5,6 +5,7 @@ import { fmtCZK, fmtDateRange, toCZK } from '../lib/format'
 import { asset } from '../lib/asset'
 import type { Reservation } from '../types'
 import { InlineText } from './Inline'
+import { STAY_OPTIONS, FLIGHTS } from '../data/stayOptions'
 
 const RES_KINDS: Reservation['kind'][] = ['flight', 'lodging', 'car', 'train', 'other']
 
@@ -66,6 +67,9 @@ export default function Overview() {
       <div className="ov-stats">
         {days.length} days · {stopCount} stops · {travelers.length} travelers · {fmtCZK(spent)} planned
       </div>
+
+      {/* B2. where to stay — candidate stays to choose from */}
+      <StayOptions />
 
       {/* C. notes */}
       <div className="ov-h">Notes</div>
@@ -155,6 +159,58 @@ function PlacesToVisit() {
           ))}
         </ul>
       )}
+    </>
+  )
+}
+
+function StayOptions() {
+  const perPerson = (totalCzk: number, flight: number) => Math.round(totalCzk / 4 + flight)
+  return (
+    <>
+      <div className="ov-h">Where to stay — pick one</div>
+      <div className="stay-grid">
+        {STAY_OPTIONS.map((s) => (
+          <a className={`stay-opt ${s.favorite ? 'stay-fav' : ''}`} key={s.id} href={s.link} target="_blank" rel="noreferrer">
+            <div className="stay-img" style={{ backgroundImage: `url(${s.image})` }}>
+              {s.favorite && <span className="stay-badge">★ Michael likes this</span>}
+            </div>
+            <div className="stay-info">
+              <div className="stay-top">
+                <span className="stay-place">{s.place}</span>
+                {s.rating != null && <span className="stay-rating">★ {s.rating.toFixed(2)}</span>}
+              </div>
+              <div className="stay-label">{s.label}</div>
+              <div className="stay-beds">{s.beds}</div>
+              <div className="stay-price-row">
+                {s.totalCzk != null ? (
+                  <span className="stay-total">{fmtCZK(s.totalCzk)}</span>
+                ) : (
+                  <span className="stay-price-req">Price on request</span>
+                )}
+                <span className="stay-nights">{s.nights} nights</span>
+              </div>
+              <div className="stay-pp">
+                {s.totalCzk != null ? (
+                  <>
+                    ≈ {fmtCZK(perPerson(s.totalCzk, s.flightPerPersonCzk))} / person
+                    <span className="stay-pp-sub"> incl. flight</span>
+                  </>
+                ) : (
+                  <>
+                    + {fmtCZK(s.flightPerPersonCzk)} / person flight
+                  </>
+                )}
+              </div>
+              {s.note && <div className="stay-note">{s.note}</div>}
+            </div>
+          </a>
+        ))}
+      </div>
+      <div className="stay-flights">
+        <span className="stay-flights-h">Flights, Prague ↔ Tirana (per person)</span>
+        <a href={FLIGHTS.long.link} target="_blank" rel="noreferrer">{FLIGHTS.long.dates}: {fmtCZK(FLIGHTS.long.perPersonCzk)}</a>
+        <a href={FLIGHTS.short.link} target="_blank" rel="noreferrer">{FLIGHTS.short.dates}: {fmtCZK(FLIGHTS.short.perPersonCzk)}</a>
+      </div>
     </>
   )
 }
