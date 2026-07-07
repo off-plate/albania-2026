@@ -20,6 +20,12 @@ export interface StayOption {
   note?: string
 }
 
+// Kratší, 8denní varianta: víc levnějších ubytování kolem 25 000 Kč.
+export const SHORT_TRIP = {
+  note: '8denní varianta (14.–21. 8., 7 nocí): spousta albánských ubytování kolem 25 000 Kč.',
+  link: 'https://www.airbnb.com/s/Albania/homes?refinement_paths%5B%5D=%2Fhomes&checkin=2026-08-14&checkout=2026-08-21&adults=4&guests=4',
+}
+
 // Flights (round trip, Prague ↔ Tirana, 4 people)
 export const FLIGHTS = {
   long: { perPersonCzk: 4800, dates: '14–23 Aug', link: 'https://www.skyscanner.cz/doprava/lety/prg/tira/260814/260823/config/15538-2608140600--31915-0-16911-2608140755%7C16911-2608231525--30596-0-15538-2608231730?adultsv2=4&cabinclass=economy&rtn=1' },

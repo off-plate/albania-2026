@@ -5,8 +5,9 @@ import { fmtCZK, fmtDateRange, toCZK } from '../lib/format'
 import { asset } from '../lib/asset'
 import type { Reservation } from '../types'
 import { InlineText } from './Inline'
-import { STAY_OPTIONS, FLIGHTS } from '../data/stayOptions'
+import { STAY_OPTIONS, FLIGHTS, SHORT_TRIP } from '../data/stayOptions'
 import { CAR_RENTALS, CAR_TRIP_COST, CAR_TRIP_MIN, CAR_TRIP_MAX } from '../data/carRentals'
+import { TRAVEL_OPTIONS, TRAVEL_KIND_LABEL } from '../data/travelOptions'
 import { applyBudgetOverride } from '../lib/budgetOverride'
 
 const RES_KINDS: Reservation['kind'][] = ['flight', 'lodging', 'car', 'train', 'other']
@@ -76,6 +77,9 @@ export default function Overview() {
 
       {/* B3. car rental options */}
       <CarRentals />
+
+      {/* B4. travel options — things to do & boat tours */}
+      <TravelOptions />
 
       {/* C. notes */}
       <div className="ov-h">Notes</div>
@@ -230,6 +234,34 @@ function StayOptions() {
         <div className="est-n">{fmtCZK(estMin)} – {fmtCZK(estMax)}</div>
         <div className="est-sub">ubytování + let + podíl na autě, bez jídla a útraty</div>
       </div>
+
+      <a className="short-note" href={SHORT_TRIP.link} target="_blank" rel="noreferrer">
+        <span className="short-note-txt">{SHORT_TRIP.note}</span>
+        <span className="short-note-link">Prohlédnout na Airbnb →</span>
+      </a>
+    </>
+  )
+}
+
+function TravelOptions() {
+  return (
+    <>
+      <div className="ov-h">Travel options · co dělat a za kolik</div>
+      <ul className="trip-list">
+        {TRAVEL_OPTIONS.map((t) => (
+          <li className="trip" key={t.name}>
+            <span className={`trip-kind trip-${t.kind}`}>{TRAVEL_KIND_LABEL[t.kind]}</span>
+            <div className="trip-main">
+              <div className="trip-top">
+                <span className="trip-name">{t.name}</span>
+                <span className="trip-price">{t.price}</span>
+              </div>
+              <div className="trip-area">{t.area}</div>
+              <div className="trip-note">{t.note}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }

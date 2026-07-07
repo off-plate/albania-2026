@@ -413,6 +413,37 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .est-n { font-family: var(--serif, Georgia, serif); font-size: 26px; margin-top: 2px; color: var(--ink); }
 .est-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
 
+/* ── Short-trip note ── */
+.short-note {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+  margin-top: 10px; padding: 10px 14px; border-radius: 10px;
+  background: var(--surface); border: 1px dashed var(--line);
+  text-decoration: none; color: var(--ink-soft); font-size: 13.5px;
+}
+.short-note:hover { text-decoration: none; border-color: var(--accent); }
+.short-note-link { color: var(--accent-deep); font-weight: 600; }
+
+/* ── Travel options ── */
+.trip-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.trip {
+  display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--surface);
+}
+.trip-kind {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: #fff; padding: 3px 8px; border-radius: 999px; white-space: nowrap; margin-top: 2px;
+}
+.trip-boat { background: #2E6BB8; }
+.trip-sight { background: #9C5BB0; }
+.trip-daytrip { background: #C8461E; }
+.trip-beach { background: #27AE60; }
+.trip-main { min-width: 0; }
+.trip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.trip-name { font-weight: 600; font-size: 15px; }
+.trip-price { font-size: 13px; color: var(--accent-deep); font-weight: 600; white-space: nowrap; }
+.trip-area { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin-top: 1px; }
+.trip-note { font-size: 13px; color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
+
 /* ── Car rental ── */
 .car-cost { font-size: 14px; color: var(--accent-deep); font-weight: 600; margin: -2px 0 10px; }
 .car-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
