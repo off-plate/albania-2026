@@ -2,7 +2,7 @@
 
 A private, editable trip planner for the August 2026 Italy road trip. A self-hosted, one-to-one clone of the core Wanderlog planner, built so the trip survives an expiring subscription. You edit; everyone with the link views.
 
-**Live:** https://off-plate.github.io/italy-trip-2026/
+**Live:** https://off-plate.github.io/albania-2026/
 
 ## What it does
 
@@ -35,7 +35,7 @@ npm run dev      # local dev
 npm run build    # builds to docs/ for GitHub Pages
 ```
 
-Built to `docs/` and served by GitHub Pages at `/italy-trip-2026/`.
+Built to `docs/` and served by GitHub Pages at `/albania-2026/`.
 
 ## Also here (reference, not the app)
 

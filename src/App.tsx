@@ -7,17 +7,17 @@ import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
 import MapPane from './components/MapPane'
 import Snackbar from './components/Snackbar'
-import Hub from './components/Hub'
 
-// Hash routing, so it works on static GitHub Pages with no server rewrites:
-//   #/            → packages hub
-//   #/italy-2026  → that trip's planner
-function useRouteSlug(): string | null {
+// This deployment is the Albania trip. The root URL loads it directly; no hub,
+// no hash needed. (Other trip slugs still work as #/<slug> if ever needed.)
+const DEFAULT_SLUG = 'albania-2026'
+
+function useRouteSlug(): string {
   const read = () => {
     const h = window.location.hash.replace(/^#\/?/, '').trim()
-    return h || null
+    return h || DEFAULT_SLUG
   }
-  const [slug, setSlug] = useState<string | null>(read)
+  const [slug, setSlug] = useState<string>(read)
   useEffect(() => {
     const on = () => setSlug(read())
     window.addEventListener('hashchange', on)
@@ -73,7 +73,6 @@ function Shell() {
 
 export default function App() {
   const slug = useRouteSlug()
-  if (!slug) return <Hub />
   return (
     <StoreProvider slug={slug} key={slug}>
       <Shell />

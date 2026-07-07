@@ -9,5 +9,5 @@ export const supabase = createClient(url, anonKey, {
   auth: { persistSession: true, autoRefreshToken: true },
 })
 
-export const TRIP_SLUG = 'italy-2026'
+export const TRIP_SLUG = 'albania-2026'
 export const EDITOR_EMAIL = 'mihael.florian@gmail.com'
