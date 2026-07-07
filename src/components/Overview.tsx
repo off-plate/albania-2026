@@ -6,7 +6,7 @@ import { asset } from '../lib/asset'
 import type { Reservation } from '../types'
 import { InlineText } from './Inline'
 import { STAY_OPTIONS, FLIGHTS } from '../data/stayOptions'
-import { CAR_RENTALS, CAR_TRIP_COST } from '../data/carRentals'
+import { CAR_RENTALS, CAR_TRIP_COST, CAR_TRIP_MIN, CAR_TRIP_MAX } from '../data/carRentals'
 
 const RES_KINDS: Reservation['kind'][] = ['flight', 'lodging', 'car', 'train', 'other']
 
@@ -169,6 +169,13 @@ function PlacesToVisit() {
 
 function StayOptions() {
   const perPerson = (totalCzk: number, flight: number) => Math.round(totalCzk / 4 + flight)
+
+  // Live budget estimate from the remaining priced stays (+ flight + car share).
+  const priced = STAY_OPTIONS.filter((s) => s.totalCzk != null)
+  const stayPlusFlight = priced.map((s) => perPerson(s.totalCzk as number, s.flightPerPersonCzk))
+  const estMin = Math.min(...stayPlusFlight) + Math.round(CAR_TRIP_MIN / 4)
+  const estMax = Math.max(...stayPlusFlight) + Math.round(CAR_TRIP_MAX / 4)
+
   return (
     <>
       <div className="ov-h">Where to stay — pick one</div>
@@ -214,6 +221,12 @@ function StayOptions() {
         <span className="stay-flights-h">Flights, Prague ↔ Tirana (per person)</span>
         <a href={FLIGHTS.long.link} target="_blank" rel="noreferrer">{FLIGHTS.long.dates}: {fmtCZK(FLIGHTS.long.perPersonCzk)}</a>
         <a href={FLIGHTS.short.link} target="_blank" rel="noreferrer">{FLIGHTS.short.dates}: {fmtCZK(FLIGHTS.short.perPersonCzk)}</a>
+      </div>
+
+      <div className="est">
+        <div className="est-h">Odhad na osobu</div>
+        <div className="est-n">{fmtCZK(estMin)} – {fmtCZK(estMax)}</div>
+        <div className="est-sub">ubytování + let + podíl na autě, bez jídla a útraty</div>
       </div>
     </>
   )

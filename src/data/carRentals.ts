@@ -10,7 +10,9 @@ export interface CarRental {
   top?: boolean // highlight
 }
 
-// Odhad ceny za auto na celý výlet.
+// Odhad ceny za auto na celý výlet (za celou skupinu, ne na osobu).
+export const CAR_TRIP_MIN = 5000
+export const CAR_TRIP_MAX = 8000
 export const CAR_TRIP_COST = '≈ 5 000–8 000 Kč za celý výlet'
 
 export const CAR_RENTALS: CarRental[] = [

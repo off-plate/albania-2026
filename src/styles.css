@@ -403,6 +403,16 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .stay-flights a { font-weight: 600; }
 .stay-price-req { font-size: 15px; font-weight: 700; color: var(--ink-soft); }
 
+/* ── Budget estimate (from remaining stays) ── */
+.est {
+  margin-top: 12px; padding: 14px 16px;
+  border: 1px solid var(--accent); border-radius: 12px;
+  background: rgba(226,85,45,0.06);
+}
+.est-h { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); }
+.est-n { font-family: var(--serif, Georgia, serif); font-size: 26px; margin-top: 2px; color: var(--ink); }
+.est-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
 /* ── Car rental ── */
 .car-cost { font-size: 14px; color: var(--accent-deep); font-weight: 600; margin: -2px 0 10px; }
 .car-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
