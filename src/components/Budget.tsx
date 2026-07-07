@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useStore } from '../store'
 import type { Currency, ExpenseCategory } from '../types'
 import { fmtCZK, fmtMoney, toCZK } from '../lib/format'
+import { applyBudgetOverride } from '../lib/budgetOverride'
 import { InlineText, InlineNumberChip } from './Inline'
 
 const CATS: { key: ExpenseCategory; label: string; color: string }[] = [
@@ -18,7 +19,9 @@ export default function Budget() {
   const { data, canEdit, patchTrip, patchExpense, deleteExpense } = useStore()
   const [adding, setAdding] = useState(false)
   if (!data) return null
-  const { trip, expenses, travelers } = data
+  const { trip, travelers } = data
+  // Viewer sees corrected real-price figures; owner-editor sees raw DB rows.
+  const expenses = canEdit ? data.expenses : applyBudgetOverride(data.expenses, trip)
 
   const spent = expenses.reduce((s, e) => s + toCZK(e, trip), 0)
   const budget = trip.budgetTotalCzk
@@ -163,9 +166,10 @@ function ExpenseComposer({ onClose }: { onClose: () => void }) {
 }
 
 function Split() {
-  const { data } = useStore()
+  const { data, canEdit } = useStore()
   if (!data) return null
-  const { trip, travelers, expenses } = data
+  const { trip, travelers } = data
+  const expenses = canEdit ? data.expenses : applyBudgetOverride(data.expenses, trip)
   if (travelers.length === 0) return <div className="ov-empty">Add travelers to split costs.</div>
 
   const total = expenses.reduce((s, e) => s + toCZK(e, trip), 0)

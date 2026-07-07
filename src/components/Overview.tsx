@@ -7,6 +7,7 @@ import type { Reservation } from '../types'
 import { InlineText } from './Inline'
 import { STAY_OPTIONS, FLIGHTS } from '../data/stayOptions'
 import { CAR_RENTALS, CAR_TRIP_COST, CAR_TRIP_MIN, CAR_TRIP_MAX } from '../data/carRentals'
+import { applyBudgetOverride } from '../lib/budgetOverride'
 
 const RES_KINDS: Reservation['kind'][] = ['flight', 'lodging', 'car', 'train', 'other']
 
@@ -15,7 +16,8 @@ export default function Overview() {
   if (!data) return null
   const { trip, travelers, days, places, expenses } = data
 
-  const spent = expenses.reduce((s, e) => s + toCZK(e, trip), 0)
+  const shownExpenses = canEdit ? expenses : applyBudgetOverride(expenses, trip)
+  const spent = shownExpenses.reduce((s, e) => s + toCZK(e, trip), 0)
   const budget = trip.budgetTotalCzk
   const stopCount = places.filter((p) => p.dayId).length
 
