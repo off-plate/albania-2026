@@ -70,15 +70,7 @@ export default function Plans() {
             <ul className="var-cost-rows">
               <li><span>Ubytování</span><span>{fmtCZK(cost.stay)}</span></li>
               <li><span>Letenky (koupeno, {fmtCZK(cost.flightPp)}/os.)</span><span>{fmtCZK(cost.flight)}</span></li>
-              <li>
-                <span>
-                  Půjčení auta
-                  {active.carRentalLink && (
-                    <> · <a className="var-cost-link" href={active.carRentalLink} target="_blank" rel="noreferrer">{active.carRentalName ?? 'odkaz'} →</a></>
-                  )}
-                </span>
-                <span>{fmtCZK(cost.car)}</span>
-              </li>
+              <li><span>Půjčení auta (nejdražší varianta)</span><span>{fmtCZK(cost.car)}</span></li>
               <li>
                 <span>Benzín (paušál, tam i zpět)</span>
                 <span>{fmtCZK(cost.fuel)}</span>
@@ -87,6 +79,23 @@ export default function Plans() {
             <div className="var-cost-note">
               Ubytování = nejdražší varianta v každé základně. Bez jídla a útraty.
             </div>
+            {active.carOptions && (
+              <div className="var-cost-note">
+                Auto:{' '}
+                {active.carOptions.map((o, i) => (
+                  <span key={o.name}>
+                    {i > 0 && ' · '}
+                    {o.link ? (
+                      <a className="var-cost-link" href={o.link} target="_blank" rel="noreferrer">
+                        {o.name} {fmtCZK(o.priceCzk)} →
+                      </a>
+                    ) : (
+                      `${o.name} ${fmtCZK(o.priceCzk)}`
+                    )}
+                  </span>
+                ))}
+              </div>
+            )}
             {cost.missingLodging.length > 0 && (
               <div className="var-cost-warn">
                 ⚠ Chybí ubytování: {cost.missingLodging.join(', ')}. Cena je zatím neúplná.

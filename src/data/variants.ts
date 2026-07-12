@@ -60,8 +60,7 @@ export interface PlanVariant {
   flightPpCzk?: number
   flightTotalCzk?: number // reálná koupená cena letenek za všechny 4
   carRentalCzk?: number
-  carRentalName?: string
-  carRentalLink?: string
+  carOptions?: { name: string; priceCzk: number; link?: string }[]
   fuelCzk?: number
 }
 
@@ -76,7 +75,9 @@ export function variantCost(v: PlanVariant) {
   const missingLodging = v.stints.filter((st) => !st.lodging?.length).map((st) => st.base)
   const flight = v.flightTotalCzk ?? (v.flightPpCzk ?? FLIGHT_PP_CZK) * 4
   const flightPp = Math.round(flight / 4)
-  const car = v.carRentalCzk ?? CAR_RENTAL_CZK
+  const car = v.carOptions?.length
+    ? Math.max(...v.carOptions.map((o) => o.priceCzk))
+    : v.carRentalCzk ?? CAR_RENTAL_CZK
   const fuel = v.fuelCzk ?? FUEL_TOTAL_CZK
   const total = stay + flight + car + fuel
   return { stay, flight, flightPp, car, fuel, total, perPerson: Math.round(total / 4), missingLodging }
@@ -128,8 +129,10 @@ export const VARIANTS: PlanVariant[] = [
     tagline: 'Durrës 2 noci, Vlorë 2 noci, Sarandë 4 noci (18.–22.), pak domů.',
     dateRange: '14.–22. 8.',
     flightTotalCzk: 19463,
-    carRentalCzk: 10000,
-    carRentalName: 'Audi A6 (Alpha Rent, odhad ~10 000)',
+    carOptions: [
+      { name: 'Audi A6 (Alpha Rent)', priceCzk: 10000 },
+      { name: 'Audi A6 (24-7 Rental)', priceCzk: 8500, link: 'https://24-7rentalcar.com/cars/audi-a6/' },
+    ],
     stints: [
       { base: 'Durrës', dates: '14.–16. 8.', nights: 2, lodging: DURRES_LODGING },
       { base: 'Vlorë', dates: '16.–18. 8.', nights: 2, lodging: VLORE_LODGING },
