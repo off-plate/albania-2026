@@ -28,7 +28,7 @@ function useRouteSlug(): string {
 }
 
 function Shell() {
-  const { view, loading, error, data, mapMobileOpen } = useStore()
+  const { view, mapMobileOpen } = useStore()
 
   return (
     <div className="shell">
@@ -37,30 +37,11 @@ function Shell() {
         <div className="left-body">
           <Rail />
           <div className="panel">
-            {/* Plans is code-only, always available (does not wait for the DB). */}
+            {/* All views are variant-driven now; no wait for the DB. */}
             {view === 'plans' && <Plans />}
-
-            {view !== 'plans' && loading && !data && (
-              <div className="boot">
-                <div className="boot-skel" />
-                <div className="boot-skel" />
-                <div className="boot-skel short" />
-                <p>Loading your trip…</p>
-              </div>
-            )}
-            {view !== 'plans' && error && !data && (
-              <div className="boot-error">
-                <p>We couldn’t load this trip.</p>
-                <span>{error}</span>
-              </div>
-            )}
-            {data && (
-              <>
-                {view === 'overview' && <Overview />}
-                {view === 'itinerary' && <Itinerary />}
-                {view === 'budget' && <Budget />}
-              </>
-            )}
+            {view === 'overview' && <Overview />}
+            {view === 'itinerary' && <Itinerary />}
+            {view === 'budget' && <Budget />}
           </div>
         </div>
       </div>
@@ -69,7 +50,6 @@ function Shell() {
         <MapPane />
       </div>
 
-      {error && data && <div className="toast">{error}</div>}
       <Snackbar />
     </div>
   )

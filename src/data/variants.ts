@@ -11,10 +11,13 @@ export const SHARED = {
   nights: '9 nocí',
   datesNote: 'Podle ceny možná zkrátíme na 22. 8. (8 nocí). Rozhodneme nakonec.',
   flight: 'Praha ↔ Tirana (zpáteční, všichni 4)',
+  flightPricePp: '~4 500 Kč / osoba',
+  flightLink:
+    'https://www.skyscanner.cz/doprava/lety/prg/tira/260814/260823/?adultsv2=4&cabinclass=economy&rtn=1',
 }
 
 // Cost building blocks (per person / per group). Edit here.
-export const FLIGHT_PP_CZK = 4800 // let na osobu, zpáteční
+export const FLIGHT_PP_CZK = 4500 // let na osobu, zpáteční (Skyscanner PRG↔TIA)
 export const CAR_RENTAL_CZK = 8000 // půjčení auta na celý výlet (skupina)
 // Benzín: reálný průměr v Albánii ~170 ALL/l (natural 95, léto 2026) ≈ 42 Kč/l.
 export const FUEL = { lPer100: 7, priceCzkPerL: 42 }

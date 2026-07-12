@@ -1,9 +1,8 @@
 import { useEffect, useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
-import { STAY_OPTIONS } from '../data/stayOptions'
 import { VARIANTS } from '../data/variants'
 import { fmtCZK } from '../lib/format'
 
@@ -16,8 +15,7 @@ function markerIcon(color: string, n: number, active: boolean) {
   })
 }
 
-// Distinct marker for candidate stays: a home glyph, accent for favourites.
-function stayIcon(fav: boolean) {
+function hotelIcon(fav: boolean) {
   return L.divIcon({
     className: '',
     html: `<div class="mk-stay ${fav ? 'mk-stay-fav' : ''}">⌂</div>`,
@@ -37,7 +35,7 @@ function FlyTo({ target }: { target: [number, number] | null }) {
   return null
 }
 
-// Re-frame the whole map to a variant when it changes.
+// Re-frame the whole map when the variant changes.
 function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: number; dep: string }) {
   const map = useMap()
   useEffect(() => {
@@ -50,139 +48,64 @@ function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: n
 }
 
 export default function MapPane() {
-  const { data, numbered, activeId, setActiveId, view, activeVariantId } = useStore()
-
+  const { activeVariantId, activeId, setActiveId } = useStore()
   const variant = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
-  const plansMode = view === 'plans' && !!variant
 
   const flyTarget = useMemo<[number, number] | null>(() => {
-    const found = numbered.find((np) => np.place.id === activeId)
-    if (found && found.place.lat != null && found.place.lng != null) {
-      return [found.place.lat, found.place.lng]
-    }
-    return null
-  }, [activeId, numbered])
-
-  // Highlighted variant stop (activeId like "var:<id>:<index>").
-  const variantFlyTarget = useMemo<[number, number] | null>(() => {
-    if (!plansMode || !activeId?.startsWith('var:')) return null
+    if (!activeId?.startsWith('var:')) return null
     const [, vid, idx] = activeId.split(':')
     if (vid !== variant.id) return null
     const s = variant.hotStops[Number(idx)]
     return s ? [s.lat, s.lng] : null
-  }, [activeId, plansMode, variant])
+  }, [activeId, variant])
 
-  const dayLines = useMemo(() => {
-    if (!data) return []
-    const byDay = new Map<string, [number, number][]>()
-    for (const np of numbered) {
-      const p = np.place
-      if (p.lat == null || p.lng == null) continue
-      if (!byDay.has(np.dayId)) byDay.set(np.dayId, [])
-      byDay.get(np.dayId)!.push([p.lat, p.lng])
-    }
-    return [...byDay.values()].filter((pts) => pts.length >= 2)
-  }, [data, numbered])
-
-  // Plans mode is code-only and must render even before the DB loads.
-  if (!plansMode && !data) return <div className="map-root" />
-  const center = plansMode ? variant.mapCenter : (data as NonNullable<typeof data>).trip.mapCenter
-  const zoom = plansMode ? variant.mapZoom : (data as NonNullable<typeof data>).trip.mapZoom
+  const hotels = variant.stints
+    .flatMap((st) => st.lodging ?? [])
+    .filter((l) => l.lat != null && l.lng != null)
 
   return (
-    <MapContainer center={center} zoom={zoom} className="map-root" scrollWheelZoom>
+    <MapContainer center={variant.mapCenter} zoom={variant.mapZoom} className="map-root" scrollWheelZoom>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <FrameVariant center={variant.mapCenter} zoom={variant.mapZoom} dep={variant.id} />
 
-      {plansMode ? (
-        <>
-          <FrameVariant center={variant.mapCenter} zoom={variant.mapZoom} dep={variant.id} />
-          {variant.hotStops.map((s, i) => {
-            const id = `var:${variant.id}:${i}`
-            return (
-              <Marker
-                key={id}
-                position={[s.lat, s.lng]}
-                icon={markerIcon(STOP[s.type].color, i + 1, activeId === id)}
-                zIndexOffset={activeId === id ? 1000 : 0}
-                eventHandlers={{ click: () => setActiveId(id) }}
-              >
-                <Popup>
-                  <strong>{i + 1}. {s.name}</strong>
-                  <span className="pop-type" style={{ color: STOP[s.type].color }}>{STOP[s.type].label}</span>
-                  {s.note && <span className="pop-blurb">{s.note}</span>}
-                </Popup>
-              </Marker>
-            )
-          })}
-          {variant.stints
-            .flatMap((st) => st.lodging ?? [])
-            .filter((l) => l.lat != null && l.lng != null)
-            .map((l) => (
-              <Marker
-                key={l.name}
-                position={[l.lat as number, l.lng as number]}
-                icon={stayIcon(!!l.note && l.note.toLowerCase().includes('prefer'))}
-                zIndexOffset={700}
-              >
-                <Popup>
-                  <strong>{l.name}</strong>
-                  <span className="pop-type" style={{ color: '#e2552d' }}>Hotel · {fmtCZK(l.priceCzk)}</span>
-                  <a href={l.link} target="_blank" rel="noreferrer">Otevřít →</a>
-                </Popup>
-              </Marker>
-            ))}
-          <FlyTo target={variantFlyTarget} />
-        </>
-      ) : (
-        <>
-          {dayLines.map((pts, i) => (
-            <Polyline key={i} positions={pts} pathOptions={{ color: '#3A2C1E', weight: 2, opacity: 0.35, dashArray: '4 6' }} />
-          ))}
-          {numbered.map((np) => {
-            const p = np.place
-            if (p.lat == null || p.lng == null) return null
-            const color = STOP[p.type].color
-            return (
-              <Marker
-                key={p.id}
-                position={[p.lat, p.lng]}
-                icon={markerIcon(color, np.n, activeId === p.id)}
-                zIndexOffset={activeId === p.id ? 1000 : 0}
-                eventHandlers={{ click: () => setActiveId(p.id) }}
-              >
-                <Popup>
-                  <strong>{np.n}. {p.name}</strong>
-                  <span className="pop-type" style={{ color }}>{STOP[p.type].label}</span>
-                  {p.blurb && <span className="pop-blurb">{p.blurb}</span>}
-                </Popup>
-              </Marker>
-            )
-          })}
-          {STAY_OPTIONS.filter((s) => s.lat != null && s.lng != null).map((s) => (
-            <Marker
-              key={s.id}
-              position={[s.lat as number, s.lng as number]}
-              icon={stayIcon(!!s.favorite)}
-              zIndexOffset={600}
-            >
-              <Popup>
-                <strong>{s.label}</strong>
-                <span className="pop-type" style={{ color: '#e2552d' }}>
-                  {s.favorite ? '★ Michael likes this · ' : ''}Ubytování
-                </span>
-                <span className="pop-blurb">
-                  {s.place} · {s.totalCzk != null ? fmtCZK(s.totalCzk) : 'cena na vyžádání'}
-                </span>
-                <a href={s.link} target="_blank" rel="noreferrer">Otevřít →</a>
-              </Popup>
-            </Marker>
-          ))}
-          <FlyTo target={flyTarget} />
-        </>
-      )}
+      {variant.hotStops.map((s, i) => {
+        const id = `var:${variant.id}:${i}`
+        return (
+          <Marker
+            key={id}
+            position={[s.lat, s.lng]}
+            icon={markerIcon(STOP[s.type].color, i + 1, activeId === id)}
+            zIndexOffset={activeId === id ? 1000 : 0}
+            eventHandlers={{ click: () => setActiveId(id) }}
+          >
+            <Popup>
+              <strong>{i + 1}. {s.name}</strong>
+              <span className="pop-type" style={{ color: STOP[s.type].color }}>{STOP[s.type].label}</span>
+              {s.note && <span className="pop-blurb">{s.note}</span>}
+            </Popup>
+          </Marker>
+        )
+      })}
+
+      {hotels.map((l) => (
+        <Marker
+          key={l.name}
+          position={[l.lat as number, l.lng as number]}
+          icon={hotelIcon(!!l.note && l.note.toLowerCase().includes('prefer'))}
+          zIndexOffset={700}
+        >
+          <Popup>
+            <strong>{l.name}</strong>
+            <span className="pop-type" style={{ color: '#e2552d' }}>Hotel · {fmtCZK(l.priceCzk)}</span>
+            <a href={l.link} target="_blank" rel="noreferrer">Otevřít →</a>
+          </Popup>
+        </Marker>
+      ))}
+
+      <FlyTo target={flyTarget} />
     </MapContainer>
   )
 }

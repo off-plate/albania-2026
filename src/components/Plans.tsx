@@ -29,7 +29,12 @@ export default function Plans() {
         </div>
         <div className="var-shared-row">
           <span className="var-shared-l">Let</span>
-          <span className="var-shared-v">{SHARED.flight}</span>
+          <span className="var-shared-v">
+            {SHARED.flight} · {SHARED.flightPricePp}
+            <a className="var-shared-link" href={SHARED.flightLink} target="_blank" rel="noreferrer">
+              Skyscanner →
+            </a>
+          </span>
         </div>
         <div className="var-shared-note">{SHARED.datesNote}</div>
       </div>

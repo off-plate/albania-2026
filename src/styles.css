@@ -497,6 +497,74 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .var-stop-name { font-weight: 600; font-size: 15px; }
 .var-stop-note { font-size: 13px; color: var(--ink-soft); }
 
+/* ── Shared link in the plans header ── */
+.var-shared-link { margin-left: 8px; font-weight: 600; font-size: 13px; white-space: nowrap; }
+
+/* ── Overview (variant-driven) ── */
+.ovw-var {
+  width: 100%; text-align: left; display: flex; justify-content: space-between; gap: 14px;
+  align-items: center; border: 1px solid var(--accent); border-radius: 12px; padding: 14px 16px;
+  background: rgba(226,85,45,0.05);
+}
+.ovw-var:hover { background: rgba(226,85,45,0.09); }
+.ovw-var-l { display: flex; gap: 12px; align-items: center; min-width: 0; }
+.ovw-var-name { font-weight: 600; font-size: 16px; }
+.ovw-var-tag { font-size: 13px; color: var(--ink-soft); }
+.ovw-var-r { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; white-space: nowrap; }
+.ovw-var-pp { font-family: var(--serif); font-size: 20px; }
+.ovw-var-total { font-size: 12px; color: var(--ink-soft); }
+.ovw-var-link { font-size: 12px; font-weight: 600; color: var(--accent-deep); }
+.ovw-flight {
+  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; background: var(--surface);
+  font-size: 14px; color: var(--ink); text-decoration: none;
+}
+.ovw-flight:hover { border-color: var(--accent); }
+.ovw-flight-price { color: var(--accent-deep); font-weight: 600; }
+
+/* ── Itinerary (timeline) ── */
+.itin-timeline { list-style: none; margin: 0; padding: 0; }
+.itin-step { display: grid; grid-template-columns: 20px 1fr; gap: 14px; position: relative; padding-bottom: 22px; }
+.itin-step:not(:last-child)::before { content: ''; position: absolute; left: 9px; top: 16px; bottom: 0; width: 1.5px; background: var(--line); }
+.itin-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--accent); margin-top: 3px; border: 2px solid var(--bg); position: relative; z-index: 1; }
+.itin-dot-end { background: var(--ink); }
+.itin-when { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); }
+.itin-title { font-family: var(--serif); font-size: 19px; margin-top: 2px; }
+.itin-title-link { cursor: pointer; }
+.itin-title-link:hover { color: var(--accent-deep); }
+.itin-note { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
+.itin-lodging { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; }
+.itin-lodging a { font-weight: 600; }
+.itin-tag { color: var(--accent-deep); font-weight: 600; }
+.itin-foot { font-size: 13px; color: var(--ink-faint); font-style: italic; margin-top: 8px; }
+
+/* ── Budget (variant-driven) ── */
+.bud-hero { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.bud-hero-pp { font-family: var(--serif); font-size: 34px; line-height: 1; }
+.bud-hero-pp small { font-size: 15px; font-family: var(--sans); color: var(--ink-soft); }
+.bud-hero-total { font-size: 15px; color: var(--ink-soft); }
+.bud-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.bud-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.bud-row-main { display: flex; flex-direction: column; min-width: 0; }
+.bud-row-label { font-weight: 600; font-size: 15px; }
+.bud-row-sub { font-size: 12.5px; color: var(--ink-faint); }
+.bud-row-vals { display: flex; flex-direction: column; align-items: flex-end; white-space: nowrap; }
+.bud-row-val { font-weight: 600; }
+.bud-row-pp { font-size: 12px; color: var(--ink-faint); }
+.bud-note { font-size: 12.5px; color: var(--ink-faint); margin-top: 8px; }
+.bud-compare { display: flex; flex-direction: column; gap: 8px; }
+.bud-cmp {
+  display: grid; grid-template-columns: 30px 1fr auto auto; gap: 12px; align-items: center; text-align: left;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: var(--surface);
+}
+.bud-cmp:hover { border-color: var(--ink-faint); }
+.bud-cmp-on { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.16); }
+.bud-cmp-badge { width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: #fff; font-family: var(--serif); font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.bud-cmp-on .bud-cmp-badge { background: var(--accent); }
+.bud-cmp-name { font-weight: 600; font-size: 14px; }
+.bud-cmp-pp { font-family: var(--serif); font-size: 17px; }
+.bud-cmp-total { font-size: 12px; color: var(--ink-soft); }
+
 /* ── Stay markers on the map ── */
 .mk-stay {
   display: flex; align-items: center; justify-content: center;
