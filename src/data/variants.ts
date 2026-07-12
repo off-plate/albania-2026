@@ -58,6 +58,7 @@ export interface PlanVariant {
   driveKm?: number
   // Přepis výchozích cen pro tuto variantu:
   flightPpCzk?: number
+  flightTotalCzk?: number // reálná koupená cena letenek za všechny 4
   carRentalCzk?: number
   fuelCzk?: number
 }
@@ -71,8 +72,8 @@ export function variantCost(v: PlanVariant) {
     return s + (prices.length ? Math.max(...prices) : 0)
   }, 0)
   const missingLodging = v.stints.filter((st) => !st.lodging?.length).map((st) => st.base)
-  const flightPp = v.flightPpCzk ?? FLIGHT_PP_CZK
-  const flight = flightPp * 4
+  const flight = v.flightTotalCzk ?? (v.flightPpCzk ?? FLIGHT_PP_CZK) * 4
+  const flightPp = Math.round(flight / 4)
   const car = v.carRentalCzk ?? CAR_RENTAL_CZK
   const fuel = v.fuelCzk ?? FUEL_TOTAL_CZK
   const total = stay + flight + car + fuel
@@ -124,7 +125,7 @@ export const VARIANTS: PlanVariant[] = [
     name: 'Durrës, Vlorë, Sarandë',
     tagline: 'Durrës 2 noci, Vlorë 2 noci, Sarandë 4 noci (18.–22.), pak domů.',
     dateRange: '14.–22. 8.',
-    flightPpCzk: 4200,
+    flightTotalCzk: 19463,
     carRentalCzk: 7500,
     stints: [
       { base: 'Durrës', dates: '14.–16. 8.', nights: 2, lodging: DURRES_LODGING },

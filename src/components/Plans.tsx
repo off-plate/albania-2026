@@ -69,7 +69,7 @@ export default function Plans() {
             </div>
             <ul className="var-cost-rows">
               <li><span>Ubytování</span><span>{fmtCZK(cost.stay)}</span></li>
-              <li><span>Letenky (4× {fmtCZK(cost.flightPp)})</span><span>{fmtCZK(cost.flight)}</span></li>
+              <li><span>Letenky (koupeno, {fmtCZK(cost.flightPp)}/os.)</span><span>{fmtCZK(cost.flight)}</span></li>
               <li><span>Půjčení auta</span><span>{fmtCZK(cost.car)}</span></li>
               <li>
                 <span>Benzín (paušál, tam i zpět)</span>
