@@ -15,8 +15,9 @@ export const SHARED = {
 
 // Cost building blocks (per person / per group). Edit here.
 export const FLIGHT_PP_CZK = 4800 // let na osobu, zpáteční
-export const CAR_RENTAL_CZK = 6500 // půjčení auta na celý výlet (skupina), ~5–8k
-export const FUEL = { lPer100: 7, priceCzkPerL: 48 } // benzín: spotřeba + cena/l
+export const CAR_RENTAL_CZK = 8000 // půjčení auta na celý výlet (skupina)
+// Benzín: reálný průměr v Albánii ~170 ALL/l (natural 95, léto 2026) ≈ 42 Kč/l.
+export const FUEL = { lPer100: 7, priceCzkPerL: 42 }
 
 export interface HotStop {
   name: string
