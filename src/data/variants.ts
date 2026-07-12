@@ -138,8 +138,8 @@ export const VARIANTS: PlanVariant[] = [
           {
             name: 'Apartmán 2 ložnice, kousek od pláže',
             priceCzk: 14770,
-            note: 'Vybráno',
-            detail: 'Plnohodnotný byt u pláže, 4 noci (18.–22.), pak domů.',
+            note: 'Rezervováno',
+            detail: 'Plnohodnotný byt u pláže, 4 noci (18.–22.). Rezervováno, zatím neplaceno.',
             lat: 39.873,
             lng: 20.007,
             link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?group_adults=4&no_rooms=2&req_adults=4&checkin=2026-08-18&checkout=2026-08-22',
