@@ -104,13 +104,13 @@ const DURRES_LODGING: Lodging[] = [
 
 const VLORE_LODGING: Lodging[] = [
   {
-    name: 'Sunny Hill Residence',
-    priceCzk: 6157,
-    note: 'Vybráno',
-    detail: 'SH8. 1 ložnice + gauč, kuchyň.',
-    lat: 40.463,
-    lng: 19.492,
-    link: 'https://www.booking.com/hotel/al/sunny-hill-residence.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
+    name: 'Villa Solis',
+    priceCzk: 6114,
+    note: 'Rezervováno',
+    detail: 'Vlorë, 16.–18. 8. Rezervováno, zatím neplaceno. Poloha přibližná.',
+    lat: 40.458,
+    lng: 19.49,
+    link: 'https://www.booking.com/searchresults.html?ss=Villa%20Solis%20Vlor%C3%AB&checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
   },
 ]
 
