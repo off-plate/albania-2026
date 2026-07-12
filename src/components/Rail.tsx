@@ -1,6 +1,7 @@
 import { useStore, type View } from '../store'
 
 const ITEMS: { key: View; label: string }[] = [
+  { key: 'plans', label: 'Plans' },
   { key: 'overview', label: 'Overview' },
   { key: 'itinerary', label: 'Itinerary' },
   { key: 'budget', label: 'Budget' },

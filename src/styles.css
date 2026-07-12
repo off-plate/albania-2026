@@ -413,6 +413,55 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .est-n { font-family: var(--serif, Georgia, serif); font-size: 26px; margin-top: 2px; color: var(--ink); }
 .est-sub { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
 
+/* ── Plan variants ── */
+.var-shared {
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px;
+  background: var(--surface); margin-bottom: 18px;
+}
+.var-shared-row { display: flex; gap: 12px; align-items: baseline; padding: 3px 0; }
+.var-shared-l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); min-width: 60px; }
+.var-shared-v { font-size: 14px; font-weight: 500; }
+.var-shared-note { font-size: 12.5px; color: var(--ink-faint); margin-top: 6px; font-style: italic; }
+
+.var-tabs { display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+.var-tab {
+  flex: 1; min-width: 170px;
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  background: var(--surface); transition: border-color 140ms, box-shadow 140ms;
+}
+.var-tab:hover { border-color: var(--ink-faint); }
+.var-tab-on { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.18); }
+.var-tab-badge {
+  width: 34px; height: 34px; flex: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 18px; font-weight: 600;
+  background: var(--ink); color: #fff;
+}
+.var-tab-on .var-tab-badge { background: var(--accent); }
+.var-tab-text { display: flex; flex-direction: column; min-width: 0; }
+.var-tab-name { font-weight: 600; font-size: 15px; }
+.var-tab-meta { font-size: 12.5px; color: var(--ink-soft); }
+
+.var-tagline { font-family: var(--serif); font-size: 19px; line-height: 1.4; margin: 0 0 16px; max-width: 46ch; }
+.var-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.var-stat { display: flex; flex-direction: column; gap: 2px; }
+.var-stat-n { font-family: var(--serif); font-size: 22px; line-height: 1.1; }
+.var-stat-l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); }
+.var-costnote { font-size: 13px; color: var(--ink-soft); margin-top: 8px; }
+
+.var-bases { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.var-bases-l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); }
+.var-base { font-size: 14px; font-weight: 600; padding: 3px 12px; border-radius: 999px; background: rgba(226,85,45,0.1); color: var(--accent-deep); }
+
+.var-stops { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.var-stop { display: flex; gap: 12px; align-items: start; padding: 8px 4px; border-bottom: 1px solid var(--line-soft); cursor: pointer; border-radius: 8px; }
+.var-stop:hover { background: rgba(36,27,18,0.03); }
+.var-stop-n { width: 24px; height: 24px; flex: none; border-radius: 50%; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.var-stop-body { display: flex; flex-direction: column; min-width: 0; }
+.var-stop-name { font-weight: 600; font-size: 15px; }
+.var-stop-note { font-size: 13px; color: var(--ink-soft); }
+
 /* ── Stay markers on the map ── */
 .mk-stay {
   display: flex; align-items: center; justify-content: center;

@@ -4,6 +4,7 @@ import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
 import { STAY_OPTIONS } from '../data/stayOptions'
+import { VARIANTS } from '../data/variants'
 import { fmtCZK } from '../lib/format'
 
 function markerIcon(color: string, n: number, active: boolean) {
@@ -36,8 +37,23 @@ function FlyTo({ target }: { target: [number, number] | null }) {
   return null
 }
 
+// Re-frame the whole map to a variant when it changes.
+function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: number; dep: string }) {
+  const map = useMap()
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce) map.setView(center, zoom)
+    else map.flyTo(center, zoom, { duration: 0.7 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dep])
+  return null
+}
+
 export default function MapPane() {
-  const { data, numbered, activeId, setActiveId } = useStore()
+  const { data, numbered, activeId, setActiveId, view, activeVariantId } = useStore()
+
+  const variant = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
+  const plansMode = view === 'plans' && !!variant
 
   const flyTarget = useMemo<[number, number] | null>(() => {
     const found = numbered.find((np) => np.place.id === activeId)
@@ -47,7 +63,15 @@ export default function MapPane() {
     return null
   }, [activeId, numbered])
 
-  // One polyline per day, connecting that day's coords-bearing stops in order.
+  // Highlighted variant stop (activeId like "var:<id>:<index>").
+  const variantFlyTarget = useMemo<[number, number] | null>(() => {
+    if (!plansMode || !activeId?.startsWith('var:')) return null
+    const [, vid, idx] = activeId.split(':')
+    if (vid !== variant.id) return null
+    const s = variant.hotStops[Number(idx)]
+    return s ? [s.lat, s.lng] : null
+  }, [activeId, plansMode, variant])
+
   const dayLines = useMemo(() => {
     if (!data) return []
     const byDay = new Map<string, [number, number][]>()
@@ -61,8 +85,8 @@ export default function MapPane() {
   }, [data, numbered])
 
   if (!data) return <div className="map-root" />
-  const center = data.trip.mapCenter
-  const zoom = data.trip.mapZoom
+  const center = plansMode ? variant.mapCenter : data.trip.mapCenter
+  const zoom = plansMode ? variant.mapZoom : data.trip.mapZoom
 
   return (
     <MapContainer center={center} zoom={zoom} className="map-root" scrollWheelZoom>
@@ -70,49 +94,77 @@ export default function MapPane() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {dayLines.map((pts, i) => (
-        <Polyline key={i} positions={pts} pathOptions={{ color: '#3A2C1E', weight: 2, opacity: 0.35, dashArray: '4 6' }} />
-      ))}
-      {numbered.map((np) => {
-        const p = np.place
-        if (p.lat == null || p.lng == null) return null
-        const color = STOP[p.type].color
-        return (
-          <Marker
-            key={p.id}
-            position={[p.lat, p.lng]}
-            icon={markerIcon(color, np.n, activeId === p.id)}
-            zIndexOffset={activeId === p.id ? 1000 : 0}
-            eventHandlers={{ click: () => setActiveId(p.id) }}
-          >
-            <Popup>
-              <strong>{np.n}. {p.name}</strong>
-              <span className="pop-type" style={{ color }}>{STOP[p.type].label}</span>
-              {p.blurb && <span className="pop-blurb">{p.blurb}</span>}
-            </Popup>
-          </Marker>
-        )
-      })}
-      {STAY_OPTIONS.filter((s) => s.lat != null && s.lng != null).map((s) => (
-        <Marker
-          key={s.id}
-          position={[s.lat as number, s.lng as number]}
-          icon={stayIcon(!!s.favorite)}
-          zIndexOffset={600}
-        >
-          <Popup>
-            <strong>{s.label}</strong>
-            <span className="pop-type" style={{ color: '#e2552d' }}>
-              {s.favorite ? '★ Michael likes this · ' : ''}Ubytování
-            </span>
-            <span className="pop-blurb">
-              {s.place} · {s.totalCzk != null ? fmtCZK(s.totalCzk) : 'cena na vyžádání'}
-            </span>
-            <a href={s.link} target="_blank" rel="noreferrer">Otevřít →</a>
-          </Popup>
-        </Marker>
-      ))}
-      <FlyTo target={flyTarget} />
+
+      {plansMode ? (
+        <>
+          <FrameVariant center={variant.mapCenter} zoom={variant.mapZoom} dep={variant.id} />
+          {variant.hotStops.map((s, i) => {
+            const id = `var:${variant.id}:${i}`
+            return (
+              <Marker
+                key={id}
+                position={[s.lat, s.lng]}
+                icon={markerIcon(STOP[s.type].color, i + 1, activeId === id)}
+                zIndexOffset={activeId === id ? 1000 : 0}
+                eventHandlers={{ click: () => setActiveId(id) }}
+              >
+                <Popup>
+                  <strong>{i + 1}. {s.name}</strong>
+                  <span className="pop-type" style={{ color: STOP[s.type].color }}>{STOP[s.type].label}</span>
+                  {s.note && <span className="pop-blurb">{s.note}</span>}
+                </Popup>
+              </Marker>
+            )
+          })}
+          <FlyTo target={variantFlyTarget} />
+        </>
+      ) : (
+        <>
+          {dayLines.map((pts, i) => (
+            <Polyline key={i} positions={pts} pathOptions={{ color: '#3A2C1E', weight: 2, opacity: 0.35, dashArray: '4 6' }} />
+          ))}
+          {numbered.map((np) => {
+            const p = np.place
+            if (p.lat == null || p.lng == null) return null
+            const color = STOP[p.type].color
+            return (
+              <Marker
+                key={p.id}
+                position={[p.lat, p.lng]}
+                icon={markerIcon(color, np.n, activeId === p.id)}
+                zIndexOffset={activeId === p.id ? 1000 : 0}
+                eventHandlers={{ click: () => setActiveId(p.id) }}
+              >
+                <Popup>
+                  <strong>{np.n}. {p.name}</strong>
+                  <span className="pop-type" style={{ color }}>{STOP[p.type].label}</span>
+                  {p.blurb && <span className="pop-blurb">{p.blurb}</span>}
+                </Popup>
+              </Marker>
+            )
+          })}
+          {STAY_OPTIONS.filter((s) => s.lat != null && s.lng != null).map((s) => (
+            <Marker
+              key={s.id}
+              position={[s.lat as number, s.lng as number]}
+              icon={stayIcon(!!s.favorite)}
+              zIndexOffset={600}
+            >
+              <Popup>
+                <strong>{s.label}</strong>
+                <span className="pop-type" style={{ color: '#e2552d' }}>
+                  {s.favorite ? '★ Michael likes this · ' : ''}Ubytování
+                </span>
+                <span className="pop-blurb">
+                  {s.place} · {s.totalCzk != null ? fmtCZK(s.totalCzk) : 'cena na vyžádání'}
+                </span>
+                <a href={s.link} target="_blank" rel="noreferrer">Otevřít →</a>
+              </Popup>
+            </Marker>
+          ))}
+          <FlyTo target={flyTarget} />
+        </>
+      )}
     </MapContainer>
   )
 }

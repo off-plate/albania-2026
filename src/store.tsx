@@ -24,7 +24,7 @@ import type {
   Trip,
 } from './types'
 
-export type View = 'overview' | 'itinerary' | 'budget'
+export type View = 'plans' | 'overview' | 'itinerary' | 'budget'
 export type Mode = 'edit' | 'view'
 
 // ── patch → DB column mappers ───────────────────────────────────────────────
@@ -106,6 +106,8 @@ interface Store {
 
   view: View
   setView: (v: View) => void
+  activeVariantId: string | null
+  setActiveVariantId: (id: string | null) => void
   activeId: string | null
   setActiveId: (id: string | null) => void
   mapMobileOpen: boolean
@@ -167,7 +169,8 @@ export function StoreProvider({ slug, children }: { slug: string; children: Reac
   const [mode, setMode] = useState<Mode>('view')
   const [authBusy, setAuthBusy] = useState(false)
 
-  const [view, setView] = useState<View>('overview')
+  const [view, setView] = useState<View>('plans')
+  const [activeVariantId, setActiveVariantId] = useState<string | null>(null)
   const [activeId, setActiveId] = useState<string | null>(null)
   const [mapMobileOpen, setMapMobileOpen] = useState(false)
 
@@ -554,6 +557,8 @@ export function StoreProvider({ slug, children }: { slug: string; children: Reac
     signOut,
     view,
     setView,
+    activeVariantId,
+    setActiveVariantId,
     activeId,
     setActiveId,
     mapMobileOpen,
