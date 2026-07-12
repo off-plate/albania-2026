@@ -29,6 +29,8 @@ export interface Lodging {
   link: string
   note?: string // short tag pill, e.g. "Preferováno"
   detail?: string // longer plain description
+  lat?: number // approx, town-level (Booking hides exact address)
+  lng?: number
 }
 
 // A stay at one base for part of the trip.
@@ -66,7 +68,7 @@ export const VARIANTS: PlanVariant[] = [
     id: 'a',
     label: 'A',
     name: 'Vlorë then Sarandë',
-    tagline: 'Three nights in Vlorë for the northern Riviera, then six in Sarandë for the south, Ksamil, Butrint and the Blue Eye.',
+    tagline: 'Vlorë 3 noci, pak Sarandë 6 nocí. Přílet do Tirany, odsud autem.',
     costPerPersonCzk: 15000,
     costNote: 'odhad: Vlorë hotel + Sarandë apartmán + let + auto + benzín',
     stints: [
@@ -80,6 +82,8 @@ export const VARIANTS: PlanVariant[] = [
             priceCzk: 12160,
             breakfast: true,
             note: 'Preferováno',
+            lat: 40.447,
+            lng: 19.49,
             link: 'https://www.booking.com/hotel/al/villa-christianna-vlora.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
           },
           {
@@ -87,6 +91,8 @@ export const VARIANTS: PlanVariant[] = [
             priceCzk: 10243,
             breakfast: true,
             note: 'Levnější alternativa',
+            lat: 40.46,
+            lng: 19.483,
             link: 'https://www.booking.com/hotel/al/her.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
           },
         ],
@@ -100,12 +106,16 @@ export const VARIANTS: PlanVariant[] = [
             name: 'Two-bedroom apartment, steps from the beach',
             priceCzk: 22155,
             detail: 'Plně vybavený apartmán kousek od pláže. Parkování asi placené.',
+            lat: 39.873,
+            lng: 20.007,
             link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
           },
           {
             name: 'Bliss Luxury Apartments & Suites',
             priceCzk: 24680,
             detail: 'Apartmán s kuchyní, queen bed a gauče.',
+            lat: 39.88,
+            lng: 20.003,
             link: 'https://www.booking.com/hotel/al/bliss-luxury-apartments-amp-suites.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
           },
         ],
@@ -114,20 +124,12 @@ export const VARIANTS: PlanVariant[] = [
     endNote: '23. 8. přímá cesta ze Sarandy na letiště (Tirana, ~3,5 h).',
     driveKm: 950,
     hotStops: [
-      { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'Northern base, start of the Riviera.' },
-      { name: 'Llogara Pass', type: 'instagram', lat: 40.2069, lng: 19.5953, note: 'Mountain pass, big coast views.' },
-      { name: 'Dhërmi / Drymades', type: 'relaxed', lat: 40.1561, lng: 19.6383, note: 'Clear-water beaches.' },
-      { name: 'Gjipe Beach', type: 'instagram', lat: 40.1856, lng: 19.6433, note: 'Canyon-backed hidden beach.' },
-      { name: 'Himarë', type: 'relaxed', lat: 40.1019, lng: 19.7444 },
-      { name: 'Porto Palermo', type: 'instagram', lat: 40.0631, lng: 19.7836, note: 'Ali Pasha castle on the bay.' },
-      { name: 'Borsh Beach', type: 'relaxed', lat: 40.0561, lng: 19.8536 },
-      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005 },
-      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Southern base, swim-to islands.' },
-      { name: 'Butrint National Park', type: 'classic', lat: 39.7456, lng: 20.0203, note: 'UNESCO ancient city.' },
-      { name: 'Blue Eye', type: 'instagram', lat: 39.9239, lng: 20.1894, note: 'Deep blue natural spring.' },
+      { name: 'Letiště Tirana (přílet)', type: 'endpoint', lat: 41.4147, lng: 19.7206, note: 'Praha → Tirana, odsud autem.' },
+      { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'První základna, 14.–17. 8.' },
+      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'Druhá základna, 17.–23. 8.' },
     ],
-    mapCenter: [40.12, 19.78],
-    mapZoom: 9,
+    mapCenter: [40.55, 19.75],
+    mapZoom: 8,
   },
   {
     id: 'b',
@@ -139,14 +141,10 @@ export const VARIANTS: PlanVariant[] = [
     stints: [{ base: 'Ksamil', dates: '14.–23. 8.', nights: 9 }],
     driveKm: 850,
     hotStops: [
-      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Base for the whole trip.' },
-      { name: 'Butrint National Park', type: 'classic', lat: 39.7456, lng: 20.0203 },
-      { name: 'Blue Eye', type: 'instagram', lat: 39.9239, lng: 20.1894 },
-      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005 },
-      { name: 'Pasqyra (Mirror) Beach', type: 'instagram', lat: 39.8186, lng: 20.005 },
-      { name: 'Gjirokastër', type: 'classic', lat: 40.0758, lng: 20.1389, note: 'UNESCO stone town, day trip inland.' },
+      { name: 'Letiště Tirana (přílet)', type: 'endpoint', lat: 41.4147, lng: 19.7206 },
+      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Základna (návrh, ještě nezadáno).' },
     ],
-    mapCenter: [39.9, 20.05],
-    mapZoom: 10,
+    mapCenter: [40.6, 19.9],
+    mapZoom: 8,
   },
 ]

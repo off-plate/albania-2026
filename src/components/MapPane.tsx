@@ -116,6 +116,23 @@ export default function MapPane() {
               </Marker>
             )
           })}
+          {variant.stints
+            .flatMap((st) => st.lodging ?? [])
+            .filter((l) => l.lat != null && l.lng != null)
+            .map((l) => (
+              <Marker
+                key={l.name}
+                position={[l.lat as number, l.lng as number]}
+                icon={stayIcon(!!l.note && l.note.toLowerCase().includes('prefer'))}
+                zIndexOffset={700}
+              >
+                <Popup>
+                  <strong>{l.name}</strong>
+                  <span className="pop-type" style={{ color: '#e2552d' }}>Hotel · {fmtCZK(l.priceCzk)}</span>
+                  <a href={l.link} target="_blank" rel="noreferrer">Otevřít →</a>
+                </Popup>
+              </Marker>
+            ))}
           <FlyTo target={variantFlyTarget} />
         </>
       ) : (
