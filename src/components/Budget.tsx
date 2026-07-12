@@ -11,7 +11,7 @@ export default function Budget() {
   const rows = [
     { label: 'Ubytování', value: c.stay, sub: v.stints.map((s) => s.base).join(' + ') },
     { label: 'Letenky', value: c.flight, sub: `koupeno · ${fmtCZK(c.flightPp)}/os. · Praha ↔ Tirana` },
-    { label: 'Půjčení auta', value: c.car, sub: 'celý výlet' },
+    { label: 'Půjčení auta', value: c.car, sub: v.carRentalName ? `${v.carRentalName} · celý výlet` : 'celý výlet' },
     { label: 'Benzín', value: c.fuel, sub: 'paušál za celý výlet, tam i zpět' },
   ]
 

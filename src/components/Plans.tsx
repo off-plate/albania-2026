@@ -70,7 +70,15 @@ export default function Plans() {
             <ul className="var-cost-rows">
               <li><span>Ubytování</span><span>{fmtCZK(cost.stay)}</span></li>
               <li><span>Letenky (koupeno, {fmtCZK(cost.flightPp)}/os.)</span><span>{fmtCZK(cost.flight)}</span></li>
-              <li><span>Půjčení auta</span><span>{fmtCZK(cost.car)}</span></li>
+              <li>
+                <span>
+                  Půjčení auta
+                  {active.carRentalLink && (
+                    <> · <a className="var-cost-link" href={active.carRentalLink} target="_blank" rel="noreferrer">{active.carRentalName ?? 'odkaz'} →</a></>
+                  )}
+                </span>
+                <span>{fmtCZK(cost.car)}</span>
+              </li>
               <li>
                 <span>Benzín (paušál, tam i zpět)</span>
                 <span>{fmtCZK(cost.fuel)}</span>

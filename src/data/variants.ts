@@ -60,6 +60,8 @@ export interface PlanVariant {
   flightPpCzk?: number
   flightTotalCzk?: number // reálná koupená cena letenek za všechny 4
   carRentalCzk?: number
+  carRentalName?: string
+  carRentalLink?: string
   fuelCzk?: number
 }
 
@@ -127,6 +129,8 @@ export const VARIANTS: PlanVariant[] = [
     dateRange: '14.–22. 8.',
     flightTotalCzk: 19463,
     carRentalCzk: 7500,
+    carRentalName: 'Audi A4 2014 (Alpha Rent)',
+    carRentalLink: 'https://alpha-rent.com/product/audi-a4-2014-ab547tl/?start_time=2026-08-14%2009:00&end_time=2026-08-22%2015:00&pickup_loc=Tirana&drop_off=Tirana',
     stints: [
       { base: 'Durrës', dates: '14.–16. 8.', nights: 2, lodging: DURRES_LODGING },
       { base: 'Vlorë', dates: '16.–18. 8.', nights: 2, lodging: VLORE_LODGING },
