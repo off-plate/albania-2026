@@ -56,7 +56,7 @@ export const VARIANTS: PlanVariant[] = [
     id: 'a',
     label: 'A',
     name: 'Vlorë then Ksamil',
-    tagline: 'Two nights in Vlorë for the northern Riviera, then a week in Ksamil for the south, the islands and Butrint.',
+    tagline: 'Three nights in Vlorë for the northern Riviera, then six in Ksamil for the south, the islands and Butrint.',
     costPerPersonCzk: 15000,
     costNote: 'odhad: Vlorë hotel + Ksamil (TBD) + let + auto',
     stints: [
