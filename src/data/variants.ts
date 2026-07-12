@@ -65,11 +65,12 @@ export interface PlanVariant {
 // Full cost for a variant, computed from the first lodging option per base.
 export function variantCost(v: PlanVariant) {
   const stay = v.stints.reduce((s, st) => s + (st.lodging?.[0]?.priceCzk ?? 0), 0)
+  const missingLodging = v.stints.filter((st) => !st.lodging?.length).map((st) => st.base)
   const flight = FLIGHT_PP_CZK * 4
   const car = CAR_RENTAL_CZK
   const fuel = v.driveKm ? Math.round((v.driveKm * FUEL.lPer100) / 100 * FUEL.priceCzkPerL) : 0
   const total = stay + flight + car + fuel
-  return { stay, flight, car, fuel, total, perPerson: Math.round(total / 4) }
+  return { stay, flight, car, fuel, total, perPerson: Math.round(total / 4), missingLodging }
 }
 
 const AIRPORT: HotStop = {
@@ -150,75 +151,37 @@ export const VARIANTS: PlanVariant[] = [
   {
     id: 'b',
     label: 'B',
-    name: 'Sarandë only',
-    tagline: 'Rovnou z letiště do Sarandy, celý pobyt tam. 14.–23. 8.',
+    name: 'Durrës, Vlorë, Sarandë',
+    tagline: 'Durrës 2 noci, Vlorë 2 noci, Sarandë 5 nocí. Sarandë byt už vybraný.',
     stints: [
+      { base: 'Durrës', dates: '14.–16. 8.', nights: 2 },
+      { base: 'Vlorë', dates: '16.–18. 8.', nights: 2 },
       {
         base: 'Sarandë',
-        dates: '14.–23. 8.',
-        nights: 9,
+        dates: '18.–23. 8.',
+        nights: 5,
         lodging: [
           {
-            name: 'Vila Mariana',
-            priceCzk: 39355,
-            breakfast: true,
-            note: 'Se snídaní',
-            detail: 'Jedna postel + gauč, bez kuchyně.',
-            lat: 39.876,
-            lng: 20.006,
-            link: 'https://www.booking.com/hotel/al/vila-mariana.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=1&req_adults=4',
-          },
-          {
-            name: 'Niklas Boutique',
-            priceCzk: 38831,
-            breakfast: true,
-            detail: 'Normální hotel se snídaní.',
-            lat: 39.872,
-            lng: 20.008,
-            link: 'https://www.booking.com/hotel/al/niklas-butique.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=1&req_adults=4',
+            name: 'Two-bedroom apartment, steps from the beach',
+            priceCzk: 18460,
+            note: 'Vybráno',
+            detail: 'Plnohodnotný byt u pláže. Cena je odhad na 5 nocí (dopočet z 6nocní ceny), potřebuju reálný total.',
+            lat: 39.873,
+            lng: 20.007,
+            link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?group_adults=4&no_rooms=2&req_adults=4&checkin=2026-08-18&checkout=2026-08-23',
           },
         ],
       },
     ],
     hotStops: [
       AIRPORT,
-      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'Základna na celý pobyt.' },
+      { name: 'Durrës', type: 'relaxed', lat: 41.3231, lng: 19.4414, note: '1. základna, 14.–16. 8.' },
+      { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: '2. základna, 16.–18. 8.' },
+      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: '3. základna, 18.–23. 8.' },
     ],
     endNote: RETURN_NOTE,
-    driveKm: 850,
-    mapCenter: [40.6, 19.85],
-    mapZoom: 8,
-  },
-  {
-    id: 'c',
-    label: 'C',
-    name: 'Ksamil only',
-    tagline: 'Rovnou z letiště do Ksamilu, celý pobyt tam. 14.–23. 8.',
-    stints: [
-      {
-        base: 'Ksamil',
-        dates: '14.–23. 8.',
-        nights: 9,
-        lodging: [
-          {
-            name: 'Michelle Apartments Ksamil',
-            priceCzk: 36670,
-            note: 'Výhled na moře',
-            detail: 'Normální postele, kuchyň, výhled na moře.',
-            lat: 39.767,
-            lng: 20.001,
-            link: 'https://www.booking.com/hotel/al/michelle-apartments-ksamil1.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
-          },
-        ],
-      },
-    ],
-    hotStops: [
-      AIRPORT,
-      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Základna na celý pobyt.' },
-    ],
-    endNote: RETURN_NOTE,
-    driveKm: 880,
-    mapCenter: [40.6, 19.9],
+    driveKm: 800,
+    mapCenter: [40.5, 19.7],
     mapZoom: 8,
   },
 ]
