@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useStore } from '../store'
-import { VARIANTS, SHARED, FLIGHT_PP_CZK, FUEL, variantCost } from '../data/variants'
+import { VARIANTS, SHARED, variantCost, variantNights } from '../data/variants'
 import { STOP } from '../stopTypes'
 import { fmtCZK } from '../lib/format'
 
@@ -17,26 +17,22 @@ export default function Plans() {
   return (
     <div className="plans">
       <div className="panel-head">
-        <h1>Plan variants</h1>
-        <p>Pick a variant. The map re-frames to just that one.</p>
+        <h1>Varianty cesty</h1>
+        <p>Vyber variantu. Mapa se přizpůsobí té zvolené.</p>
       </div>
 
       {/* shared across all variants */}
       <div className="var-shared">
         <div className="var-shared-row">
-          <span className="var-shared-l">Termín</span>
-          <span className="var-shared-v">{SHARED.dates} · {SHARED.nights}</span>
-        </div>
-        <div className="var-shared-row">
-          <span className="var-shared-l">Let</span>
+          <span className="var-shared-l">Letenky</span>
           <span className="var-shared-v">
-            {SHARED.flight} · {SHARED.flightPricePp}
+            {SHARED.flight}
             <a className="var-shared-link" href={SHARED.flightLink} target="_blank" rel="noreferrer">
               Skyscanner →
             </a>
           </span>
         </div>
-        <div className="var-shared-note">{SHARED.datesNote}</div>
+        <div className="var-shared-note">{SHARED.note}</div>
       </div>
 
       {/* selector */}
@@ -61,6 +57,7 @@ export default function Plans() {
       {/* showcase */}
       {active && cost && (
         <div className="var-show">
+          <div className="var-term">{active.dateRange} · {variantNights(active)} nocí</div>
           <p className="var-tagline">{active.tagline}</p>
 
           {/* cost breakdown */}
@@ -72,15 +69,15 @@ export default function Plans() {
             </div>
             <ul className="var-cost-rows">
               <li><span>Ubytování</span><span>{fmtCZK(cost.stay)}</span></li>
-              <li><span>Let (4× {fmtCZK(FLIGHT_PP_CZK)})</span><span>{fmtCZK(cost.flight)}</span></li>
+              <li><span>Letenky (4× {fmtCZK(cost.flightPp)})</span><span>{fmtCZK(cost.flight)}</span></li>
               <li><span>Půjčení auta</span><span>{fmtCZK(cost.car)}</span></li>
               <li>
-                <span>Benzín (~{active.driveKm} km, tam i zpět)</span>
+                <span>Benzín (paušál, tam i zpět)</span>
                 <span>{fmtCZK(cost.fuel)}</span>
               </li>
             </ul>
             <div className="var-cost-note">
-              ubytování = nejdražší varianta v každé základně · benzín {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · bez jídla
+              Ubytování = nejdražší varianta v každé základně. Bez jídla a útraty.
             </div>
             {cost.missingLodging.length > 0 && (
               <div className="var-cost-warn">

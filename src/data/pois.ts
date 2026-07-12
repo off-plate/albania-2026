@@ -44,7 +44,7 @@ export const POI_ZOOM = 7
 export const POIS: Poi[] = [
   {
     id: 'dajti',
-    name: 'Mount Dajti',
+    name: 'Hora Dajti',
     category: 'view',
     lat: 41.3597,
     lng: 19.9236,
@@ -55,7 +55,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'shkopet',
-    name: 'Shkopet Bridge',
+    name: 'Most Shkopet',
     category: 'view',
     lat: 41.66,
     lng: 19.87,
@@ -64,7 +64,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'vlore-old',
-    name: 'Vlorë Old Town',
+    name: 'Staré město Vlorë',
     category: 'town',
     lat: 40.4667,
     lng: 19.4897,
@@ -75,7 +75,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'llogara',
-    name: 'Llogara Pass',
+    name: 'Průsmyk Llogara',
     category: 'view',
     lat: 40.2069,
     lng: 19.5953,
@@ -86,7 +86,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'gjipe',
-    name: 'Gjipe Beach',
+    name: 'Pláž Gjipe',
     category: 'beach',
     lat: 40.1856,
     lng: 19.6433,
@@ -97,7 +97,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'filikuri',
-    name: 'Filikuri Beach',
+    name: 'Pláž Filikuri',
     category: 'beach',
     lat: 40.095,
     lng: 19.715,
@@ -106,7 +106,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'blue-eye',
-    name: 'The Blue Eye (Syri i Kaltër)',
+    name: 'Modré oko (Syri i Kaltër)',
     category: 'sight',
     lat: 39.9239,
     lng: 20.1894,
@@ -117,7 +117,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'butrint',
-    name: 'Butrint National Archaeological Park',
+    name: 'Národní park Butrint',
     category: 'sight',
     lat: 39.7456,
     lng: 20.0203,
@@ -128,7 +128,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'osumi-rafting',
-    name: 'Osumi Canyons — packrafting',
+    name: 'Kaňony Osumi (packrafting)',
     category: 'activity',
     lat: 40.42,
     lng: 20.23,

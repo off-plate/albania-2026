@@ -1,5 +1,5 @@
 import { useStore } from '../store'
-import { VARIANTS, FLIGHT_PP_CZK, FUEL, variantCost } from '../data/variants'
+import { VARIANTS, variantCost } from '../data/variants'
 import { POIS } from '../data/pois'
 import { fmtCZK } from '../lib/format'
 
@@ -10,9 +10,9 @@ export default function Budget() {
 
   const rows = [
     { label: 'Ubytování', value: c.stay, sub: v.stints.map((s) => s.base).join(' + ') },
-    { label: `Let (4× ${fmtCZK(FLIGHT_PP_CZK)})`, value: c.flight, sub: 'Praha ↔ Tirana' },
+    { label: `Letenky (4× ${fmtCZK(c.flightPp)})`, value: c.flight, sub: 'Praha ↔ Tirana' },
     { label: 'Půjčení auta', value: c.car, sub: 'celý výlet' },
-    { label: 'Benzín', value: c.fuel, sub: `~${v.driveKm} km · ${FUEL.lPer100} l/100 km · ${FUEL.priceCzkPerL} Kč/l · tam i zpět` },
+    { label: 'Benzín', value: c.fuel, sub: 'paušál za celý výlet, tam i zpět' },
   ]
 
   return (

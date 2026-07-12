@@ -7,11 +7,17 @@ export default function Itinerary() {
   const { activeVariantId, setActiveId } = useStore()
   const v = VARIANTS.find((x) => x.id === activeVariantId) ?? VARIANTS[0]
 
+  // Odvození příletu/odletu z termínu, např. "14.–22. 8." → 14. 8. / 22. 8.
+  const [aRaw, bRaw] = v.dateRange.split('–').map((s) => s.trim())
+  const month = bRaw.split(/\s+/).slice(1).join(' ')
+  const arrive = `${aRaw} ${month}`.trim()
+  const depart = bRaw
+
   return (
     <div className="itin">
       <div className="panel-head">
         <h1>Itinerář</h1>
-        <p>Varianta {v.label} · {v.name} · {SHARED.dates}</p>
+        <p>Varianta {v.label} · {v.name} · {v.dateRange}</p>
       </div>
 
       <ol className="itin-timeline">
@@ -19,7 +25,7 @@ export default function Itinerary() {
         <li className="itin-step">
           <span className="itin-dot itin-dot-end" />
           <div className="itin-body">
-            <div className="itin-when">14. 8. · přílet</div>
+            <div className="itin-when">{arrive} · přílet</div>
             <div className="itin-title">Praha → Tirana, pak autem na základnu</div>
             <div className="itin-note">{SHARED.flight}</div>
           </div>
@@ -56,7 +62,7 @@ export default function Itinerary() {
         <li className="itin-step">
           <span className="itin-dot itin-dot-end" />
           <div className="itin-body">
-            <div className="itin-when">23. 8. · odlet</div>
+            <div className="itin-when">{depart} · odlet</div>
             <div className="itin-title">Cesta na letiště Tirana, odlet do Prahy</div>
             {v.endNote && <div className="itin-note">{v.endNote}</div>}
           </div>

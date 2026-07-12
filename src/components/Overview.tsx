@@ -1,6 +1,5 @@
 import { useStore } from '../store'
-import { VARIANTS, SHARED, variantCost } from '../data/variants'
-import { CAR_RENTALS, CAR_TRIP_COST } from '../data/carRentals'
+import { VARIANTS, SHARED, variantCost, variantNights } from '../data/variants'
 import { TRAVEL_OPTIONS, TRAVEL_KIND_LABEL } from '../data/travelOptions'
 import { fmtCZK } from '../lib/format'
 
@@ -12,8 +11,8 @@ export default function Overview() {
   return (
     <div className="ovw">
       <div className="panel-head">
-        <h1>Trip to Albania</h1>
-        <p>{SHARED.dates} · {SHARED.nights} · 2 páry / 4 lidi</p>
+        <h1>Cesta do Albánie</h1>
+        <p>{v.dateRange} · {variantNights(v)} nocí · 2 páry / 4 lidi</p>
       </div>
 
       {/* selected variant snapshot */}
@@ -37,7 +36,7 @@ export default function Overview() {
       <div className="ov-h">Let</div>
       <a className="ovw-flight" href={SHARED.flightLink} target="_blank" rel="noreferrer">
         <span>{SHARED.flight}</span>
-        <span className="ovw-flight-price">{SHARED.flightPricePp} · Skyscanner →</span>
+        <span className="ovw-flight-price">{fmtCZK(cost.flightPp)} / osoba · Skyscanner →</span>
       </a>
 
       {/* bases + hotels of the chosen variant */}
@@ -65,20 +64,6 @@ export default function Overview() {
         ))}
       </div>
       {v.endNote && <div className="var-endnote">{v.endNote}</div>}
-
-      {/* general reference: car rental */}
-      <div className="ov-h">Půjčovny aut u letiště · {CAR_TRIP_COST}</div>
-      <ul className="car-list">
-        {CAR_RENTALS.map((c) => (
-          <li className={`car ${c.top ? 'car-top' : ''}`} key={c.name}>
-            <div className="car-head">
-              <span className="car-name">{c.name}</span>
-              <span className="car-rating">★ {c.rating.toFixed(1)}<span className="car-reviews"> · {c.reviews.toLocaleString('cs-CZ')} recenzí</span></span>
-            </div>
-            <div className="car-note">{c.note}</div>
-          </li>
-        ))}
-      </ul>
 
       {/* general reference: things to do */}
       <div className="ov-h">Co dělat a za kolik</div>

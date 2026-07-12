@@ -1,26 +1,22 @@
 import type { StopType } from '../types'
 
-// PLAN VARIANTS
-// Michael dictates each variant (A, B, C…). Only what he gives goes on the map:
-// the arrival airport, the base locations and the hotels. Cost is computed from
-// real components below, not guessed.
+// VARIANTY CESTY
+// Michael diktuje každou variantu. Na mapě je jen to, co zadal: přílet (letiště),
+// základny a hotely. Cena se počítá z reálných položek níže (nejdražší ubytování
+// v každé základně = worst case).
 
-// Shared across ALL variants:
+// Sdílené pro všechny varianty:
 export const SHARED = {
-  dates: '14.–23. 8. 2026',
-  nights: '9 nocí',
-  datesNote: 'Podle ceny možná zkrátíme na 22. 8. (8 nocí). Rozhodneme nakonec.',
   flight: 'Praha ↔ Tirana (zpáteční, všichni 4)',
-  flightPricePp: '~4 500 Kč / osoba',
   flightLink:
     'https://www.skyscanner.cz/doprava/lety/prg/tira/260814/260823/?adultsv2=4&cabinclass=economy&rtn=1',
+  note: 'Termíny i ceny se u jednotlivých variant můžou lišit.',
 }
 
-// Cost building blocks (per person / per group). Edit here.
-export const FLIGHT_PP_CZK = 4500 // let na osobu, zpáteční (Skyscanner PRG↔TIA)
-export const CAR_RENTAL_CZK = 8000 // půjčení auta na celý výlet (skupina)
-// Benzín: reálný průměr v Albánii ~170 ALL/l (natural 95, léto 2026) ≈ 42 Kč/l.
-export const FUEL = { lPer100: 7, priceCzkPerL: 42 }
+// Výchozí ceny (dají se přepsat u konkrétní varianty).
+export const FLIGHT_PP_CZK = 4500 // letenka na osobu, zpáteční
+export const CAR_RENTAL_CZK = 9000 // půjčení auta na celý výlet (skupina)
+export const FUEL_TOTAL_CZK = 3500 // benzín paušálně za celý výlet (skupina)
 
 export interface HotStop {
   name: string
@@ -35,9 +31,9 @@ export interface Lodging {
   priceCzk: number
   breakfast?: boolean
   link: string
-  note?: string // short tag pill
-  detail?: string // longer description
-  lat?: number // approx, town-level (Booking hides exact address)
+  note?: string // krátký štítek
+  detail?: string // delší popis
+  lat?: number // přibližně, na úroveň města (Booking skrývá přesnou adresu)
   lng?: number
 }
 
@@ -53,28 +49,34 @@ export interface PlanVariant {
   label: string
   name: string
   tagline: string
+  dateRange: string
   stints: Stint[]
   hotStops: HotStop[]
   mapCenter: [number, number]
   mapZoom: number
   endNote?: string
-  /** Estimated total driving in Albania, incl. airport there AND back (km). */
   driveKm?: number
+  // Přepis výchozích cen pro tuto variantu:
+  flightPpCzk?: number
+  carRentalCzk?: number
+  fuelCzk?: number
 }
 
-// Full cost for a variant, computed from the first lodging option per base.
+export const variantNights = (v: PlanVariant) => v.stints.reduce((n, s) => n + s.nights, 0)
+
+// Celková cena varianty. Ubytování = nejdražší varianta v každé základně.
 export function variantCost(v: PlanVariant) {
-  // Worst-case: the most expensive lodging option per base.
   const stay = v.stints.reduce((s, st) => {
     const prices = (st.lodging ?? []).map((l) => l.priceCzk)
     return s + (prices.length ? Math.max(...prices) : 0)
   }, 0)
   const missingLodging = v.stints.filter((st) => !st.lodging?.length).map((st) => st.base)
-  const flight = FLIGHT_PP_CZK * 4
-  const car = CAR_RENTAL_CZK
-  const fuel = v.driveKm ? Math.round((v.driveKm * FUEL.lPer100) / 100 * FUEL.priceCzkPerL) : 0
+  const flightPp = v.flightPpCzk ?? FLIGHT_PP_CZK
+  const flight = flightPp * 4
+  const car = v.carRentalCzk ?? CAR_RENTAL_CZK
+  const fuel = v.fuelCzk ?? FUEL_TOTAL_CZK
   const total = stay + flight + car + fuel
-  return { stay, flight, car, fuel, total, perPerson: Math.round(total / 4), missingLodging }
+  return { stay, flight, flightPp, car, fuel, total, perPerson: Math.round(total / 4), missingLodging }
 }
 
 const AIRPORT: HotStop = {
@@ -84,163 +86,54 @@ const AIRPORT: HotStop = {
   lng: 19.7206,
   note: 'Praha → Tirana, odsud autem.',
 }
-const RETURN_NOTE = '23. 8. přímá cesta na letiště (Tirana).'
+
+// Ubytování sdílené variantami B a C (vybrané):
+const DURRES_LODGING: Lodging[] = [
+  {
+    name: 'Aquila D',
+    priceCzk: 7081,
+    breakfast: true,
+    note: 'Vybráno',
+    detail: 'Rruga Egnatia. 2 pokoje, se snídaní.',
+    lat: 41.323,
+    lng: 19.443,
+    link: 'https://www.booking.com/hotel/al/aquila-d.html?checkin=2026-08-14&checkout=2026-08-16&group_adults=4&no_rooms=2&req_adults=4',
+  },
+]
+
+const VLORE_LODGING: Lodging[] = [
+  {
+    name: 'Sunny Hill Residence',
+    priceCzk: 6157,
+    note: 'Vybráno',
+    detail: 'SH8. 1 ložnice + gauč, kuchyň.',
+    lat: 40.463,
+    lng: 19.492,
+    link: 'https://www.booking.com/hotel/al/sunny-hill-residence.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
+  },
+]
+
+const DURRES_STOP: HotStop = { name: 'Durrës', type: 'relaxed', lat: 41.3231, lng: 19.4414, note: '1. základna' }
+const VLORE_STOP: HotStop = { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'základna' }
+const SARANDE_STOP: HotStop = { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'základna' }
 
 export const VARIANTS: PlanVariant[] = [
-  {
-    id: 'a',
-    label: 'A',
-    name: 'Vlorë then Sarandë',
-    tagline: 'Vlorë 3 noci, pak Sarandë 6 nocí. Přílet do Tirany, odsud autem.',
-    stints: [
-      {
-        base: 'Vlorë',
-        dates: '14.–17. 8.',
-        nights: 3,
-        lodging: [
-          {
-            name: 'Villa Christianna Vlora',
-            priceCzk: 12160,
-            breakfast: true,
-            note: 'Preferováno',
-            lat: 40.447,
-            lng: 19.49,
-            link: 'https://www.booking.com/hotel/al/villa-christianna-vlora.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Hotel Her',
-            priceCzk: 10243,
-            breakfast: true,
-            note: 'Levnější alternativa',
-            lat: 40.46,
-            lng: 19.483,
-            link: 'https://www.booking.com/hotel/al/her.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
-          },
-        ],
-      },
-      {
-        base: 'Sarandë',
-        dates: '17.–23. 8.',
-        nights: 6,
-        lodging: [
-          {
-            name: 'Two-bedroom apartment, steps from the beach',
-            priceCzk: 22155,
-            detail: 'Plně vybavený apartmán kousek od pláže. Parkování asi placené.',
-            lat: 39.873,
-            lng: 20.007,
-            link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Bliss Luxury Apartments & Suites',
-            priceCzk: 24680,
-            detail: 'Apartmán s kuchyní, queen bed a gauče.',
-            lat: 39.88,
-            lng: 20.003,
-            link: 'https://www.booking.com/hotel/al/bliss-luxury-apartments-amp-suites.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
-          },
-        ],
-      },
-    ],
-    hotStops: [
-      AIRPORT,
-      { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'První základna, 14.–17. 8.' },
-      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'Druhá základna, 17.–23. 8.' },
-    ],
-    endNote: '23. 8. přímá cesta ze Sarandy na letiště (Tirana, ~3,5 h).',
-    driveKm: 950,
-    mapCenter: [40.55, 19.75],
-    mapZoom: 8,
-  },
   {
     id: 'b',
     label: 'B',
     name: 'Durrës, Vlorë, Sarandë',
-    tagline: 'Durrës 2 noci, Vlorë 2 noci, Sarandë 5 nocí. Sarandë byt už vybraný.',
+    tagline: 'Durrës 2 noci, Vlorë 2 noci, Sarandë 5 nocí. Byt v Sarandě už vybraný.',
+    dateRange: '14.–23. 8.',
     stints: [
-      {
-        base: 'Durrës',
-        dates: '14.–16. 8.',
-        nights: 2,
-        lodging: [
-          {
-            name: 'La Mer Durrës',
-            priceCzk: 6450,
-            breakfast: true,
-            detail: 'Rruga Pavaresia. Snídaně + parkování. Pozor: některé postele patrové, jedna manželská.',
-            lat: 41.301,
-            lng: 19.46,
-            link: 'https://www.booking.com/hotel/al/la-mer-durres.html?checkin=2026-08-14&checkout=2026-08-16&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Aquila D',
-            priceCzk: 7081,
-            breakfast: true,
-            detail: 'Rruga Egnatia. 2 pokoje, se snídaní.',
-            lat: 41.323,
-            lng: 19.443,
-            link: 'https://www.booking.com/hotel/al/aquila-d.html?checkin=2026-08-14&checkout=2026-08-16&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'GrandStay Sea Penthouse',
-            priceCzk: 7668,
-            detail: 'Rruga Taulantia, u moře.',
-            lat: 41.3105,
-            lng: 19.449,
-            link: 'https://www.booking.com/hotel/al/grandstay-sea-penthouse.html?checkin=2026-08-14&checkout=2026-08-16&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Exclusive Spacious 2-Bedroom Escape',
-            priceCzk: 5633,
-            note: 'Nejlevnější',
-            detail: 'Rruga Teodor Komneni. Téměř žádné recenze, nešlo dohledat na Googlu — ověřit.',
-            lat: 41.313,
-            lng: 19.452,
-            link: 'https://www.booking.com/hotel/al/exclusive-spacious-2bedroom-escape-in-durres.html?checkin=2026-08-14&checkout=2026-08-16&group_adults=4&no_rooms=2&req_adults=4',
-          },
-        ],
-      },
-      {
-        base: 'Vlorë',
-        dates: '16.–18. 8.',
-        nights: 2,
-        lodging: [
-          {
-            name: 'Vila Anxhelo & Xhemi',
-            priceCzk: 7470,
-            breakfast: true,
-            detail: 'Rruga Kanan Maze. 2 ložnice, snídaně v ceně, bez kuchyně.',
-            lat: 40.452,
-            lng: 19.488,
-            link: 'https://www.booking.com/hotel/al/vila-anxhelo-amp-xhemi.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Bel Ami Apartments',
-            priceCzk: 7333,
-            breakfast: true,
-            detail: 'Silnice Vlorë–Orikum. Snídaně v ceně, bez kuchyně.',
-            lat: 40.4,
-            lng: 19.478,
-            link: 'https://www.booking.com/hotel/al/bel-ami-apartments.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
-          },
-          {
-            name: 'Sunny Hill Residence',
-            priceCzk: 6157,
-            note: 'Nejlevnější',
-            detail: 'SH8. 1 ložnice + gauč, kuchyň.',
-            lat: 40.463,
-            lng: 19.492,
-            link: 'https://www.booking.com/hotel/al/sunny-hill-residence.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
-          },
-        ],
-      },
+      { base: 'Durrës', dates: '14.–16. 8.', nights: 2, lodging: DURRES_LODGING },
+      { base: 'Vlorë', dates: '16.–18. 8.', nights: 2, lodging: VLORE_LODGING },
       {
         base: 'Sarandë',
         dates: '18.–23. 8.',
         nights: 5,
         lodging: [
           {
-            name: 'Two-bedroom apartment, steps from the beach',
+            name: 'Apartmán 2 ložnice, kousek od pláže',
             priceCzk: 18460,
             note: 'Vybráno',
             detail: 'Plnohodnotný byt u pláže. Cena je odhad na 5 nocí (dopočet z 6nocní ceny), potřebuju reálný total.',
@@ -253,11 +146,50 @@ export const VARIANTS: PlanVariant[] = [
     ],
     hotStops: [
       AIRPORT,
-      { name: 'Durrës', type: 'relaxed', lat: 41.3231, lng: 19.4414, note: '1. základna, 14.–16. 8.' },
-      { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: '2. základna, 16.–18. 8.' },
-      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: '3. základna, 18.–23. 8.' },
+      { ...DURRES_STOP, note: '1. základna, 14.–16. 8.' },
+      { ...VLORE_STOP, note: '2. základna, 16.–18. 8.' },
+      { ...SARANDE_STOP, note: '3. základna, 18.–23. 8.' },
     ],
-    endNote: RETURN_NOTE,
+    endNote: '23. 8. přímá cesta na letiště (Tirana).',
+    driveKm: 800,
+    mapCenter: [40.5, 19.7],
+    mapZoom: 8,
+  },
+  {
+    id: 'c',
+    label: 'C',
+    name: 'Durrës, Vlorë, Sarandë (kratší)',
+    tagline: 'Jako B, ale o den kratší (14.–22.). Levnější letenky i auto.',
+    dateRange: '14.–22. 8.',
+    flightPpCzk: 4200,
+    carRentalCzk: 7500,
+    stints: [
+      { base: 'Durrës', dates: '14.–16. 8.', nights: 2, lodging: DURRES_LODGING },
+      { base: 'Vlorë', dates: '16.–18. 8.', nights: 2, lodging: VLORE_LODGING },
+      {
+        base: 'Sarandë',
+        dates: '18.–22. 8.',
+        nights: 4,
+        lodging: [
+          {
+            name: 'Apartmán 2 ložnice, kousek od pláže',
+            priceCzk: 14770,
+            note: 'Vybráno',
+            detail: 'Plnohodnotný byt u pláže, 4 noci (18.–22.), pak domů.',
+            lat: 39.873,
+            lng: 20.007,
+            link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?group_adults=4&no_rooms=2&req_adults=4&checkin=2026-08-18&checkout=2026-08-22',
+          },
+        ],
+      },
+    ],
+    hotStops: [
+      AIRPORT,
+      { ...DURRES_STOP, note: '1. základna, 14.–16. 8.' },
+      { ...VLORE_STOP, note: '2. základna, 16.–18. 8.' },
+      { ...SARANDE_STOP, note: '3. základna, 18.–22. 8.' },
+    ],
+    endNote: '22. 8. přímá cesta na letiště (Tirana).',
     driveKm: 800,
     mapCenter: [40.5, 19.7],
     mapZoom: 8,

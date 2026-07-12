@@ -4,12 +4,12 @@ import type { StopType } from './types'
 // classic = the accent; instagram warmed off forbidden indigo-violet;
 // endpoint a warm near-black. These appear on 9–26px dots + map markers only.
 export const STOP: Record<StopType, { label: string; color: string }> = {
-  classic: { label: 'Classic stop', color: '#C8461E' },
-  instagram: { label: 'Viewpoint', color: '#9C5BB0' },
-  relaxed: { label: 'Sea & slow', color: '#2E8B6B' },
-  car: { label: 'Motor valley', color: '#2E6BB8' },
-  optional: { label: 'If time allows', color: '#9A8C7B' },
-  endpoint: { label: 'Start / End', color: '#3A2C1E' },
+  classic: { label: 'Klasická zastávka', color: '#C8461E' },
+  instagram: { label: 'Vyhlídka', color: '#9C5BB0' },
+  relaxed: { label: 'Základna', color: '#2E8B6B' },
+  car: { label: 'Motorové muzeum', color: '#2E6BB8' },
+  optional: { label: 'Když zbude čas', color: '#9A8C7B' },
+  endpoint: { label: 'Přílet / odlet', color: '#3A2C1E' },
 }
 
 export const STOP_ORDER: StopType[] = [

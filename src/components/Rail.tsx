@@ -1,10 +1,10 @@
 import { useStore, type View } from '../store'
 
 const ITEMS: { key: View; label: string }[] = [
-  { key: 'plans', label: 'Plans' },
-  { key: 'overview', label: 'Overview' },
-  { key: 'itinerary', label: 'Itinerary' },
-  { key: 'budget', label: 'Budget' },
+  { key: 'plans', label: 'Varianty' },
+  { key: 'overview', label: 'Přehled' },
+  { key: 'itinerary', label: 'Itinerář' },
+  { key: 'budget', label: 'Rozpočet' },
 ]
 
 // One hand-traced route glyph, reused. Not a Lucide icon.
@@ -37,7 +37,7 @@ export default function Rail() {
       <div className="rail-foot">
         <span className={`mode-pill ${canEdit ? 'mode-edit' : 'mode-view'}`}>
           <span className="mode-dot" />
-          {canEdit ? 'Editing' : isEditor && mode === 'view' ? 'Viewing' : 'Viewing'}
+          {canEdit ? 'Úpravy' : isEditor && mode === 'view' ? 'Prohlížení' : 'Prohlížení'}
         </span>
       </div>
     </nav>

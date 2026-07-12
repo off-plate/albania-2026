@@ -40,57 +40,57 @@ export default function TopBar() {
   return (
     <header className="topbar">
       <div className="topbar-l">
-        <a className="brand" href="#/" title="All trips">
+        <a className="brand" href="#/" title="Všechny cesty">
           <span className="brand-mark">‹</span>
-          {data?.trip.title ?? 'Trips'}
+          Albánie 2026
         </a>
-        <span className="saved">{saving ? 'Saving…' : 'Saved'}</span>
+        <span className="saved">{saving ? 'Ukládám…' : 'Uloženo'}</span>
       </div>
 
       <div className="topbar-r">
         <button className="btn-line" onClick={shareView}>
-          {copied ? 'Link copied' : 'Share view'}
+          {copied ? 'Zkopírováno' : 'Sdílet'}
         </button>
 
         {isEditor ? (
           <>
             <div className="toggle">
               <button className={mode === 'view' ? 'toggle-on' : ''} onClick={() => setMode('view')}>
-                View
+                Prohlížet
               </button>
               <button className={mode === 'edit' ? 'toggle-on' : ''} onClick={() => setMode('edit')}>
-                Edit
+                Upravit
               </button>
             </div>
-            <button className="btn-line" onClick={signOut}>Sign out</button>
+            <button className="btn-line" onClick={signOut}>Odhlásit</button>
           </>
         ) : (
-          <button className="btn-line" onClick={() => setLoginOpen(true)}>Edit</button>
+          <button className="btn-line" onClick={() => setLoginOpen(true)}>Upravit</button>
         )}
 
         <button className="btn-map-toggle" onClick={() => setMapMobileOpen(!mapMobileOpen)}>
-          {mapMobileOpen ? 'List' : 'Map'}
+          {mapMobileOpen ? 'Seznam' : 'Mapa'}
         </button>
       </div>
 
       {loginOpen && (
         <div className="modal-scrim" onClick={() => setLoginOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Sign in to edit</h3>
-            <p className="modal-sub">Only the trip owner can edit. Everyone else has a read-only view.</p>
+            <h3>Přihlásit k úpravám</h3>
+            <p className="modal-sub">Upravovat může jen vlastník cesty. Ostatní vidí jen náhled.</p>
             <input
               type="password"
               autoFocus
-              placeholder="Editor password"
+              placeholder="Heslo"
               value={pw}
               onChange={(e) => setPw(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && submit()}
             />
             {err && <div className="modal-err">{err}</div>}
             <div className="modal-actions">
-              <button className="ap-link" onClick={() => setLoginOpen(false)}>Cancel</button>
+              <button className="ap-link" onClick={() => setLoginOpen(false)}>Zrušit</button>
               <button className="comp-add" onClick={submit} disabled={authBusy}>
-                {authBusy ? 'Signing in…' : 'Sign in'}
+                {authBusy ? 'Přihlašuji…' : 'Přihlásit'}
               </button>
             </div>
           </div>
