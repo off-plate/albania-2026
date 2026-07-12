@@ -1,5 +1,6 @@
 import { useStore } from '../store'
 import { VARIANTS, FLIGHT_PP_CZK, FUEL, variantCost } from '../data/variants'
+import { POIS } from '../data/pois'
 import { fmtCZK } from '../lib/format'
 
 export default function Budget() {
@@ -46,6 +47,31 @@ export default function Budget() {
       {c.missingLodging.length > 0 && (
         <div className="bud-warn">⚠ Chybí ubytování: {c.missingLodging.join(', ')}. Celková cena je zatím neúplná.</div>
       )}
+
+      {/* optional activities */}
+      {(() => {
+        const opts = POIS.filter((p) => p.optional && p.priceCzk)
+        if (!opts.length) return null
+        return (
+          <>
+            <div className="ov-h">Volitelné (nezapočítáno výše)</div>
+            <ul className="bud-rows">
+              {opts.map((o) => (
+                <li className="bud-row" key={o.id}>
+                  <div className="bud-row-main">
+                    <span className="bud-row-label">{o.name}</span>
+                    <span className="bud-row-sub">za 4 · {o.bookLink ? 'rezervace online' : ''}</span>
+                  </div>
+                  <div className="bud-row-vals">
+                    <span className="bud-row-val">{fmtCZK(o.priceCzk as number)}</span>
+                    <span className="bud-row-pp">{fmtCZK(Math.round((o.priceCzk as number) / 4))}/os.</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      })()}
 
       {/* compare all variants */}
       <div className="ov-h">Porovnání variant</div>

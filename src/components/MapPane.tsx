@@ -4,7 +4,17 @@ import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
 import { VARIANTS } from '../data/variants'
+import { POIS, POI_COLOR, POI_CENTER, POI_ZOOM } from '../data/pois'
 import { fmtCZK } from '../lib/format'
+
+function poiIcon(color: string) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="mk-poi" style="background:${color}"></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  })
+}
 
 function markerIcon(color: string, n: number, active: boolean) {
   return L.divIcon({
@@ -48,8 +58,9 @@ function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: n
 }
 
 export default function MapPane() {
-  const { activeVariantId, activeId, setActiveId } = useStore()
+  const { activeVariantId, activeId, setActiveId, view } = useStore()
   const variant = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
+  const itinMode = view === 'itinerary'
 
   const flyTarget = useMemo<[number, number] | null>(() => {
     if (!activeId?.startsWith('var:')) return null
@@ -62,6 +73,27 @@ export default function MapPane() {
   const hotels = variant.stints
     .flatMap((st) => st.lodging ?? [])
     .filter((l) => l.lat != null && l.lng != null)
+
+  if (itinMode) {
+    return (
+      <MapContainer center={POI_CENTER} zoom={POI_ZOOM} className="map-root" scrollWheelZoom>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <FrameVariant center={POI_CENTER} zoom={POI_ZOOM} dep="itin" />
+        {POIS.map((p) => (
+          <Marker key={p.id} position={[p.lat, p.lng]} icon={poiIcon(POI_COLOR[p.category])}>
+            <Popup>
+              <strong>{p.name}</strong>
+              <span className="pop-blurb">{p.note}</span>
+              <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    )
+  }
 
   return (
     <MapContainer center={variant.mapCenter} zoom={variant.mapZoom} className="map-root" scrollWheelZoom>

@@ -1,5 +1,6 @@
 import { useStore } from '../store'
 import { VARIANTS, SHARED } from '../data/variants'
+import { POIS, POI_COLOR, POI_LABEL } from '../data/pois'
 import { fmtCZK } from '../lib/format'
 
 export default function Itinerary() {
@@ -66,6 +67,40 @@ export default function Itinerary() {
         Denní program (výlety, pláže, večeře) doplníme, až bude vybraná varianta. Zatím je jisté
         jen rozložení základen.
       </p>
+
+      <div className="ov-h">Co vidět · hotspoty</div>
+      <div className="poi-grid">
+        {POIS.map((p) => (
+          <article className={`poi ${p.optional ? 'poi-opt' : ''}`} key={p.id}>
+            <div className="poi-photo">
+              {p.photo ? (
+                <img src={p.photo} alt={p.name} loading="lazy" referrerPolicy="no-referrer" />
+              ) : (
+                <span className="poi-photo-ph" style={{ color: POI_COLOR[p.category] }}>
+                  {p.name.slice(0, 1)}
+                </span>
+              )}
+              <span className="poi-kind" style={{ background: POI_COLOR[p.category] }}>
+                {POI_LABEL[p.category]}
+              </span>
+            </div>
+            <div className="poi-body">
+              <h3 className="poi-name">{p.name}</h3>
+              <p className="poi-note">{p.note}</p>
+              {p.optional && p.priceCzk && (
+                <p className="poi-price">
+                  Volitelné · {fmtCZK(p.priceCzk)} za 4 ({fmtCZK(Math.round(p.priceCzk / 4))}/os.)
+                </p>
+              )}
+              <div className="poi-links">
+                <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
+                {p.bookLink && <a href={p.bookLink} target="_blank" rel="noreferrer">Rezervovat →</a>}
+              </div>
+              {p.photoCredit && <span className="poi-credit">foto: {p.photoCredit}</span>}
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   )
 }
