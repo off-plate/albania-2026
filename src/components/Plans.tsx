@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useStore } from '../store'
-import { VARIANTS, SHARED, FUEL } from '../data/variants'
+import { VARIANTS, SHARED, FLIGHT_PP_CZK, FUEL, variantCost } from '../data/variants'
 import { STOP } from '../stopTypes'
 import { fmtCZK } from '../lib/format'
 
@@ -12,10 +12,7 @@ export default function Plans() {
   }, [activeVariantId, setActiveVariantId])
 
   const active = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
-
-  const liters = active?.driveKm ? (active.driveKm * FUEL.lPer100) / 100 : null
-  const fuelTotal = liters != null ? Math.round(liters * FUEL.priceCzkPerL) : null
-  const fuelPerPerson = fuelTotal != null ? Math.round(fuelTotal / 4) : null
+  const cost = active ? variantCost(active) : null
 
   return (
     <div className="plans">
@@ -49,7 +46,7 @@ export default function Plans() {
             <span className="var-tab-text">
               <span className="var-tab-name">{v.name}</span>
               <span className="var-tab-meta">
-                {fmtCZK(v.costPerPersonCzk)}/os. · {v.stints.map((s) => s.base).join(' → ')}
+                {fmtCZK(variantCost(v).perPerson)}/os. · {v.stints.map((s) => s.base).join(' → ')}
               </span>
             </span>
           </button>
@@ -57,26 +54,32 @@ export default function Plans() {
       </div>
 
       {/* showcase */}
-      {active && (
+      {active && cost && (
         <div className="var-show">
           <p className="var-tagline">{active.tagline}</p>
 
-          <div className="var-stats">
-            <div className="var-stat">
-              <span className="var-stat-n">{fmtCZK(active.costPerPersonCzk)}</span>
-              <span className="var-stat-l">na osobu</span>
+          {/* cost breakdown */}
+          <div className="ov-h">Cena (odhad)</div>
+          <div className="var-cost">
+            <div className="var-cost-top">
+              <span className="var-cost-pp">{fmtCZK(cost.perPerson)}<small> / osoba</small></span>
+              <span className="var-cost-all">{fmtCZK(cost.total)} celkem (4)</span>
             </div>
-            <div className="var-stat">
-              <span className="var-stat-n">{fmtCZK(active.costPerPersonCzk * 4)}</span>
-              <span className="var-stat-l">celkem (4)</span>
-            </div>
-            <div className="var-stat">
-              <span className="var-stat-n">{active.hotStops.length}</span>
-              <span className="var-stat-l">hot stops</span>
+            <ul className="var-cost-rows">
+              <li><span>Ubytování</span><span>{fmtCZK(cost.stay)}</span></li>
+              <li><span>Let (4× {fmtCZK(FLIGHT_PP_CZK)})</span><span>{fmtCZK(cost.flight)}</span></li>
+              <li><span>Půjčení auta</span><span>{fmtCZK(cost.car)}</span></li>
+              <li>
+                <span>Benzín (~{active.driveKm} km, tam i zpět)</span>
+                <span>{fmtCZK(cost.fuel)}</span>
+              </li>
+            </ul>
+            <div className="var-cost-note">
+              benzín: {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · bez jídla a útraty
             </div>
           </div>
-          <div className="var-costnote">{active.costNote}</div>
 
+          {/* bases + lodging */}
           <div className="ov-h">Základny</div>
           <div className="var-stints">
             {active.stints.map((s, i) => (
@@ -106,24 +109,10 @@ export default function Plans() {
             ))}
           </div>
 
-          {fuelTotal != null && (
-            <>
-              <div className="ov-h">Benzín (odhad)</div>
-              <div className="var-fuel">
-                <div className="var-fuel-top">
-                  <span className="var-fuel-n">{fmtCZK(fuelTotal)}</span>
-                  <span className="var-fuel-pp">{fmtCZK(fuelPerPerson as number)} / osoba</span>
-                </div>
-                <div className="var-fuel-calc">
-                  ~{active.driveKm} km · {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · ~{Math.round(liters as number)} l
-                </div>
-              </div>
-            </>
-          )}
-
           {active.endNote && <div className="var-endnote">{active.endNote}</div>}
 
-          <div className="ov-h">Hot stops · {active.hotStops.length}</div>
+          {/* hot stops (only what was dictated: airport + locations) */}
+          <div className="ov-h">Na mapě</div>
           <ol className="var-stops">
             {active.hotStops.map((s, i) => (
               <li

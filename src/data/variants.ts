@@ -1,11 +1,11 @@
 import type { StopType } from '../types'
 
 // PLAN VARIANTS
-// Michael sends variants (A, B, maybe more). Each is a self-contained option
-// with its own hot stops, bases, cost and map framing. The map re-frames to the
-// selected variant and shows only its stops.
+// Michael dictates each variant (A, B, C…). Only what he gives goes on the map:
+// the arrival airport, the base locations and the hotels. Cost is computed from
+// real components below, not guessed.
 
-// Shared across ALL variants (same for A and B):
+// Shared across ALL variants:
 export const SHARED = {
   dates: '14.–23. 8. 2026',
   nights: '9 nocí',
@@ -13,27 +13,30 @@ export const SHARED = {
   flight: 'Praha ↔ Tirana (zpáteční, všichni 4)',
 }
 
+// Cost building blocks (per person / per group). Edit here.
+export const FLIGHT_PP_CZK = 4800 // let na osobu, zpáteční
+export const CAR_RENTAL_CZK = 6500 // půjčení auta na celý výlet (skupina), ~5–8k
+export const FUEL = { lPer100: 7, priceCzkPerL: 48 } // benzín: spotřeba + cena/l
+
 export interface HotStop {
   name: string
-  type: StopType // drives the dot / marker colour
+  type: StopType
   lat: number
   lng: number
   note?: string
 }
 
-// A lodging option (candidate) for a base.
 export interface Lodging {
   name: string
   priceCzk: number
   breakfast?: boolean
   link: string
-  note?: string // short tag pill, e.g. "Preferováno"
-  detail?: string // longer plain description
+  note?: string // short tag pill
+  detail?: string // longer description
   lat?: number // approx, town-level (Booking hides exact address)
   lng?: number
 }
 
-// A stay at one base for part of the trip.
 export interface Stint {
   base: string
   dates: string
@@ -43,25 +46,36 @@ export interface Stint {
 
 export interface PlanVariant {
   id: string
-  label: string // 'A', 'B', ...
+  label: string
   name: string
   tagline: string
-  costPerPersonCzk: number
-  costNote: string
   stints: Stint[]
   hotStops: HotStop[]
   mapCenter: [number, number]
   mapZoom: number
   endNote?: string
-  /** Estimated total driving in Albania (km), for the fuel estimate. */
+  /** Estimated total driving in Albania, incl. airport there AND back (km). */
   driveKm?: number
 }
 
-// Fuel estimate assumptions (editable). Albania pump price ~1.9 EUR/l.
-export const FUEL = {
-  lPer100: 7, // average consumption
-  priceCzkPerL: 48,
+// Full cost for a variant, computed from the first lodging option per base.
+export function variantCost(v: PlanVariant) {
+  const stay = v.stints.reduce((s, st) => s + (st.lodging?.[0]?.priceCzk ?? 0), 0)
+  const flight = FLIGHT_PP_CZK * 4
+  const car = CAR_RENTAL_CZK
+  const fuel = v.driveKm ? Math.round((v.driveKm * FUEL.lPer100) / 100 * FUEL.priceCzkPerL) : 0
+  const total = stay + flight + car + fuel
+  return { stay, flight, car, fuel, total, perPerson: Math.round(total / 4) }
 }
+
+const AIRPORT: HotStop = {
+  name: 'Letiště Tirana (přílet)',
+  type: 'endpoint',
+  lat: 41.4147,
+  lng: 19.7206,
+  note: 'Praha → Tirana, odsud autem.',
+}
+const RETURN_NOTE = '23. 8. přímá cesta na letiště (Tirana).'
 
 export const VARIANTS: PlanVariant[] = [
   {
@@ -69,8 +83,6 @@ export const VARIANTS: PlanVariant[] = [
     label: 'A',
     name: 'Vlorë then Sarandë',
     tagline: 'Vlorë 3 noci, pak Sarandë 6 nocí. Přílet do Tirany, odsud autem.',
-    costPerPersonCzk: 15000,
-    costNote: 'odhad: Vlorë hotel + Sarandë apartmán + let + auto + benzín',
     stints: [
       {
         base: 'Vlorë',
@@ -121,29 +133,87 @@ export const VARIANTS: PlanVariant[] = [
         ],
       },
     ],
-    endNote: '23. 8. přímá cesta ze Sarandy na letiště (Tirana, ~3,5 h).',
-    driveKm: 950,
     hotStops: [
-      { name: 'Letiště Tirana (přílet)', type: 'endpoint', lat: 41.4147, lng: 19.7206, note: 'Praha → Tirana, odsud autem.' },
+      AIRPORT,
       { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'První základna, 14.–17. 8.' },
       { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'Druhá základna, 17.–23. 8.' },
     ],
+    endNote: '23. 8. přímá cesta ze Sarandy na letiště (Tirana, ~3,5 h).',
+    driveKm: 950,
     mapCenter: [40.55, 19.75],
     mapZoom: 8,
   },
   {
     id: 'b',
     label: 'B',
-    name: 'South base',
-    tagline: 'One base in the south around Ksamil, less driving, more beach time. Cheaper.',
-    costPerPersonCzk: 12000,
-    costNote: 'ubytování ~25k + let + auto',
-    stints: [{ base: 'Ksamil', dates: '14.–23. 8.', nights: 9 }],
-    driveKm: 850,
-    hotStops: [
-      { name: 'Letiště Tirana (přílet)', type: 'endpoint', lat: 41.4147, lng: 19.7206 },
-      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Základna (návrh, ještě nezadáno).' },
+    name: 'Sarandë only',
+    tagline: 'Rovnou z letiště do Sarandy, celý pobyt tam. 14.–23. 8.',
+    stints: [
+      {
+        base: 'Sarandë',
+        dates: '14.–23. 8.',
+        nights: 9,
+        lodging: [
+          {
+            name: 'Vila Mariana',
+            priceCzk: 39355,
+            breakfast: true,
+            note: 'Se snídaní',
+            detail: 'Jedna postel + gauč, bez kuchyně.',
+            lat: 39.876,
+            lng: 20.006,
+            link: 'https://www.booking.com/hotel/al/vila-mariana.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=1&req_adults=4',
+          },
+          {
+            name: 'Niklas Boutique',
+            priceCzk: 38831,
+            breakfast: true,
+            detail: 'Normální hotel se snídaní.',
+            lat: 39.872,
+            lng: 20.008,
+            link: 'https://www.booking.com/hotel/al/niklas-butique.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=1&req_adults=4',
+          },
+        ],
+      },
     ],
+    hotStops: [
+      AIRPORT,
+      { name: 'Sarandë', type: 'relaxed', lat: 39.8756, lng: 20.005, note: 'Základna na celý pobyt.' },
+    ],
+    endNote: RETURN_NOTE,
+    driveKm: 850,
+    mapCenter: [40.6, 19.85],
+    mapZoom: 8,
+  },
+  {
+    id: 'c',
+    label: 'C',
+    name: 'Ksamil only',
+    tagline: 'Rovnou z letiště do Ksamilu, celý pobyt tam. 14.–23. 8.',
+    stints: [
+      {
+        base: 'Ksamil',
+        dates: '14.–23. 8.',
+        nights: 9,
+        lodging: [
+          {
+            name: 'Michelle Apartments Ksamil',
+            priceCzk: 36670,
+            note: 'Výhled na moře',
+            detail: 'Normální postele, kuchyň, výhled na moře.',
+            lat: 39.767,
+            lng: 20.001,
+            link: 'https://www.booking.com/hotel/al/michelle-apartments-ksamil1.html?checkin=2026-08-14&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
+          },
+        ],
+      },
+    ],
+    hotStops: [
+      AIRPORT,
+      { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Základna na celý pobyt.' },
+    ],
+    endNote: RETURN_NOTE,
+    driveKm: 880,
     mapCenter: [40.6, 19.9],
     mapZoom: 8,
   },
