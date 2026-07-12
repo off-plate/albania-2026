@@ -74,15 +74,32 @@ export default function Plans() {
           <div className="var-costnote">{active.costNote}</div>
 
           <div className="ov-h">Základny</div>
-          <ol className="var-stints">
+          <div className="var-stints">
             {active.stints.map((s, i) => (
-              <li className="var-stint" key={s.base + i}>
-                <span className="var-stint-base">{s.base}</span>
-                <span className="var-stint-dates">{s.dates}</span>
-                <span className="var-stint-nights">{s.nights} {s.nights === 1 ? 'noc' : s.nights < 5 ? 'noci' : 'nocí'}</span>
-              </li>
+              <div className="var-stint-block" key={s.base + i}>
+                <div className="var-stint">
+                  <span className="var-stint-base">{s.base}</span>
+                  <span className="var-stint-dates">{s.dates}</span>
+                  <span className="var-stint-nights">{s.nights} {s.nights === 1 ? 'noc' : s.nights < 5 ? 'noci' : 'nocí'}</span>
+                </div>
+                {s.lodging && s.lodging.length > 0 && (
+                  <ul className="var-lodging">
+                    {s.lodging.map((l) => (
+                      <li className="var-lodge" key={l.name}>
+                        <a className="var-lodge-name" href={l.link} target="_blank" rel="noreferrer">
+                          {l.name} →
+                        </a>
+                        <span className="var-lodge-price">
+                          {fmtCZK(l.priceCzk)}{l.breakfast ? ' · se snídaní' : ''}
+                        </span>
+                        {l.note && <span className="var-lodge-note">{l.note}</span>}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             ))}
-          </ol>
+          </div>
 
           <div className="ov-h">Hot stops · {active.hotStops.length}</div>
           <ol className="var-stops">

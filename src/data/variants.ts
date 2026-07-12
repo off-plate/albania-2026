@@ -21,11 +21,21 @@ export interface HotStop {
   note?: string
 }
 
+// A lodging option (candidate) for a base.
+export interface Lodging {
+  name: string
+  priceCzk: number
+  breakfast?: boolean
+  link: string
+  note?: string
+}
+
 // A stay at one base for part of the trip.
 export interface Stint {
   base: string
   dates: string
   nights: number
+  lodging?: Lodging[]
 }
 
 export interface PlanVariant {
@@ -48,10 +58,30 @@ export const VARIANTS: PlanVariant[] = [
     name: 'Vlorë then Ksamil',
     tagline: 'Two nights in Vlorë for the northern Riviera, then a week in Ksamil for the south, the islands and Butrint.',
     costPerPersonCzk: 15000,
-    costNote: 'odhad: 2 ubytování + let + auto (bez jídla)',
+    costNote: 'odhad: Vlorë hotel + Ksamil (TBD) + let + auto',
     stints: [
-      { base: 'Vlorë', dates: '14.–16. 8.', nights: 2 },
-      { base: 'Ksamil', dates: '16.–23. 8.', nights: 7 },
+      {
+        base: 'Vlorë',
+        dates: '14.–17. 8.',
+        nights: 3,
+        lodging: [
+          {
+            name: 'Villa Christianna Vlora',
+            priceCzk: 12160,
+            breakfast: true,
+            note: 'Preferováno',
+            link: 'https://www.booking.com/hotel/al/villa-christianna-vlora.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
+          },
+          {
+            name: 'Hotel Her',
+            priceCzk: 10243,
+            breakfast: true,
+            note: 'Levnější alternativa',
+            link: 'https://www.booking.com/hotel/al/her.html?checkin=2026-08-14&checkout=2026-08-17&group_adults=4&no_rooms=2&req_adults=4',
+          },
+        ],
+      },
+      { base: 'Ksamil', dates: '17.–23. 8.', nights: 6 },
     ],
     hotStops: [
       { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'Northern base, start of the Riviera.' },
