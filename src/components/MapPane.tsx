@@ -84,9 +84,10 @@ export default function MapPane() {
     return [...byDay.values()].filter((pts) => pts.length >= 2)
   }, [data, numbered])
 
-  if (!data) return <div className="map-root" />
-  const center = plansMode ? variant.mapCenter : data.trip.mapCenter
-  const zoom = plansMode ? variant.mapZoom : data.trip.mapZoom
+  // Plans mode is code-only and must render even before the DB loads.
+  if (!plansMode && !data) return <div className="map-root" />
+  const center = plansMode ? variant.mapCenter : (data as NonNullable<typeof data>).trip.mapCenter
+  const zoom = plansMode ? variant.mapZoom : (data as NonNullable<typeof data>).trip.mapZoom
 
   return (
     <MapContainer center={center} zoom={zoom} className="map-root" scrollWheelZoom>
