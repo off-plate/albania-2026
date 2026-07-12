@@ -44,7 +44,9 @@ export default function Plans() {
             <span className="var-tab-badge">{v.label}</span>
             <span className="var-tab-text">
               <span className="var-tab-name">{v.name}</span>
-              <span className="var-tab-meta">{fmtCZK(v.costPerPersonCzk)}/os. · {v.bases.join(' + ')}</span>
+              <span className="var-tab-meta">
+                {fmtCZK(v.costPerPersonCzk)}/os. · {v.stints.map((s) => s.base).join(' → ')}
+              </span>
             </span>
           </button>
         ))}
@@ -71,12 +73,16 @@ export default function Plans() {
           </div>
           <div className="var-costnote">{active.costNote}</div>
 
-          <div className="var-bases">
-            <span className="var-bases-l">Základny</span>
-            {active.bases.map((b) => (
-              <span className="var-base" key={b}>{b}</span>
+          <div className="ov-h">Základny</div>
+          <ol className="var-stints">
+            {active.stints.map((s, i) => (
+              <li className="var-stint" key={s.base + i}>
+                <span className="var-stint-base">{s.base}</span>
+                <span className="var-stint-dates">{s.dates}</span>
+                <span className="var-stint-nights">{s.nights} {s.nights === 1 ? 'noc' : s.nights < 5 ? 'noci' : 'nocí'}</span>
+              </li>
             ))}
-          </div>
+          </ol>
 
           <div className="ov-h">Hot stops · {active.hotStops.length}</div>
           <ol className="var-stops">

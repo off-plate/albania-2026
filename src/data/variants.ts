@@ -21,6 +21,13 @@ export interface HotStop {
   note?: string
 }
 
+// A stay at one base for part of the trip.
+export interface Stint {
+  base: string
+  dates: string
+  nights: number
+}
+
 export interface PlanVariant {
   id: string
   label: string // 'A', 'B', ...
@@ -28,7 +35,7 @@ export interface PlanVariant {
   tagline: string
   costPerPersonCzk: number
   costNote: string
-  bases: string[]
+  stints: Stint[]
   hotStops: HotStop[]
   mapCenter: [number, number]
   mapZoom: number
@@ -38,11 +45,14 @@ export const VARIANTS: PlanVariant[] = [
   {
     id: 'a',
     label: 'A',
-    name: 'Riviera loop',
-    tagline: 'The full Albanian Riviera: a northern base, then a southern base, more driving, more coast.',
+    name: 'Vlorë then Ksamil',
+    tagline: 'Two nights in Vlorë for the northern Riviera, then a week in Ksamil for the south, the islands and Butrint.',
     costPerPersonCzk: 15000,
-    costNote: 'ubytování + let + auto (bez jídla)',
-    bases: ['Vlorë', 'Ksamil'],
+    costNote: 'odhad: 2 ubytování + let + auto (bez jídla)',
+    stints: [
+      { base: 'Vlorë', dates: '14.–16. 8.', nights: 2 },
+      { base: 'Ksamil', dates: '16.–23. 8.', nights: 7 },
+    ],
     hotStops: [
       { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'Northern base, start of the Riviera.' },
       { name: 'Llogara Pass', type: 'instagram', lat: 40.2069, lng: 19.5953, note: 'Mountain pass, big coast views.' },
@@ -66,7 +76,7 @@ export const VARIANTS: PlanVariant[] = [
     tagline: 'One base in the south around Ksamil, less driving, more beach time. Cheaper.',
     costPerPersonCzk: 12000,
     costNote: 'ubytování ~25k + let + auto',
-    bases: ['Ksamil'],
+    stints: [{ base: 'Ksamil', dates: '14.–23. 8.', nights: 9 }],
     hotStops: [
       { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Base for the whole trip.' },
       { name: 'Butrint National Park', type: 'classic', lat: 39.7456, lng: 20.0203 },

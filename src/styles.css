@@ -454,6 +454,15 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .var-bases-l { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); }
 .var-base { font-size: 14px; font-weight: 600; padding: 3px 12px; border-radius: 999px; background: rgba(226,85,45,0.1); color: var(--accent-deep); }
 
+.var-stints { list-style: none; margin: 0 0 4px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.var-stint {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: baseline;
+  padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+}
+.var-stint-base { font-weight: 600; font-size: 15px; }
+.var-stint-dates { font-size: 13px; color: var(--ink-soft); }
+.var-stint-nights { font-size: 13px; font-weight: 600; color: var(--accent-deep); }
+
 .var-stops { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .var-stop { display: flex; gap: 12px; align-items: start; padding: 8px 4px; border-bottom: 1px solid var(--line-soft); cursor: pointer; border-radius: 8px; }
 .var-stop:hover { background: rgba(36,27,18,0.03); }
