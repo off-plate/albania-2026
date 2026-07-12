@@ -43,7 +43,7 @@ export default function Budget() {
           </li>
         ))}
       </ul>
-      <div className="bud-note">Bez jídla a útraty na místě. Ceny ubytování jsou totály za skupinu.</div>
+      <div className="bud-note">Ubytování počítá vždy nejdražší variantu v každé základně (totál za skupinu). Bez jídla a útraty na místě.</div>
       {c.missingLodging.length > 0 && (
         <div className="bud-warn">⚠ Chybí ubytování: {c.missingLodging.join(', ')}. Celková cena je zatím neúplná.</div>
       )}

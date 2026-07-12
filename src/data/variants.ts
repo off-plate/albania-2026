@@ -64,7 +64,11 @@ export interface PlanVariant {
 
 // Full cost for a variant, computed from the first lodging option per base.
 export function variantCost(v: PlanVariant) {
-  const stay = v.stints.reduce((s, st) => s + (st.lodging?.[0]?.priceCzk ?? 0), 0)
+  // Worst-case: the most expensive lodging option per base.
+  const stay = v.stints.reduce((s, st) => {
+    const prices = (st.lodging ?? []).map((l) => l.priceCzk)
+    return s + (prices.length ? Math.max(...prices) : 0)
+  }, 0)
   const missingLodging = v.stints.filter((st) => !st.lodging?.length).map((st) => st.base)
   const flight = FLIGHT_PP_CZK * 4
   const car = CAR_RENTAL_CZK
@@ -196,7 +200,40 @@ export const VARIANTS: PlanVariant[] = [
           },
         ],
       },
-      { base: 'Vlorë', dates: '16.–18. 8.', nights: 2 },
+      {
+        base: 'Vlorë',
+        dates: '16.–18. 8.',
+        nights: 2,
+        lodging: [
+          {
+            name: 'Vila Anxhelo & Xhemi',
+            priceCzk: 7470,
+            breakfast: true,
+            detail: 'Rruga Kanan Maze. 2 ložnice, snídaně v ceně, bez kuchyně.',
+            lat: 40.452,
+            lng: 19.488,
+            link: 'https://www.booking.com/hotel/al/vila-anxhelo-amp-xhemi.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
+          },
+          {
+            name: 'Bel Ami Apartments',
+            priceCzk: 7333,
+            breakfast: true,
+            detail: 'Silnice Vlorë–Orikum. Snídaně v ceně, bez kuchyně.',
+            lat: 40.4,
+            lng: 19.478,
+            link: 'https://www.booking.com/hotel/al/bel-ami-apartments.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
+          },
+          {
+            name: 'Sunny Hill Residence',
+            priceCzk: 6157,
+            note: 'Nejlevnější',
+            detail: 'SH8. 1 ložnice + gauč, kuchyň.',
+            lat: 40.463,
+            lng: 19.492,
+            link: 'https://www.booking.com/hotel/al/sunny-hill-residence.html?checkin=2026-08-16&checkout=2026-08-18&group_adults=4&no_rooms=2&req_adults=4',
+          },
+        ],
+      },
       {
         base: 'Sarandë',
         dates: '18.–23. 8.',

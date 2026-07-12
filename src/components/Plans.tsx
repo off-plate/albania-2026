@@ -80,7 +80,7 @@ export default function Plans() {
               </li>
             </ul>
             <div className="var-cost-note">
-              benzín: {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · bez jídla a útraty
+              ubytování = nejdražší varianta v každé základně · benzín {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · bez jídla
             </div>
             {cost.missingLodging.length > 0 && (
               <div className="var-cost-warn">
