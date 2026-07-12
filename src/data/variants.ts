@@ -130,7 +130,7 @@ export const VARIANTS: PlanVariant[] = [
     dateRange: '14.–22. 8.',
     flightTotalCzk: 19463,
     carOptions: [
-      { name: 'Audi A6 (Alpha Rent)', priceCzk: 10000 },
+      { name: 'Audi A6 (Alpha Rent)', priceCzk: 10000, link: 'https://alpha-rent.com/' },
       { name: 'Audi A6 (24-7 Rental)', priceCzk: 8500, link: 'https://24-7rentalcar.com/cars/audi-a6/' },
     ],
     stints: [
