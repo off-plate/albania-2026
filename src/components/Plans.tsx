@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useStore } from '../store'
-import { VARIANTS, SHARED } from '../data/variants'
+import { VARIANTS, SHARED, FUEL } from '../data/variants'
 import { STOP } from '../stopTypes'
 import { fmtCZK } from '../lib/format'
 
@@ -12,6 +12,10 @@ export default function Plans() {
   }, [activeVariantId, setActiveVariantId])
 
   const active = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
+
+  const liters = active?.driveKm ? (active.driveKm * FUEL.lPer100) / 100 : null
+  const fuelTotal = liters != null ? Math.round(liters * FUEL.priceCzkPerL) : null
+  const fuelPerPerson = fuelTotal != null ? Math.round(fuelTotal / 4) : null
 
   return (
     <div className="plans">
@@ -93,6 +97,7 @@ export default function Plans() {
                           {fmtCZK(l.priceCzk)}{l.breakfast ? ' · se snídaní' : ''}
                         </span>
                         {l.note && <span className="var-lodge-note">{l.note}</span>}
+                        {l.detail && <span className="var-lodge-detail">{l.detail}</span>}
                       </li>
                     ))}
                   </ul>
@@ -100,6 +105,23 @@ export default function Plans() {
               </div>
             ))}
           </div>
+
+          {fuelTotal != null && (
+            <>
+              <div className="ov-h">Benzín (odhad)</div>
+              <div className="var-fuel">
+                <div className="var-fuel-top">
+                  <span className="var-fuel-n">{fmtCZK(fuelTotal)}</span>
+                  <span className="var-fuel-pp">{fmtCZK(fuelPerPerson as number)} / osoba</span>
+                </div>
+                <div className="var-fuel-calc">
+                  ~{active.driveKm} km · {FUEL.lPer100} l/100 km · {FUEL.priceCzkPerL} Kč/l · ~{Math.round(liters as number)} l
+                </div>
+              </div>
+            </>
+          )}
+
+          {active.endNote && <div className="var-endnote">{active.endNote}</div>}
 
           <div className="ov-h">Hot stops · {active.hotStops.length}</div>
           <ol className="var-stops">

@@ -27,7 +27,8 @@ export interface Lodging {
   priceCzk: number
   breakfast?: boolean
   link: string
-  note?: string
+  note?: string // short tag pill, e.g. "Preferováno"
+  detail?: string // longer plain description
 }
 
 // A stay at one base for part of the trip.
@@ -49,16 +50,25 @@ export interface PlanVariant {
   hotStops: HotStop[]
   mapCenter: [number, number]
   mapZoom: number
+  endNote?: string
+  /** Estimated total driving in Albania (km), for the fuel estimate. */
+  driveKm?: number
+}
+
+// Fuel estimate assumptions (editable). Albania pump price ~1.9 EUR/l.
+export const FUEL = {
+  lPer100: 7, // average consumption
+  priceCzkPerL: 48,
 }
 
 export const VARIANTS: PlanVariant[] = [
   {
     id: 'a',
     label: 'A',
-    name: 'Vlorë then Ksamil',
-    tagline: 'Three nights in Vlorë for the northern Riviera, then six in Ksamil for the south, the islands and Butrint.',
+    name: 'Vlorë then Sarandë',
+    tagline: 'Three nights in Vlorë for the northern Riviera, then six in Sarandë for the south, Ksamil, Butrint and the Blue Eye.',
     costPerPersonCzk: 15000,
-    costNote: 'odhad: Vlorë hotel + Ksamil (TBD) + let + auto',
+    costNote: 'odhad: Vlorë hotel + Sarandë apartmán + let + auto + benzín',
     stints: [
       {
         base: 'Vlorë',
@@ -81,8 +91,28 @@ export const VARIANTS: PlanVariant[] = [
           },
         ],
       },
-      { base: 'Ksamil', dates: '17.–23. 8.', nights: 6 },
+      {
+        base: 'Sarandë',
+        dates: '17.–23. 8.',
+        nights: 6,
+        lodging: [
+          {
+            name: 'Two-bedroom apartment, steps from the beach',
+            priceCzk: 22155,
+            detail: 'Plně vybavený apartmán kousek od pláže. Parkování asi placené.',
+            link: 'https://www.booking.com/hotel/al/stunning-two-bedrooms-apartment-steps-from-the-beach.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
+          },
+          {
+            name: 'Bliss Luxury Apartments & Suites',
+            priceCzk: 24680,
+            detail: 'Apartmán s kuchyní, queen bed a gauče.',
+            link: 'https://www.booking.com/hotel/al/bliss-luxury-apartments-amp-suites.html?checkin=2026-08-17&checkout=2026-08-23&group_adults=4&no_rooms=2&req_adults=4',
+          },
+        ],
+      },
     ],
+    endNote: '23. 8. přímá cesta ze Sarandy na letiště (Tirana, ~3,5 h).',
+    driveKm: 950,
     hotStops: [
       { name: 'Vlorë', type: 'relaxed', lat: 40.4686, lng: 19.4892, note: 'Northern base, start of the Riviera.' },
       { name: 'Llogara Pass', type: 'instagram', lat: 40.2069, lng: 19.5953, note: 'Mountain pass, big coast views.' },
@@ -107,6 +137,7 @@ export const VARIANTS: PlanVariant[] = [
     costPerPersonCzk: 12000,
     costNote: 'ubytování ~25k + let + auto',
     stints: [{ base: 'Ksamil', dates: '14.–23. 8.', nights: 9 }],
+    driveKm: 850,
     hotStops: [
       { name: 'Ksamil', type: 'relaxed', lat: 39.7667, lng: 20.0011, note: 'Base for the whole trip.' },
       { name: 'Butrint National Park', type: 'classic', lat: 39.7456, lng: 20.0203 },
