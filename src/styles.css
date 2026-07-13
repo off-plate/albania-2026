@@ -569,6 +569,26 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 .bud-cmp-pp { font-family: var(--serif); font-size: 17px; }
 .bud-cmp-total { font-size: 12px; color: var(--ink-soft); }
 
+/* ── Plán & mapa ── */
+.pm-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.pm-chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+.pm-chip:hover { border-color: var(--ink-faint); }
+.pm-chip-on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pm-day { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--surface); margin-bottom: 10px; cursor: pointer; transition: border-color 140ms, box-shadow 140ms, opacity 140ms; }
+.pm-day:hover { border-color: var(--ink-faint); }
+.pm-day-on { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(226,85,45,0.16); }
+.pm-day-dim { opacity: 0.5; }
+.pm-day-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.pm-day-base { font-family: var(--serif); font-size: 20px; font-weight: 500; }
+.pm-day-dates { font-size: 13px; color: var(--ink-soft); }
+.pm-day-hotel { font-size: 13.5px; color: var(--accent-deep); margin-top: 4px; }
+.pm-poi { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.pm-poi li { display: flex; align-items: baseline; gap: 8px; font-size: 14px; }
+.pm-poi-name { font-weight: 500; }
+.pm-poi-kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); }
+.pm-poi a { margin-left: auto; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.pm-empty { color: var(--ink-faint); font-size: 13px; font-style: italic; }
+
 /* ── POI hotspots (itinerary) ── */
 .poi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .poi { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); display: flex; flex-direction: column; }

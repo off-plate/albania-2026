@@ -3,6 +3,7 @@ import { StoreProvider, useStore } from './store'
 import TopBar from './components/TopBar'
 import Rail from './components/Rail'
 import Plans from './components/Plans'
+import PlanMap from './components/PlanMap'
 import Overview from './components/Overview'
 import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
@@ -39,6 +40,7 @@ function Shell() {
           <div className="panel">
             {/* All views are variant-driven now; no wait for the DB. */}
             {view === 'plans' && <Plans />}
+            {view === 'planmap' && <PlanMap />}
             {view === 'overview' && <Overview />}
             {view === 'itinerary' && <Itinerary />}
             {view === 'budget' && <Budget />}

@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react'
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
 import { VARIANTS } from '../data/variants'
 import { POIS, POI_COLOR, POI_CENTER, POI_ZOOM } from '../data/pois'
+import { baseId } from './PlanMap'
 import { fmtCZK } from '../lib/format'
 
 function poiIcon(color: string) {
@@ -58,9 +59,10 @@ function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: n
 }
 
 export default function MapPane() {
-  const { activeVariantId, activeId, setActiveId, view } = useStore()
+  const { activeVariantId, activeId, setActiveId, view, planFocus } = useStore()
   const variant = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
   const itinMode = view === 'itinerary'
+  const planMode = view === 'planmap'
 
   const flyTarget = useMemo<[number, number] | null>(() => {
     if (!activeId?.startsWith('var:')) return null
@@ -73,6 +75,48 @@ export default function MapPane() {
   const hotels = variant.stints
     .flatMap((st) => st.lodging ?? [])
     .filter((l) => l.lat != null && l.lng != null)
+
+  if (planMode) {
+    const bases = variant.hotStops.filter((h) => h.type === 'relaxed')
+    const focusBase = planFocus !== 'all' ? bases.find((b) => baseId(b.name) === planFocus) : null
+    const shownBases = focusBase ? [focusBase] : bases
+    const shownPois = focusBase ? POIS.filter((p) => p.nearBase === planFocus) : POIS
+    const center: [number, number] = focusBase ? [focusBase.lat, focusBase.lng] : POI_CENTER
+    const zoom = focusBase ? 10 : POI_ZOOM
+    const routes: [number, number][][] = focusBase
+      ? shownPois.map((p) => [[focusBase.lat, focusBase.lng], [p.lat, p.lng]])
+      : [bases.map((b) => [b.lat, b.lng] as [number, number])]
+
+    return (
+      <MapContainer center={center} zoom={zoom} className="map-root" scrollWheelZoom>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <FrameVariant center={center} zoom={zoom} dep={`plan-${planFocus}`} />
+        {routes.map((pts, i) => (
+          <Polyline key={i} positions={pts} pathOptions={{ color: '#3A2C1E', weight: 2, opacity: 0.4, dashArray: '4 6' }} />
+        ))}
+        {shownBases.map((b, i) => (
+          <Marker key={b.name} position={[b.lat, b.lng]} icon={markerIcon('#2E8B6B', i + 1, false)}>
+            <Popup>
+              <strong>{b.name}</strong>
+              {b.note && <span className="pop-blurb">{b.note}</span>}
+            </Popup>
+          </Marker>
+        ))}
+        {shownPois.map((p) => (
+          <Marker key={p.id} position={[p.lat, p.lng]} icon={poiIcon(POI_COLOR[p.category])}>
+            <Popup>
+              <strong>{p.name}</strong>
+              <span className="pop-blurb">{p.note}</span>
+              <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
+    )
+  }
 
   if (itinMode) {
     return (

@@ -17,6 +17,7 @@ export interface Poi {
   optional?: boolean
   priceCzk?: number // total for the group of 4
   bookLink?: string
+  nearBase?: 'durres' | 'vlore' | 'sarande'
 }
 
 const gmap = (lat: number, lng: number) =>
@@ -44,6 +45,7 @@ export const POI_ZOOM = 7
 export const POIS: Poi[] = [
   {
     id: 'dajti',
+    nearBase: 'durres',
     name: 'Hora Dajti',
     category: 'view',
     lat: 41.3597,
@@ -55,6 +57,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'shkopet',
+    nearBase: 'durres',
     name: 'Most Shkopet',
     category: 'view',
     lat: 41.66,
@@ -64,6 +67,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'vlore-old',
+    nearBase: 'vlore',
     name: 'Staré město Vlorë',
     category: 'town',
     lat: 40.4667,
@@ -75,6 +79,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'llogara',
+    nearBase: 'vlore',
     name: 'Průsmyk Llogara',
     category: 'view',
     lat: 40.2069,
@@ -86,6 +91,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'gjipe',
+    nearBase: 'vlore',
     name: 'Pláž Gjipe',
     category: 'beach',
     lat: 40.1856,
@@ -97,6 +103,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'filikuri',
+    nearBase: 'vlore',
     name: 'Pláž Filikuri',
     category: 'beach',
     lat: 40.095,
@@ -106,6 +113,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'blue-eye',
+    nearBase: 'sarande',
     name: 'Modré oko (Syri i Kaltër)',
     category: 'sight',
     lat: 39.9239,
@@ -117,6 +125,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'butrint',
+    nearBase: 'sarande',
     name: 'Národní park Butrint',
     category: 'sight',
     lat: 39.7456,
@@ -128,6 +137,7 @@ export const POIS: Poi[] = [
   },
   {
     id: 'osumi-rafting',
+    nearBase: 'sarande',
     name: 'Kaňony Osumi (packrafting)',
     category: 'activity',
     lat: 40.42,
