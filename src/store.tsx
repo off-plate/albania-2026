@@ -24,7 +24,7 @@ import type {
   Trip,
 } from './types'
 
-export type View = 'plans' | 'planmap' | 'overview' | 'itinerary' | 'budget'
+export type View = 'plans' | 'planmap' | 'explore' | 'overview' | 'itinerary' | 'budget'
 export type Mode = 'edit' | 'view'
 
 // ── patch → DB column mappers ───────────────────────────────────────────────
@@ -110,6 +110,8 @@ interface Store {
   setActiveVariantId: (id: string | null) => void
   planFocus: string
   setPlanFocus: (s: string) => void
+  exploreState: Record<string, 'added' | 'rejected'>
+  setExplore: (id: string, s: 'added' | 'rejected' | null) => void
   activeId: string | null
   setActiveId: (id: string | null) => void
   mapMobileOpen: boolean
@@ -174,6 +176,26 @@ export function StoreProvider({ slug, children }: { slug: string; children: Reac
   const [view, setView] = useState<View>('plans')
   const [activeVariantId, setActiveVariantId] = useState<string | null>(null)
   const [planFocus, setPlanFocus] = useState<string>('all')
+  const [exploreState, setExploreStateRaw] = useState<Record<string, 'added' | 'rejected'>>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('explore:v1') || '{}')
+    } catch {
+      return {}
+    }
+  })
+  const setExplore = (id: string, s: 'added' | 'rejected' | null) => {
+    setExploreStateRaw((prev) => {
+      const next = { ...prev }
+      if (s === null) delete next[id]
+      else next[id] = s
+      try {
+        localStorage.setItem('explore:v1', JSON.stringify(next))
+      } catch {
+        /* ignore */
+      }
+      return next
+    })
+  }
   const [activeId, setActiveId] = useState<string | null>(null)
   const [mapMobileOpen, setMapMobileOpen] = useState(false)
 
@@ -564,6 +586,8 @@ export function StoreProvider({ slug, children }: { slug: string; children: Reac
     setActiveVariantId,
     planFocus,
     setPlanFocus,
+    exploreState,
+    setExplore,
     activeId,
     setActiveId,
     mapMobileOpen,

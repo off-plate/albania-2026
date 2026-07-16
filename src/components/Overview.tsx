@@ -1,6 +1,5 @@
 import { useStore } from '../store'
 import { VARIANTS, SHARED, variantCost, variantNights } from '../data/variants'
-import { TRAVEL_OPTIONS, TRAVEL_KIND_LABEL } from '../data/travelOptions'
 import { fmtCZK } from '../lib/format'
 
 export default function Overview() {
@@ -65,23 +64,12 @@ export default function Overview() {
       </div>
       {v.endNote && <div className="var-endnote">{v.endNote}</div>}
 
-      {/* general reference: things to do */}
-      <div className="ov-h">Co dělat a za kolik</div>
-      <ul className="trip-list">
-        {TRAVEL_OPTIONS.map((t) => (
-          <li className="trip" key={t.name}>
-            <span className={`trip-kind trip-${t.kind}`}>{TRAVEL_KIND_LABEL[t.kind]}</span>
-            <div className="trip-main">
-              <div className="trip-top">
-                <span className="trip-name">{t.name}</span>
-                <span className="trip-price">{t.price}</span>
-              </div>
-              <div className="trip-area">{t.area}</div>
-              <div className="trip-note">{t.note}</div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* tips moved to Explore */}
+      <div className="ov-h">Výlety a tipy</div>
+      <button className="ovw-flight" onClick={() => setView('explore')}>
+        <span>Tipy na výlety s cenami a vzdálenostmi</span>
+        <span className="ovw-flight-price">Explore →</span>
+      </button>
     </div>
   )
 }

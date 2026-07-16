@@ -1,11 +1,13 @@
 import { useStore } from '../store'
 import { VARIANTS, SHARED } from '../data/variants'
-import { POIS, POI_COLOR, POI_LABEL } from '../data/pois'
+import { POI_COLOR, POI_LABEL } from '../data/pois'
+import { addedExplore, exploreMapLink } from '../data/explore'
 import { fmtCZK } from '../lib/format'
 
 export default function Itinerary() {
-  const { activeVariantId, setActiveId } = useStore()
+  const { activeVariantId, setActiveId, exploreState, setView } = useStore()
   const v = VARIANTS.find((x) => x.id === activeVariantId) ?? VARIANTS[0]
+  const added = addedExplore(exploreState)
 
   // Odvození příletu/odletu z termínu, např. "14.–22. 8." → 14. 8. / 22. 8.
   const [aRaw, bRaw] = v.dateRange.split('–').map((s) => s.trim())
@@ -74,39 +76,46 @@ export default function Itinerary() {
         jen rozložení základen.
       </p>
 
-      <div className="ov-h">Co vidět · hotspoty</div>
-      <div className="poi-grid">
-        {POIS.map((p) => (
-          <article className={`poi ${p.optional ? 'poi-opt' : ''}`} key={p.id}>
-            <div className="poi-photo">
-              {p.photo ? (
-                <img src={p.photo} alt={p.name} loading="lazy" referrerPolicy="no-referrer" />
-              ) : (
-                <span className="poi-photo-ph" style={{ color: POI_COLOR[p.category] }}>
-                  {p.name.slice(0, 1)}
+      <div className="ov-h">Co vidět · přidané výlety</div>
+      {added.length === 0 ? (
+        <p className="itin-foot">
+          Zatím nic přidané.{' '}
+          <button className="link-btn" onClick={() => setView('explore')}>Přidej výlety v Explore →</button>
+        </p>
+      ) : (
+        <div className="poi-grid">
+          {added.map((p) => (
+            <article className="poi" key={p.id}>
+              <div className="poi-photo">
+                {p.photo ? (
+                  <img src={p.photo} alt={p.name} loading="lazy" referrerPolicy="no-referrer" />
+                ) : (
+                  <span className="poi-photo-ph" style={{ color: POI_COLOR[p.category] }}>
+                    {p.name.slice(0, 1)}
+                  </span>
+                )}
+                <span className="poi-kind" style={{ background: POI_COLOR[p.category] }}>
+                  {POI_LABEL[p.category]}
                 </span>
-              )}
-              <span className="poi-kind" style={{ background: POI_COLOR[p.category] }}>
-                {POI_LABEL[p.category]}
-              </span>
-            </div>
-            <div className="poi-body">
-              <h3 className="poi-name">{p.name}</h3>
-              <p className="poi-note">{p.note}</p>
-              {p.optional && p.priceCzk && (
-                <p className="poi-price">
-                  Volitelné · {fmtCZK(p.priceCzk)} za 4 ({fmtCZK(Math.round(p.priceCzk / 4))}/os.)
-                </p>
-              )}
-              <div className="poi-links">
-                <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
-                {p.bookLink && <a href={p.bookLink} target="_blank" rel="noreferrer">Rezervovat →</a>}
               </div>
-              {p.photoCredit && <span className="poi-credit">foto: {p.photoCredit}</span>}
-            </div>
-          </article>
-        ))}
-      </div>
+              <div className="poi-body">
+                <h3 className="poi-name">{p.name}</h3>
+                <p className="poi-note">{p.note}</p>
+                <p className="poi-price">
+                  🚗 {p.driveKm} km · {p.driveMin} min · {p.costPpCzk === 0 ? 'zdarma' : `${fmtCZK(p.costPpCzk)}/os.`}
+                </p>
+                <div className="poi-links">
+                  <a href={exploreMapLink(p)} target="_blank" rel="noreferrer">Mapa →</a>
+                  {p.links.map((l) => (
+                    <a key={l.url} href={l.url} target="_blank" rel="noreferrer">{l.label} →</a>
+                  ))}
+                </div>
+                {p.photoCredit && <span className="poi-credit">foto: {p.photoCredit}</span>}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

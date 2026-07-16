@@ -1,10 +1,10 @@
 import { useStore } from '../store'
 import { VARIANTS, variantCost } from '../data/variants'
-import { POIS } from '../data/pois'
+import { addedExplore } from '../data/explore'
 import { fmtCZK } from '../lib/format'
 
 export default function Budget() {
-  const { activeVariantId, setActiveVariantId } = useStore()
+  const { activeVariantId, setActiveVariantId, exploreState } = useStore()
   const v = VARIANTS.find((x) => x.id === activeVariantId) ?? VARIANTS[0]
   const c = variantCost(v)
 
@@ -48,27 +48,31 @@ export default function Budget() {
         <div className="bud-warn">⚠ Chybí ubytování: {c.missingLodging.join(', ')}. Celková cena je zatím neúplná.</div>
       )}
 
-      {/* optional activities */}
+      {/* added explore items with a cost */}
       {(() => {
-        const opts = POIS.filter((p) => p.optional && p.priceCzk)
+        const opts = addedExplore(exploreState).filter((i) => i.costPpCzk > 0)
         if (!opts.length) return null
+        const sumPp = opts.reduce((s, o) => s + o.costPpCzk, 0)
         return (
           <>
-            <div className="ov-h">Volitelné (nezapočítáno výše)</div>
+            <div className="ov-h">Přidané výlety (volitelné)</div>
             <ul className="bud-rows">
               {opts.map((o) => (
                 <li className="bud-row" key={o.id}>
                   <div className="bud-row-main">
                     <span className="bud-row-label">{o.name}</span>
-                    <span className="bud-row-sub">za 4 · {o.bookLink ? 'rezervace online' : ''}</span>
+                    <span className="bud-row-sub">{o.costNote ?? ''}</span>
                   </div>
                   <div className="bud-row-vals">
-                    <span className="bud-row-val">{fmtCZK(o.priceCzk as number)}</span>
-                    <span className="bud-row-pp">{fmtCZK(Math.round((o.priceCzk as number) / 4))}/os.</span>
+                    <span className="bud-row-val">{fmtCZK(o.costPpCzk * 4)}</span>
+                    <span className="bud-row-pp">{fmtCZK(o.costPpCzk)}/os.</span>
                   </div>
                 </li>
               ))}
             </ul>
+            <div className="bud-note">
+              Výlety navíc: {fmtCZK(sumPp)}/os. ({fmtCZK(sumPp * 4)} za 4). Nezapočítáno do ceny výše.
+            </div>
           </>
         )
       })()}

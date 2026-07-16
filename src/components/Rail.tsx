@@ -3,6 +3,7 @@ import { useStore, type View } from '../store'
 const ITEMS: { key: View; label: string }[] = [
   { key: 'plans', label: 'Varianty' },
   { key: 'planmap', label: 'Plán & mapa' },
+  { key: 'explore', label: 'Explore' },
   { key: 'overview', label: 'Přehled' },
   { key: 'itinerary', label: 'Itinerář' },
   { key: 'budget', label: 'Rozpočet' },

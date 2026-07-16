@@ -4,6 +4,7 @@ import TopBar from './components/TopBar'
 import Rail from './components/Rail'
 import Plans from './components/Plans'
 import PlanMap from './components/PlanMap'
+import Explore from './components/Explore'
 import Overview from './components/Overview'
 import Itinerary from './components/Itinerary'
 import Budget from './components/Budget'
@@ -41,6 +42,7 @@ function Shell() {
             {/* All views are variant-driven now; no wait for the DB. */}
             {view === 'plans' && <Plans />}
             {view === 'planmap' && <PlanMap />}
+            {view === 'explore' && <Explore />}
             {view === 'overview' && <Overview />}
             {view === 'itinerary' && <Itinerary />}
             {view === 'budget' && <Budget />}

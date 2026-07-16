@@ -4,7 +4,8 @@ import L from 'leaflet'
 import { useStore } from '../store'
 import { STOP } from '../stopTypes'
 import { VARIANTS } from '../data/variants'
-import { POIS, POI_COLOR, POI_CENTER, POI_ZOOM } from '../data/pois'
+import { POI_COLOR, POI_CENTER, POI_ZOOM } from '../data/pois'
+import { addedExplore, exploreMapLink } from '../data/explore'
 import { baseId } from './PlanMap'
 import { fmtCZK } from '../lib/format'
 
@@ -59,7 +60,8 @@ function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: n
 }
 
 export default function MapPane() {
-  const { activeVariantId, activeId, setActiveId, view, planFocus } = useStore()
+  const { activeVariantId, activeId, setActiveId, view, planFocus, exploreState } = useStore()
+  const added = addedExplore(exploreState)
   const variant = VARIANTS.find((v) => v.id === activeVariantId) ?? VARIANTS[0]
   const itinMode = view === 'itinerary'
   const planMode = view === 'planmap'
@@ -80,7 +82,7 @@ export default function MapPane() {
     const bases = variant.hotStops.filter((h) => h.type === 'relaxed')
     const focusBase = planFocus !== 'all' ? bases.find((b) => baseId(b.name) === planFocus) : null
     const shownBases = focusBase ? [focusBase] : bases
-    const shownPois = focusBase ? POIS.filter((p) => p.nearBase === planFocus) : POIS
+    const shownPois = focusBase ? added.filter((p) => p.nearBase === planFocus) : added
     const center: [number, number] = focusBase ? [focusBase.lat, focusBase.lng] : POI_CENTER
     const zoom = focusBase ? 10 : POI_ZOOM
     const routes: [number, number][][] = focusBase
@@ -110,7 +112,7 @@ export default function MapPane() {
             <Popup>
               <strong>{p.name}</strong>
               <span className="pop-blurb">{p.note}</span>
-              <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
+              <a href={exploreMapLink(p)} target="_blank" rel="noreferrer">Mapa →</a>
             </Popup>
           </Marker>
         ))}
@@ -126,12 +128,12 @@ export default function MapPane() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <FrameVariant center={POI_CENTER} zoom={POI_ZOOM} dep="itin" />
-        {POIS.map((p) => (
+        {added.map((p) => (
           <Marker key={p.id} position={[p.lat, p.lng]} icon={poiIcon(POI_COLOR[p.category])}>
             <Popup>
               <strong>{p.name}</strong>
               <span className="pop-blurb">{p.note}</span>
-              <a href={p.mapLink} target="_blank" rel="noreferrer">Mapa →</a>
+              <a href={exploreMapLink(p)} target="_blank" rel="noreferrer">Mapa →</a>
             </Popup>
           </Marker>
         ))}

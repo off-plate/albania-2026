@@ -1,6 +1,7 @@
 import { useStore } from '../store'
 import { VARIANTS } from '../data/variants'
-import { POIS, POI_COLOR, POI_LABEL } from '../data/pois'
+import { POI_COLOR, POI_LABEL } from '../data/pois'
+import { addedExplore, exploreMapLink } from '../data/explore'
 import { fmtCZK } from '../lib/format'
 
 export const baseId = (name: string) =>
@@ -9,8 +10,9 @@ export const baseId = (name: string) =>
 const nights = (n: number) => (n === 1 ? 'noc' : n < 5 ? 'noci' : 'nocí')
 
 export default function PlanMap() {
-  const { activeVariantId, planFocus, setPlanFocus } = useStore()
+  const { activeVariantId, planFocus, setPlanFocus, exploreState } = useStore()
   const v = VARIANTS.find((x) => x.id === activeVariantId) ?? VARIANTS[0]
+  const added = addedExplore(exploreState)
 
   return (
     <div className="planmap">
@@ -42,7 +44,7 @@ export default function PlanMap() {
 
       {v.stints.map((s) => {
         const id = baseId(s.base)
-        const pois = POIS.filter((p) => p.nearBase === id)
+        const pois = added.filter((p) => p.nearBase === id)
         const hotel = s.lodging?.[0]
         const dim = planFocus !== 'all' && planFocus !== id
         return (
@@ -67,12 +69,12 @@ export default function PlanMap() {
                   <span className="dot" style={{ background: POI_COLOR[p.category] }} />
                   <span className="pm-poi-name">{p.name}</span>
                   <span className="pm-poi-kind">{POI_LABEL[p.category]}</span>
-                  <a href={p.mapLink} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                  <a href={exploreMapLink(p)} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
                     Mapa →
                   </a>
                 </li>
               ))}
-              {pois.length === 0 && <li className="pm-empty">Žádné výlety poblíž.</li>}
+              {pois.length === 0 && <li className="pm-empty">Nic přidaného. Přidej výlety v Explore.</li>}
             </ul>
           </article>
         )
