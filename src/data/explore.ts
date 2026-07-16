@@ -33,6 +33,8 @@ export const EXPLORE: ExploreItem[] = [
   // ── Durrës (14.–16.) + cesta z letiště ──
   {
     id: 'durres-amfi',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Amphitheatre_of_Durr%C3%ABs_%28by_Pudelek%29.JPG/330px-Amphitheatre_of_Durr%C3%ABs_%28by_Pudelek%29.JPG',
+    photoCredit: 'Wikimedia Commons',
     name: 'Římský amfiteátr Durrës',
     category: 'sight',
     nearBase: 'durres',
@@ -47,6 +49,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'kruja',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Kruj%C3%AB-KrujaAlbania_2016.jpg/330px-Kruj%C3%AB-KrujaAlbania_2016.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Kruja — hrad a bazar',
     category: 'sight',
     nearBase: 'durres',
@@ -77,6 +81,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'tirana-center',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Skanderbeg_square_tirana_2016.jpg/330px-Skanderbeg_square_tirana_2016.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Tirana — centrum + Bunk’Art',
     category: 'town',
     nearBase: 'durres',
@@ -91,6 +97,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'shkopet',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Mat_Unterlauf.jpg/330px-Mat_Unterlauf.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Most Shkopet',
     category: 'view',
     nearBase: 'durres',
@@ -121,6 +129,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'zvernec',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/The_monastery_of_Zvernec.JPG/330px-The_monastery_of_Zvernec.JPG',
+    photoCredit: 'Wikimedia Commons',
     name: 'Ostrov Zvernec + klášter',
     category: 'sight',
     nearBase: 'vlore',
@@ -149,6 +159,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'karaburun-sazan',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/ALB_20070718_img_1368.jpg/330px-ALB_20070718_img_1368.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Karaburun–Sazan (lodí)',
     category: 'activity',
     nearBase: 'vlore',
@@ -163,6 +175,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'dhermi',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Dh%C3%ABrmi_Beach_Panorama_%282008%29.jpg/330px-Dh%C3%ABrmi_Beach_Panorama_%282008%29.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Dhërmi / Drymades',
     category: 'beach',
     nearBase: 'vlore',
@@ -192,6 +206,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'filikuri',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/ALB_20070718_img_1368.jpg/330px-ALB_20070718_img_1368.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Pláž Filikuri',
     category: 'beach',
     nearBase: 'vlore',
@@ -208,6 +224,8 @@ export const EXPLORE: ExploreItem[] = [
   // ── Sarandë / Ksamil (18.–22.) ──
   {
     id: 'ksamil',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Ksamill-1.jpg/330px-Ksamill-1.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Ksamil — pláže a ostrůvky',
     category: 'beach',
     nearBase: 'sarande',
@@ -254,6 +272,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'lekuresi',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/L%C3%ABkur%C3%ABsi_Castle%2C_Saranda%2C_Albania_2015-09-25_01.jpg/330px-L%C3%ABkur%C3%ABsi_Castle%2C_Saranda%2C_Albania_2015-09-25_01.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Hrad Lëkurësi (Sarandë)',
     category: 'view',
     nearBase: 'sarande',
@@ -268,6 +288,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'pasqyra',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/CIty_of_Saranda_Albania_2016.jpg/330px-CIty_of_Saranda_Albania_2016.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Pláž Pasqyra (Zrcadlová)',
     category: 'beach',
     nearBase: 'sarande',
@@ -281,6 +303,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'gjirokaster',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Gjirokaster_2016-2017.jpg/330px-Gjirokaster_2016-2017.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Gjirokastër — staré město + hrad',
     category: 'sight',
     nearBase: 'sarande',
@@ -295,6 +319,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'korfu',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Pontikonisi.jpg/330px-Pontikonisi.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Korfu na den (trajektem)',
     category: 'activity',
     nearBase: 'sarande',
@@ -309,6 +335,8 @@ export const EXPLORE: ExploreItem[] = [
   },
   {
     id: 'osumi-rafting',
+    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Gorica_bridge_Berat_Albania_2018.1.jpg/330px-Gorica_bridge_Berat_Albania_2018.1.jpg',
+    photoCredit: 'Wikimedia Commons',
     name: 'Kaňony Osumi (packrafting)',
     category: 'activity',
     nearBase: 'sarande',
