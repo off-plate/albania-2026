@@ -29,8 +29,26 @@ function useRouteSlug(): string {
   return slug
 }
 
+// Leaflet crashes if it initializes inside a display:none container (mobile,
+// map closed) — it computes NaN coords and throws. So only mount the map when
+// it is actually visible: always on desktop, on mobile only when opened.
+function useIsMobile() {
+  const [m, setM] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches,
+  )
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)')
+    const on = () => setM(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  return m
+}
+
 function Shell() {
   const { view, mapMobileOpen } = useStore()
+  const isMobile = useIsMobile()
+  const showMap = !isMobile || mapMobileOpen
 
   return (
     <div className="shell">
@@ -51,7 +69,7 @@ function Shell() {
       </div>
 
       <div className={mapMobileOpen ? 'map-col map-col-open' : 'map-col'}>
-        <MapPane />
+        {showMap && <MapPane />}
       </div>
 
       <Snackbar />

@@ -39,7 +39,7 @@ function hotelIcon(fav: boolean) {
 function FlyTo({ target }: { target: [number, number] | null }) {
   const map = useMap()
   useEffect(() => {
-    if (!target) return
+    if (!target || !map.getSize().x) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce) map.setView(target, Math.max(map.getZoom(), 9))
     else map.flyTo(target, Math.max(map.getZoom(), 9), { duration: 0.6 })
@@ -51,6 +51,7 @@ function FlyTo({ target }: { target: [number, number] | null }) {
 function FrameVariant({ center, zoom, dep }: { center: [number, number]; zoom: number; dep: string }) {
   const map = useMap()
   useEffect(() => {
+    if (!map.getSize().x) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce) map.setView(center, zoom)
     else map.flyTo(center, zoom, { duration: 0.7 })
