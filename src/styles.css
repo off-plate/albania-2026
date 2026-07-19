@@ -690,18 +690,45 @@ textarea.inline-input { resize: vertical; line-height: 1.5; }
 @media (max-width: 900px) {
   .shell { display: block; height: 100%; }
   .left { width: 100%; border-right: 0; height: 100%; }
-  .btn-map-toggle { display: inline-block; padding: 7px 13px; border: 1px solid var(--line); border-radius: 999px; font-weight: 600; font-size: 13px; }
+  .left-body { flex-direction: column; }
+
+  .btn-map-toggle { display: inline-block; padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px; font-weight: 600; font-size: 13px; }
   .map-col { position: fixed; inset: 56px 0 0 0; z-index: 500; display: none; }
   .map-col-open { display: block; }
-  .rail { width: 144px; }
-  .panel { padding: 20px 16px 96px; }
-  .split-cards { grid-template-columns: 1fr; }
-  .poi-grid { grid-template-columns: 1fr; }
-  .ex-grid { grid-template-columns: 1fr; }
+
+  /* nav rail becomes a horizontal, scrollable tab bar */
+  .rail {
+    width: 100%; flex: none; flex-direction: row; align-items: center; gap: 6px;
+    overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
+    padding: 8px 12px; border-right: 0; border-bottom: 1px solid var(--line);
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail { scrollbar-width: none; }
+  .rail-group { flex-direction: row; gap: 6px; }
+  .rail-item { white-space: nowrap; padding: 8px 14px; border-radius: 999px; font-size: 14px; }
+  .rail-glyph { display: none; }
+  .rail-foot { display: none; }
+
+  .panel { flex: 1; min-height: 0; padding: 18px 16px 40px; }
+  .panel > div { max-width: none; }
+  .panel-head h1, .ov-title { font-size: 30px; }
+
+  /* topbar: single row, tighter */
+  .topbar { padding: 0 12px; gap: 6px; }
+  .topbar-r { gap: 6px; }
+  .btn-line, .toggle button { padding: 6px 10px; font-size: 12px; }
+  .saved { display: none; }
+
+  /* one-column grids */
+  .split-cards, .poi-grid, .ex-grid, .stay-grid { grid-template-columns: 1fr; }
+  .var-tab { min-width: 0; flex-basis: 100%; }
 }
 @media (max-width: 560px) {
   .card { grid-template-columns: 26px 1fr 72px; }
   .card-photo { width: 72px; height: 54px; }
-  .panel-head h1, .ov-title { font-size: 32px; }
-  .stay-grid { grid-template-columns: 1fr; }
+  .panel-head h1, .ov-title { font-size: 28px; }
+  .ov-grid, .ov-stats, .var-stats, .money-top { grid-template-columns: 1fr; }
+  .var-stats, .money-top { grid-template-columns: repeat(3, 1fr); }
+  .res-photos { grid-template-columns: repeat(3, 1fr); }
+  .modal { width: 100%; }
 }
